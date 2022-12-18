@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// bunch of classes to interact with the grid.
 public class GridUtils : MonoBehaviour
 {
-    public Tilemap tileMap;
+    public Tilemap levelTileMap;
+    public Tilemap overlayTileMap;
+    public Tile overlayTile;
 
     // given a starting tile, return all tiles that can be reached.
     // returns a list which is the path to the tile. The last element in the list is the target tile.
@@ -33,7 +36,7 @@ public class GridUtils : MonoBehaviour
             {
                 var next = v + d;
                 // explore this if it's unexplored and a floor tile
-                if (!pathTo.ContainsKey(next) && tileMap.GetTile(next) != null && tileMap.GetTile(next).name == "FloorBase")
+                if (!pathTo.ContainsKey(next) && levelTileMap.GetTile(next) != null && levelTileMap.GetTile(next).name == "FloorBase")
                 {
                     // this tile was unexplored.
                     var pathToThis = new List<Vector3Int>(pathTo[v]);
@@ -52,5 +55,20 @@ public class GridUtils : MonoBehaviour
         }
 
         return results;
+    }
+
+    // set the list of tiles as selected.
+    public void showTilesAsSelected(List<Vector3Int> selected)
+    {
+        clearSelectedTiles();
+        foreach (var n in selected)
+        {
+            overlayTileMap.SetTile(n, overlayTile);
+        }
+    }
+
+    public void clearSelectedTiles()
+    {
+        overlayTileMap.ClearAllTiles();
     }
 }
