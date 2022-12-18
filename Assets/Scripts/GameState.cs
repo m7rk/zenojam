@@ -11,6 +11,8 @@ public class GameState : MonoBehaviour
     public Vector3Int playerPosition;
     public GameObject playerSprite;
 
+    private readonly float MOVE_ANIM_SPEED = 3f;
+
     // Grid Stuff
     public GridUtils gu;
 
@@ -18,6 +20,9 @@ public class GameState : MonoBehaviour
     public TMPro.TMP_Text floorText;
     static string[] numbers  = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
     public static int floorID = 9;
+
+    // State stuff
+    List<Vector3Int> pendingPlayerPath;
 
     public enum State
     {
@@ -32,15 +37,15 @@ public class GameState : MonoBehaviour
     void Start()
     {
         playerPosition = new Vector3Int(1, 1, 0);
-        putGOAtPosition(playerSprite, playerPosition);
+        playerSprite.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
         floorText.text = "FLOOR " + numbers[floorID].ToUpper();
     }
 
-    void putGOAtPosition(GameObject go, Vector3Int pos)
+    Vector3 globalPositionForTile(Vector3Int pos)
     {
         // 0.5 depends on sprite position and should not be trusted
-        go.transform.position = gu.levelTileMap.CellToWorld(pos) + new Vector3(0, 0.5f, 1);
+        return gu.levelTileMap.CellToWorld(pos) + new Vector3(0, 0.5f, 1);
     }
 
     // get the tile currently under the mouse
@@ -63,8 +68,7 @@ public class GameState : MonoBehaviour
                     var targ = tileAtMousePosition();
                     if(reachableTilesFrom(playerPosition,3).Contains(targ))
                     {
-                        playerPosition = targ;
-                        putGOAtPosition(playerSprite, playerPosition);
+                        pendingPlayerPath = findPathTo(playerPosition, 3, targ);
                         gu.clearSelectedTiles();
                         state = State.PLAYER_MOVE;
                     }
@@ -73,10 +77,29 @@ public class GameState : MonoBehaviour
                 break;
 
             case State.PLAYER_MOVE:
-                // animate moving to the tile (next?)
 
-                // skipped for now.
-                state = State.PLAYER_DECIDE_ACTION;
+                // go to square
+                playerSprite.transform.position = Vector3.MoveTowards(playerSprite.transform.position, globalPositionForTile(pendingPlayerPath[0]), MOVE_ANIM_SPEED * Time.deltaTime);
+
+                // if sqaure reached go to next. if no next go to next state.
+                if (Vector3.Distance(playerSprite.transform.position, globalPositionForTile(pendingPlayerPath[0])) < 0.01f)
+                {
+                    playerSprite.transform.position = globalPositionForTile(pendingPlayerPath[0]);
+                    playerPosition = pendingPlayerPath[0];
+                    pendingPlayerPath.RemoveAt(0);
+                    if(pendingPlayerPath.Count == 0)
+                    {
+                        playerSprite.GetComponent<PlayerSprite>().faceFront = true;
+                        playerSprite.GetComponent<PlayerSprite>().faceRight = true;
+                        state = State.PLAYER_DECIDE_ACTION;
+                    }
+                }
+                else
+                {
+                    // set facing
+                    playerSprite.GetComponent<PlayerSprite>().faceFront = globalPositionForTile(pendingPlayerPath[0]).y - playerSprite.transform.position.y < 0;
+                    playerSprite.GetComponent<PlayerSprite>().faceRight = globalPositionForTile(pendingPlayerPath[0]).x - playerSprite.transform.position.x > 0;
+                }
 
                 break;
             case State.PLAYER_DECIDE_ACTION:
@@ -121,6 +144,23 @@ public class GameState : MonoBehaviour
             }
         }
         return destsOnly;
+    }
+
+    List<Vector3Int> findPathTo(Vector3Int start, int depth, Vector3Int end)
+    {
+        var reachable = gu.BFS(playerPosition, 3);
+        foreach (var v in reachable)
+        {
+            if (v.Count > 0)
+            {
+                if((v[v.Count - 1]) == end)
+                {
+                    return v;
+                }
+            }
+        }
+        Debug.Log("path error in findPathTo");
+        return null;
     }
 
     // draw all reachable tiles
