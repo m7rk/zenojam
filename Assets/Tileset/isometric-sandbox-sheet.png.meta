@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,6 +100,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -108,9 +120,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
-        width: 32
-        height: 32
+        y: 384
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,10 +140,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 256
-        width: 32
-        height: 32
+        x: 48
+        y: 384
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,10 +161,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 256
-        width: 32
-        height: 32
+        x: 96
+        y: 384
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +182,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_3
       rect:
         serializedVersion: 2
-        x: 96
-        y: 256
-        width: 32
-        height: 32
+        x: 144
+        y: 384
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,10 +203,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
-        width: 32
-        height: 32
+        x: 192
+        y: 384
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +224,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_5
       rect:
         serializedVersion: 2
-        x: 160
-        y: 256
-        width: 32
-        height: 32
+        x: 240
+        y: 384
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,9 +246,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 224
-        width: 32
-        height: 32
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +266,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 224
-        width: 32
-        height: 32
+        x: 48
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -275,10 +287,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_8
       rect:
         serializedVersion: 2
-        x: 64
-        y: 224
-        width: 32
-        height: 32
+        x: 96
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -296,10 +308,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_9
       rect:
         serializedVersion: 2
-        x: 96
-        y: 224
-        width: 32
-        height: 32
+        x: 144
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -307,7 +319,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7fdce8dec5063794c9ebe015030e140b
+      spriteID: 1703d8dc43b9a7144ad621d97fde4536
       internalID: 729884859
       vertices: []
       indices: 
@@ -317,10 +329,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_10
       rect:
         serializedVersion: 2
-        x: 128
-        y: 224
-        width: 32
-        height: 32
+        x: 192
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -328,7 +340,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c616fdab45cc19c4883deb7723b49433
+      spriteID: 0e04d736a307f084c8a68f554515dc19
       internalID: -1147491150
       vertices: []
       indices: 
@@ -338,10 +350,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_11
       rect:
         serializedVersion: 2
-        x: 160
-        y: 224
-        width: 32
-        height: 32
+        x: 240
+        y: 336
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -349,7 +361,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34f802063548123489e99efdcf9ec5e2
+      spriteID: 8db7477113171314991c11c8a41e9c1f
       internalID: -943221904
       vertices: []
       indices: 
@@ -360,9 +372,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
-        width: 32
-        height: 32
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -370,7 +382,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b70c2ac0ed32ed48aaae874099f1a13
+      spriteID: 8102fa22992fa884b8c4ffd45101bed0
       internalID: 287688261
       vertices: []
       indices: 
@@ -380,10 +392,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 192
-        width: 32
-        height: 32
+        x: 48
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -391,7 +403,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 692678a67e5db834bbec0df95ebeb2c6
+      spriteID: c25ed53e527baac4c8ce63432abe577d
       internalID: 1962392931
       vertices: []
       indices: 
@@ -401,10 +413,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_14
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
-        width: 32
-        height: 32
+        x: 96
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -412,7 +424,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e251bc88af05a946aa39bb2ed1d7f41
+      spriteID: a1cb39fa2b2378846acabe54e02b2c7d
       internalID: -1315081706
       vertices: []
       indices: 
@@ -422,10 +434,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_15
       rect:
         serializedVersion: 2
-        x: 96
-        y: 192
-        width: 32
-        height: 32
+        x: 144
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -433,7 +445,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e7924ba95ec78f479819a941da01e9d
+      spriteID: 74fc7ebc9523e74409d2a3b2b8ce2fd4
       internalID: 1949529420
       vertices: []
       indices: 
@@ -443,10 +455,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_16
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
-        width: 32
-        height: 32
+        x: 192
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -454,7 +466,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e3b6db65970cc848925ecf176d488fc
+      spriteID: 6347a78983a9f1a40aede3b749dde35e
       internalID: 745009127
       vertices: []
       indices: 
@@ -464,10 +476,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_17
       rect:
         serializedVersion: 2
-        x: 160
-        y: 192
-        width: 32
-        height: 32
+        x: 240
+        y: 288
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -475,7 +487,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0cc9432d31eebb4085f361afa14e976
+      spriteID: bdb7e5c9c6183eb4aa1fc82c548f7698
       internalID: -1953154202
       vertices: []
       indices: 
@@ -486,9 +498,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 160
-        width: 32
-        height: 32
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -496,7 +508,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07d2341461c6969498cf9467241c8f37
+      spriteID: 0fbb52d29b2406746a82c0f42caaa8ea
       internalID: -1020524423
       vertices: []
       indices: 
@@ -506,10 +518,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_19
       rect:
         serializedVersion: 2
-        x: 32
-        y: 160
-        width: 32
-        height: 32
+        x: 48
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -517,7 +529,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 566b1579cac8b31478615ce52bd93e7a
+      spriteID: 7c8a05091adf6204d8bf627048cd226a
       internalID: -1454130076
       vertices: []
       indices: 
@@ -527,10 +539,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_20
       rect:
         serializedVersion: 2
-        x: 64
-        y: 160
-        width: 32
-        height: 32
+        x: 96
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -538,7 +550,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29bbc8761df394a47acb52dc78eeee9a
+      spriteID: 66587b13413979d4eb9a51f606a2b4d9
       internalID: 1347406335
       vertices: []
       indices: 
@@ -548,10 +560,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_21
       rect:
         serializedVersion: 2
-        x: 96
-        y: 160
-        width: 32
-        height: 32
+        x: 144
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -559,7 +571,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1aada0119ed56c74dab934fee58b7d2d
+      spriteID: a0954ca7810866048bfb5ad3f7cdfa43
       internalID: 1779778779
       vertices: []
       indices: 
@@ -569,10 +581,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_22
       rect:
         serializedVersion: 2
-        x: 128
-        y: 160
-        width: 32
-        height: 32
+        x: 192
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -580,7 +592,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5027dbba9ad280c4ebd42da1ce11d8de
+      spriteID: ea143326361f2554eb490acaef4c6688
       internalID: -2113139566
       vertices: []
       indices: 
@@ -590,10 +602,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_23
       rect:
         serializedVersion: 2
-        x: 160
-        y: 160
-        width: 32
-        height: 32
+        x: 240
+        y: 240
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -601,7 +613,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeac499d1dbd7c540b78f5228a362382
+      spriteID: 6f32d9a96b74c9b4a85c22d4ae095635
       internalID: -1097866745
       vertices: []
       indices: 
@@ -612,9 +624,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 32
-        height: 32
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -622,7 +634,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ea8c4a45784a934aa4b33719dc535d3
+      spriteID: aac2e280c4d59e74e96616bd093ae46b
       internalID: -314829195
       vertices: []
       indices: 
@@ -632,10 +644,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_25
       rect:
         serializedVersion: 2
-        x: 32
-        y: 128
-        width: 32
-        height: 32
+        x: 48
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -643,7 +655,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ea5d4aa877b5634cbac1707f52d562a
+      spriteID: 7ffd022d89dc2694086a95b50d7fcecf
       internalID: 140375598
       vertices: []
       indices: 
@@ -653,10 +665,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_26
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
+        x: 96
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -664,7 +676,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be6e9fceed5ec4a499d2a6e174fbe4d3
+      spriteID: 0c4aef7482b139b44b2b5202c1aaaca2
       internalID: 538990291
       vertices: []
       indices: 
@@ -674,10 +686,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_27
       rect:
         serializedVersion: 2
-        x: 96
-        y: 128
-        width: 32
-        height: 32
+        x: 144
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -685,7 +697,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9b18cdbcc66d284b8b87279211154f3
+      spriteID: 17059e6cfa3c41a4cb5ffb03fdc8a100
       internalID: 1008547296
       vertices: []
       indices: 
@@ -695,10 +707,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_28
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 32
-        height: 32
+        x: 192
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -706,7 +718,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc440a7b2d1e56641b4308341ecd2f71
+      spriteID: 5771c66f8055989489285cb4464d0073
       internalID: -392490423
       vertices: []
       indices: 
@@ -716,10 +728,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_29
       rect:
         serializedVersion: 2
-        x: 160
-        y: 128
-        width: 32
-        height: 32
+        x: 240
+        y: 192
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -727,7 +739,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 732790a1ba2f50e4b8599bb28dc96ab7
+      spriteID: 6860dd2bd3645c2469a6c8383b4349f9
       internalID: -1270860361
       vertices: []
       indices: 
@@ -737,10 +749,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_30
       rect:
         serializedVersion: 2
-        x: 128
-        y: 96
-        width: 32
-        height: 32
+        x: 192
+        y: 144
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -748,7 +760,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bd1e488759bdd747b73d63fdf982360
+      spriteID: f7d722a60b1223a4a8f17fb11b110758
       internalID: 727007202
       vertices: []
       indices: 
@@ -758,10 +770,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_31
       rect:
         serializedVersion: 2
-        x: 160
-        y: 96
-        width: 32
-        height: 32
+        x: 240
+        y: 144
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -769,7 +781,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 503ed24e3a7e3d94c95eda6680bffd09
+      spriteID: 32e32c1c0f638fb4da1f57ce8a4f7660
       internalID: 529754150
       vertices: []
       indices: 
@@ -780,9 +792,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 32
-        height: 32
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -790,7 +802,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9345900b0a9076648919ac7aee5a03bb
+      spriteID: da382d42a9c32f546a715411e20da4cd
       internalID: 723646507
       vertices: []
       indices: 
@@ -800,10 +812,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_33
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 48
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -811,7 +823,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bbc173e8ff7a0146918785bb85d28ea
+      spriteID: 219da8e4ccdc69a4d8400dd55a5e509c
       internalID: -1986436986
       vertices: []
       indices: 
@@ -821,10 +833,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_34
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
+        x: 96
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -832,7 +844,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e778b17ded38bbe4ebcf1971aed90607
+      spriteID: a5cf8c30bbf076348b58bfa703c0dd07
       internalID: -830448828
       vertices: []
       indices: 
@@ -842,10 +854,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_35
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
+        x: 144
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -853,7 +865,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b649bd1ad4cf404e95b3a54fb843906
+      spriteID: 91dcd9b954cbbed4f96f4f2cc0fc7f59
       internalID: -41346765
       vertices: []
       indices: 
@@ -863,10 +875,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_36
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 32
-        height: 32
+        x: 192
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -874,7 +886,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bac95db10a61384381054d52949e1d1
+      spriteID: bef17a257cc5e124d9d0a37943ba9daf
       internalID: -426453668
       vertices: []
       indices: 
@@ -884,10 +896,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_37
       rect:
         serializedVersion: 2
-        x: 160
-        y: 64
-        width: 32
-        height: 32
+        x: 240
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -895,7 +907,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28e8655aab483e74db2696558e373f6c
+      spriteID: da3859d655613da4ba06f3301204fd74
       internalID: 1358423313
       vertices: []
       indices: 
@@ -906,9 +918,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 32
-        height: 32
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -916,7 +928,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 977548e44c8bb3549bdddebccdd4fa51
+      spriteID: e78863bd080c42f44a4410b2e63fd7e8
       internalID: -89532392
       vertices: []
       indices: 
@@ -926,10 +938,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_39
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
+        x: 48
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -937,7 +949,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c062e5b1febe93b4f89829b461f83740
+      spriteID: 2919ee7c9d0539046bd82745f1065315
       internalID: -553428498
       vertices: []
       indices: 
@@ -947,10 +959,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_40
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
+        x: 96
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -958,7 +970,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70f2297529a0eba4c9a136ed0b8b3ddf
+      spriteID: 29c50d9bf6cf31b4bb8ba16916d98b79
       internalID: -379847515
       vertices: []
       indices: 
@@ -968,10 +980,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_41
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
+        x: 144
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -979,7 +991,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: deccbafff7b93854d9f93b39cd111371
+      spriteID: 7b3db7b04b70b2a42a3852d903d9d753
       internalID: -886744101
       vertices: []
       indices: 
@@ -989,10 +1001,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_42
       rect:
         serializedVersion: 2
-        x: 128
-        y: 32
-        width: 32
-        height: 32
+        x: 192
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1000,7 +1012,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c17e44b3e9b9a04f88ed89d615e69d4
+      spriteID: e681b0ef156b208429cde9125bf42afd
       internalID: -1870462378
       vertices: []
       indices: 
@@ -1010,10 +1022,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_43
       rect:
         serializedVersion: 2
-        x: 160
-        y: 32
-        width: 32
-        height: 32
+        x: 240
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1021,7 +1033,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d1b76c22f47fcf41b529857708b4947
+      spriteID: 98d372c2badf6324790a92f19d684c9d
       internalID: -173939896
       vertices: []
       indices: 
@@ -1033,8 +1045,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1042,7 +1054,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cbba6cc94785df49aacab56c6ce05b9
+      spriteID: cb990d22d613056409ae7d5deea70c2c
       internalID: -1794424256
       vertices: []
       indices: 
@@ -1052,10 +1064,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_45
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 0
-        width: 32
-        height: 32
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1063,7 +1075,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d27185a62ce23f408056132f4112b52
+      spriteID: e38b6338d0935914b88ea3913909fb8e
       internalID: 1179336257
       vertices: []
       indices: 
@@ -1073,10 +1085,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_46
       rect:
         serializedVersion: 2
-        x: 128
+        x: 192
         y: 0
-        width: 32
-        height: 32
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1084,7 +1096,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46648f5330163ee41bfe863af1262e2d
+      spriteID: bdccca72a3979b94c9bf2e564a7abbcb
       internalID: -850747827
       vertices: []
       indices: 
@@ -1094,10 +1106,10 @@ TextureImporter:
       name: isometric-sandbox-sheet_47
       rect:
         serializedVersion: 2
-        x: 160
+        x: 240
         y: 0
-        width: 32
-        height: 32
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1105,7 +1117,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5217554fc0058d4da03931a6293d5a3
+      spriteID: f0a5fc7d1cf7185499f90ae8ccc990ca
       internalID: -1112043841
       vertices: []
       indices: 

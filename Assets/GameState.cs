@@ -2,8 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spinny : MonoBehaviour
+public class GameState : MonoBehaviour
 {
+    public enum State
+    {
+        PLAYER_DECIDE_MOVE,
+        PLAYER_MOVE,
+        PLAYER_DECIDE_ACTION,
+        PLAYER_ACTION,
+        AI_MOVE
+    }
+
+    State state;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +23,6 @@ public class Spinny : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z + (Time.deltaTime * 90));
+        
     }
 }
