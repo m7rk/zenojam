@@ -23,12 +23,17 @@ public class GridUtils : MonoBehaviour
         while (queue.Count > 0)
         {
             var v = queue.Dequeue();
+            // this is an edge tile.
+            if(pathTo[v].Count >= range)
+            {
+                continue;
+            }
 
             foreach (var d in dirs)
             {
                 var next = v + d;
                 // explore this if it's unexplored and a floor tile
-                if (!pathTo.ContainsKey(next) && tileMap.GetTile(next).name == "FloorBase")
+                if (!pathTo.ContainsKey(next) && tileMap.GetTile(next) != null && tileMap.GetTile(next).name == "FloorBase")
                 {
                     // this tile was unexplored.
                     var pathToThis = new List<Vector3Int>(pathTo[v]);
@@ -45,6 +50,7 @@ public class GridUtils : MonoBehaviour
         {
             results.Add(n.Value);
         }
-        return new List<List<Vector3Int>>();
+
+        return results;
     }
 }

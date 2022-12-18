@@ -27,6 +27,7 @@ public class Cursor : MonoBehaviour
 
     void processClick(Vector3Int click)
     {
-        gu.BFS(click, 2);
+        var reachable = gu.BFS(click, 2);
+        Debug.Log("c" + reachable.Count);
     }
 }
