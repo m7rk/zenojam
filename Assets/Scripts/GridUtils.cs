@@ -36,7 +36,7 @@ public class GridUtils : MonoBehaviour
             {
                 var next = v + d;
                 // explore this if it's unexplored and a floor tile
-                if (!pathTo.ContainsKey(next) && levelTileMap.GetTile(next) != null && levelTileMap.GetTile(next).name == "FloorBase")
+                if (!pathTo.ContainsKey(next) && levelTileMap.GetTile(next) != null && levelTileMap.GetTile(next).name.Contains("Floor"))
                 {
                     // this tile was unexplored.
                     var pathToThis = new List<Vector3Int>(pathTo[v]);

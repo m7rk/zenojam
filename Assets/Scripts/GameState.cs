@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameState : MonoBehaviour
 {
@@ -11,6 +13,11 @@ public class GameState : MonoBehaviour
 
     // Grid Stuff
     public GridUtils gu;
+
+    // Floor stuff
+    public TMPro.TMP_Text floorText;
+    static string[] numbers  = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+    public static int floorID = 9;
 
     public enum State
     {
@@ -26,7 +33,8 @@ public class GameState : MonoBehaviour
     {
         playerPosition = new Vector3Int(1, 1, 0);
         putGOAtPosition(playerSprite, playerPosition);
-        showReachableTilesForPlayer();   
+        showReachableTilesForPlayer();
+        floorText.text = "FLOOR " + numbers[floorID].ToUpper();
     }
 
     void putGOAtPosition(GameObject go, Vector3Int pos)
@@ -63,8 +71,9 @@ public class GameState : MonoBehaviour
                     
                 }
                 break;
+
             case State.PLAYER_MOVE:
-                // animate moving to the tile
+                // animate moving to the tile (next?)
 
                 // skipped for now.
                 state = State.PLAYER_DECIDE_ACTION;
@@ -72,6 +81,9 @@ public class GameState : MonoBehaviour
                 break;
             case State.PLAYER_DECIDE_ACTION:
                 // wait for a valid action
+
+                // break early if they should escape
+                checkLeaveFloor();
 
                 // skipped for now.
                 state = State.PLAYER_ACTION;
@@ -115,5 +127,22 @@ public class GameState : MonoBehaviour
     void showReachableTilesForPlayer()
     {
         gu.showTilesAsSelected(reachableTilesFrom(playerPosition,3));
+    }
+
+    void checkLeaveFloor()
+    {
+        if (gu.levelTileMap.GetTile(playerPosition).name == "FloorEscape")
+        {
+            floorID -= 1;
+            if (floorID == 0)
+            {
+                SceneManager.LoadScene("Title");
+
+            }
+            else
+            {
+                SceneManager.LoadScene("Dungeon");
+            }
+        }
     }
 }
