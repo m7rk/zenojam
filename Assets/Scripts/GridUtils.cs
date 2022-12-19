@@ -87,7 +87,7 @@ public class GridUtils : MonoBehaviour
                 }
             }
         }
-        Debug.Log("path error in findPathTo");
+        Debug.Log("path error in findPathTo! This will crash the game.");
         return null;
     }
 

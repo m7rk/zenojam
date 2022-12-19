@@ -33,15 +33,19 @@ public class LevelGenerator : MonoBehaviour
             reachableToPlayer = gu.reachableTilesFrom(Vector3Int.zero, 100, new HashSet<Vector3Int>());
         }
 
+        reachableToPlayer.Add(Vector3Int.zero);
         // This map works
         cullNonReachable(reachableToPlayer);
 
         // drop npcs
         gs.NPCPositions = new Dictionary<Vector3Int, GameObject>();
-        GameObject k = Instantiate(npcPrefabs[0]);
-        k.transform.SetParent(this.transform);
-        k.transform.position = gs.globalPositionForTile(new Vector3Int(-1, -1, 0));
-        gs.NPCPositions[new Vector3Int(-1, -1, 0)] = k;
+        for (int i = 0; i != 3; ++i)
+        {
+            GameObject k = Instantiate(npcPrefabs[0]);
+            k.transform.SetParent(this.transform);
+            k.transform.position = gs.globalPositionForTile(new Vector3Int(-i, -1, 0));
+            gs.NPCPositions[new Vector3Int(-i, -1, 0)] = k;
+        }
 
         // place ladder
     }
@@ -64,7 +68,6 @@ public class LevelGenerator : MonoBehaviour
                 if (tVal < FILL_THRESH)
                 {
                     var targTile = (int)((tiles.Length * tVal) / FILL_THRESH);
-                    Debug.Log(targTile);
                     if (targTile >= tiles.Length)
                     {
                         targTile = tiles.Length - 1;

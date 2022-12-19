@@ -21,7 +21,9 @@ public class GameState : MonoBehaviour
     public static int floorID = 9;
 
     // State stuff
-    List<Vector3Int> pendingPlayerPath;
+    GameObject currentUnitToMove;
+    List<Vector3Int> pendingUnitPath;
+    List<Vector3Int> AITurnOrder;
 
     // NPC Stuff, pop'd by levelgnerator
     public Dictionary<Vector3Int, GameObject> NPCPositions;
@@ -39,7 +41,7 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
-        playerPosition = new Vector3Int(1, 1, 0);
+        playerPosition = new Vector3Int(0, 0, 0);
         playerSprite.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
         floorText.text = "FLOOR " + numbers[floorID].ToUpper();        
@@ -78,38 +80,54 @@ public class GameState : MonoBehaviour
             var targ = tileAtMousePosition();
             if (gu.reachableTilesFrom(playerPosition, 3, NPCOccupiedTiles()).Contains(targ))
             {
-                pendingPlayerPath = gu.findPathTo(playerPosition, 3, targ, NPCOccupiedTiles());
+                // order a move, player to position.
+                currentUnitToMove = playerSprite;
+                pendingUnitPath = gu.findPathTo(playerPosition, 3, targ, NPCOccupiedTiles());
+
+                // update player position and clear old tiles
+                playerPosition = targ;
                 gu.clearSelectedTiles();
+
+                // next state
                 state = State.PLAYER_MOVE;
             }
 
         }
     }
 
-    void playerMove()
+    // move unit with current unit to move and pending path.
+    // returns true when move is complete.
+    public bool moveUnit()
     {
         // go to square
-        playerSprite.transform.position = Vector3.MoveTowards(playerSprite.transform.position, globalPositionForTile(pendingPlayerPath[0]), MOVE_ANIM_SPEED * Time.deltaTime);
+        currentUnitToMove.transform.position = Vector3.MoveTowards(currentUnitToMove.transform.position, globalPositionForTile(pendingUnitPath[0]), MOVE_ANIM_SPEED * Time.deltaTime);
 
         // if sqaure reached go to next. if no next go to next state.
-        if (Vector3.Distance(playerSprite.transform.position, globalPositionForTile(pendingPlayerPath[0])) < 0.01f)
+        if (Vector3.Distance(currentUnitToMove.transform.position, globalPositionForTile(pendingUnitPath[0])) < 0.01f)
         {
-            playerSprite.transform.position = globalPositionForTile(pendingPlayerPath[0]);
-            playerPosition = pendingPlayerPath[0];
-            pendingPlayerPath.RemoveAt(0);
-            if (pendingPlayerPath.Count == 0)
+            currentUnitToMove.transform.position = globalPositionForTile(pendingUnitPath[0]);
+            pendingUnitPath.RemoveAt(0);
+            if (pendingUnitPath.Count == 0)
             {
-                playerSprite.GetComponent<Unit>().faceFront = true;
-                playerSprite.GetComponent<Unit>().faceRight = true;
-                state = State.PLAYER_DECIDE_ACTION;
+                currentUnitToMove = null;
+                pendingUnitPath = null;
+                return true;
             }
         }
         else
         {
             // set facing
-            playerSprite.GetComponent<Unit>().faceFront = globalPositionForTile(pendingPlayerPath[0]).y - playerSprite.transform.position.y < 0;
-            playerSprite.GetComponent<Unit>().faceRight = globalPositionForTile(pendingPlayerPath[0]).x - playerSprite.transform.position.x > 0;
+            currentUnitToMove.GetComponent<Unit>().faceFront = globalPositionForTile(pendingUnitPath[0]).y - currentUnitToMove.transform.position.y < 0;
+            currentUnitToMove.GetComponent<Unit>().faceRight = globalPositionForTile(pendingUnitPath[0]).x - currentUnitToMove.transform.position.x > 0;
+
+
+            // the AIS are backwards so this is a filthy hack to fix thsat
+            if(state == State.AI_MOVE)
+            {
+                currentUnitToMove.GetComponent<Unit>().faceRight = !currentUnitToMove.GetComponent<Unit>().faceRight;
+            }
         }
+        return false;
 
     }
 
@@ -123,7 +141,10 @@ public class GameState : MonoBehaviour
                 break;
 
             case State.PLAYER_MOVE:
-                playerMove();
+                if(moveUnit())
+                {
+                    state = State.PLAYER_DECIDE_ACTION;
+                }
                 break;
 
             case State.PLAYER_DECIDE_ACTION:
@@ -137,22 +158,22 @@ public class GameState : MonoBehaviour
                 break;
             case State.PLAYER_ACTION:
                 // animation action
-
+                generateAITurnOrder();
                 // skipped for now.
                 state = State.AI_MOVE;
                 break;
             case State.AI_MOVE:
                 // animate all NPCs
-
-                // skipped for now.
-                state = State.PLAYER_DECIDE_MOVE;
-                showReachableTilesForPlayer();
+                if(aiMove())
+                {
+                    state = State.PLAYER_DECIDE_MOVE;
+                    showReachableTilesForPlayer();
+                }
                 break;
         }
 
 
     }
-
 
     // draw all reachable tiles
     void showReachableTilesForPlayer()
@@ -176,4 +197,48 @@ public class GameState : MonoBehaviour
             }
         }
     }
+
+    void generateAITurnOrder()
+    {
+        AITurnOrder = new List<Vector3Int>();
+
+        foreach(var v in NPCPositions.Keys)
+        {
+            AITurnOrder.Add(v);
+        }
+
+        AITurnOrder.Sort((a, b) => (Mathf.Abs(a.x - playerPosition.x) + Mathf.Abs(a.y - playerPosition.y)) - (Mathf.Abs(b.x - playerPosition.x) + Mathf.Abs(b.y - playerPosition.y)));
+    }
+
+    bool aiMove()
+    {
+        // check if there is a unit moving
+        if(currentUnitToMove == null)
+        {
+            // any units left to move?
+            if(AITurnOrder.Count == 0)
+            {
+                // done!
+                return true;
+            }
+
+            var curTurn = AITurnOrder[0];
+            AITurnOrder.RemoveAt(0);
+            currentUnitToMove = NPCPositions[curTurn];
+            pendingUnitPath = gu.findPathTo(curTurn, 1000, playerPosition, NPCOccupiedTiles());
+            // cut off last move since that would collide with player
+            pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+
+            // update AI positon
+            NPCPositions.Remove(curTurn);
+            NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMove;
+            // all set! now just need to run the mover.
+        }
+
+        moveUnit();
+        return false;
+
+    }
+
+
 }
