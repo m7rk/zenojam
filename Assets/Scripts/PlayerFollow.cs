@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerFollow : MonoBehaviour
 {
     public readonly float FOLLOW_SPEED = 2f;
+    public readonly float VECTOR_H_OFFSET = -0.3f;
     public GameObject player;
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,6 @@ public class PlayerFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Vector3.Scale(new Vector3(1,1,0),Vector3.Lerp(this.transform.position,player.transform.position,Time.deltaTime * FOLLOW_SPEED));
+        this.transform.position = Vector3.Scale(new Vector3(1,1,0),Vector3.Lerp(this.transform.position, (VECTOR_H_OFFSET * Vector3.up) + player.transform.position,Time.deltaTime * FOLLOW_SPEED));
     }
 }

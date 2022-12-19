@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   f1: {fileID: 1911137479, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
   f2: {fileID: 1599449620, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
-  b1: {fileID: 1334670778, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
-  b2: {fileID: 1769100258, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
+  b1: {fileID: 1769100258, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
+  b2: {fileID: 1334670778, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
   faceFront: 1
   faceRight: 1
