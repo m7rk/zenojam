@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerFollow : MonoBehaviour
 {
-    public readonly float FOLLOW_SPEED = 2f;
+    public readonly float FOLLOW_SPEED = 3f;
     public readonly float VECTOR_H_OFFSET = -0.3f;
     public GameObject player;
     // Start is called before the first frame update

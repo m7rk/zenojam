@@ -15,6 +15,10 @@ public class Unit : MonoBehaviour
     public bool faceFront = true;
     public bool faceRight = true;
 
+    public int speed;
+    public int health;
+    public GameItem item;
+
     // Start is called before the first frame update
     void Start()
     {

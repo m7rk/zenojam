@@ -7,6 +7,7 @@ public class LevelGenerator : MonoBehaviour
 {
     public GridUtils gu;
     public GameState gs;
+    public GameObject ladder;
 
     public Tile[] tiles;
     public GameObject[] npcPrefabs;
@@ -32,19 +33,24 @@ public class LevelGenerator : MonoBehaviour
             generateMapCandidate();
             reachableToPlayer = gu.reachableTilesFrom(Vector3Int.zero, 100, new HashSet<Vector3Int>());
         }
+        // this map works
 
+        // place the ladder - this will be as far from the player as possible every time because of how BFS works
+        gs.ladderPosition = reachableToPlayer[reachableToPlayer.Count - 1];
+        ladder.transform.position = gs.globalPositionForTile(reachableToPlayer[reachableToPlayer.Count - 1]);
+
+        // remove all the islands the perlin made
         reachableToPlayer.Add(Vector3Int.zero);
-        // This map works
         cullNonReachable(reachableToPlayer);
 
         // drop npcs
-        gs.NPCPositions = new Dictionary<Vector3Int, GameObject>();
+        gs.NPCPositions = new Dictionary<Vector3Int, Unit>();
         for (int i = 0; i != 3; ++i)
         {
             GameObject k = Instantiate(npcPrefabs[i]);
             k.transform.SetParent(this.transform);
             k.transform.position = gs.globalPositionForTile(new Vector3Int(-i, -1, 0));
-            gs.NPCPositions[new Vector3Int(-i, -1, 0)] = k;
+            gs.NPCPositions[new Vector3Int(-i, -1, 0)] = k.GetComponent<Unit>();
         }
 
         // place ladder

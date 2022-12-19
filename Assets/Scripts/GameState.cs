@@ -5,15 +5,18 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+// ADD CLICK SELF TO SKIP TURN!
+
 public class GameState : MonoBehaviour
 {
     // player junk
     public Vector3Int playerPosition;
-    public GameObject playerSprite;
-    private readonly float MOVE_ANIM_SPEED = 3f;
+    public Unit playerUnit;
+    private readonly float MOVE_ANIM_SPEED = 3.5f;
 
     // Grid Stuff
     public GridUtils gu;
+    public Vector3Int ladderPosition;
 
     // Floor stuff
     public TMPro.TMP_Text floorText;
@@ -21,12 +24,12 @@ public class GameState : MonoBehaviour
     public static int floorID = 9;
 
     // State stuff
-    GameObject currentUnitToMove;
+    Unit currentUnitToMove;
     List<Vector3Int> pendingUnitPath;
     List<Vector3Int> AITurnOrder;
 
     // NPC Stuff, pop'd by levelgnerator
-    public Dictionary<Vector3Int, GameObject> NPCPositions;
+    public Dictionary<Vector3Int, Unit> NPCPositions;
 
 
     public enum State
@@ -42,7 +45,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         playerPosition = new Vector3Int(0, 0, 0);
-        playerSprite.transform.position = globalPositionForTile(playerPosition);
+        playerUnit.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
         floorText.text = "FLOOR " + numbers[floorID].ToUpper();        
     }
@@ -78,11 +81,11 @@ public class GameState : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             var targ = tileAtMousePosition();
-            if (gu.reachableTilesFrom(playerPosition, 3, NPCOccupiedTiles()).Contains(targ))
+            if (gu.reachableTilesFrom(playerPosition, playerUnit.speed, NPCOccupiedTiles()).Contains(targ))
             {
                 // order a move, player to position.
-                currentUnitToMove = playerSprite;
-                pendingUnitPath = gu.findPathTo(playerPosition, 3, targ, NPCOccupiedTiles());
+                currentUnitToMove = playerUnit;
+                pendingUnitPath = gu.findPathTo(playerPosition, playerUnit.speed, targ, NPCOccupiedTiles());
 
                 // update player position and clear old tiles
                 playerPosition = targ;
@@ -90,8 +93,38 @@ public class GameState : MonoBehaviour
 
                 // next state
                 state = State.PLAYER_MOVE;
+                return;
             }
 
+            if(targ == playerPosition)
+            {
+                // skip move step
+                state = State.PLAYER_DECIDE_ACTION;
+                return;
+            }
+
+        }
+    }
+
+    void playerDecideAction()
+    {
+        if(actionableTiles().Count == 0)
+        {
+            // no action, end turn
+            state = State.PLAYER_ACTION;
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            var targ = tileAtMousePosition();
+            if (actionableTiles().Contains(targ))
+            {
+                // trigger the attack animation
+
+                // next state
+                state = State.PLAYER_ACTION;
+            }
         }
     }
 
@@ -143,18 +176,17 @@ public class GameState : MonoBehaviour
             case State.PLAYER_MOVE:
                 if(moveUnit())
                 {
+                    checkLeaveFloor();
                     state = State.PLAYER_DECIDE_ACTION;
+                    showActionableTiles();
                 }
                 break;
 
             case State.PLAYER_DECIDE_ACTION:
                 // wait for a valid action
-
                 // break early if they should escape
-                checkLeaveFloor();
+                playerDecideAction();
 
-                // skipped for now.
-                state = State.PLAYER_ACTION;
                 break;
             case State.PLAYER_ACTION:
                 // animation action
@@ -178,12 +210,32 @@ public class GameState : MonoBehaviour
     // draw all reachable tiles
     void showReachableTilesForPlayer()
     {
-        gu.showTilesAsSelected(gu.reachableTilesFrom(playerPosition,3, NPCOccupiedTiles()));
+        var reachable = gu.reachableTilesFrom(playerPosition, playerUnit.speed, NPCOccupiedTiles());
+        reachable.Add(playerPosition);
+        gu.showTilesAsSelected(reachable);
+    }
+
+    public List<Vector3Int> actionableTiles()
+    {
+        var inRange = gu.reachableTilesFrom(playerPosition, playerUnit.item.range, new HashSet<Vector3Int>());
+        List<Vector3Int> hasNPC = new List<Vector3Int>();
+        foreach (var v in inRange)
+        {
+            if (NPCPositions.ContainsKey(v))
+            {
+                hasNPC.Add(v);
+            }
+        }
+        return hasNPC;
+    }
+    void showActionableTiles()
+    {
+        gu.showTilesAsSelected(actionableTiles());
     }
 
     void checkLeaveFloor()
     {
-        if (gu.levelTileMap.GetTile(playerPosition).name == "FloorEscape")
+        if (playerPosition == ladderPosition)
         {
             floorID -= 1;
             if (floorID == 0)
@@ -206,7 +258,6 @@ public class GameState : MonoBehaviour
         {
             AITurnOrder.Add(v);
         }
-
         AITurnOrder.Sort((a, b) => (Mathf.Abs(a.x - playerPosition.x) + Mathf.Abs(a.y - playerPosition.y)) - (Mathf.Abs(b.x - playerPosition.x) + Mathf.Abs(b.y - playerPosition.y)));
     }
 
@@ -222,17 +273,43 @@ public class GameState : MonoBehaviour
                 return true;
             }
 
+            // pull the coordinate of the AI player to move.
             var curTurn = AITurnOrder[0];
             AITurnOrder.RemoveAt(0);
             currentUnitToMove = NPCPositions[curTurn];
-            pendingUnitPath = gu.findPathTo(curTurn, 1000, playerPosition, NPCOccupiedTiles());
-            // cut off last move since that would collide with player
-            pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
 
-            // update AI positon
-            NPCPositions.Remove(curTurn);
-            NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMove;
-            // all set! now just need to run the mover.
+            // check if there exists a possible path to the player.
+            var reachable = gu.reachableTilesFrom(curTurn, 1000, NPCOccupiedTiles());
+
+            if(reachable.Contains(playerPosition))
+            {
+                pendingUnitPath = gu.findPathTo(curTurn, 1000, playerPosition, NPCOccupiedTiles());
+                // cut off last move since that would collide with player
+                pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+
+
+                // we were next to the player, so we don't need to update position after all.
+                if (pendingUnitPath.Count == 0)
+                {
+                    currentUnitToMove = null;
+                    pendingUnitPath = null;
+                    return false;
+                }
+                // update AI positon and go ahead with movement
+                else
+                {
+                    NPCPositions.Remove(curTurn);
+                    NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMove;
+                }
+            }
+            else
+            {
+                // can't reach player, just do nothing.
+                currentUnitToMove = null;
+                return false;
+            }
+
+
         }
 
         moveUnit();
