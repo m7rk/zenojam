@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-// ADD CLICK SELF TO SKIP TURN!
-
 public class GameState : MonoBehaviour
 {
     // player junk
@@ -30,6 +28,9 @@ public class GameState : MonoBehaviour
 
     // NPC Stuff, pop'd by levelgnerator
     public Dictionary<Vector3Int, Unit> NPCPositions;
+
+    // AI Stuff
+    private int AI_AGGRO_RANGE = 7;
 
     public enum State
     {
@@ -292,27 +293,50 @@ public class GameState : MonoBehaviour
             if(reachable.Contains(playerPosition))
             {
                 pendingUnitPath = gu.findPathTo(curTurn, 1000, playerPosition, NPCOccupiedTiles());
+
                 // cut off last move since that would collide with player
                 pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
 
-
-                // we were next to the player, so we don't need to update position after all.
-                if (pendingUnitPath.Count == 0)
+                // aggro check
+                if(pendingUnitPath.Count < AI_AGGRO_RANGE)
                 {
+                    currentUnitToMove.aggro = true;
+                }
+
+                // only go as far as we can if length too big
+                while (pendingUnitPath.Count > currentUnitToMove.speed)
+                {
+                    pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+                }
+
+                if (currentUnitToMove.aggro)
+                {
+                    // we were next to the player, so we don't need to update position after all.
+                    if (pendingUnitPath.Count == 0)
+                    {
+                        currentUnitToMove = null;
+                        pendingUnitPath = null;
+                        return false;
+                    }
+                    // update AI positon and go ahead with movement
+                    else
+                    {
+                        NPCPositions.Remove(curTurn);
+                        NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMove;
+                    }
+                }
+                else
+                {
+                    // player is too far away, do nothing
                     currentUnitToMove = null;
                     pendingUnitPath = null;
                     return false;
-                }
-                // update AI positon and go ahead with movement
-                else
-                {
-                    NPCPositions.Remove(curTurn);
-                    NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMove;
                 }
             }
             else
             {
                 // can't reach player, just do nothing.
+                pendingUnitPath = null;
                 currentUnitToMove = null;
                 return false;
             }

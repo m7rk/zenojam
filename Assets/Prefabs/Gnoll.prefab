@@ -52,10 +52,11 @@ MonoBehaviour:
   faceFront: 1
   faceRight: 1
   speed: 2
-  health: 4
+  health: 3
   item: {fileID: 0}
   healthPrefab: {fileID: 3754268584229062117, guid: 97b458b01a3857a4aba34f171fcb750b, type: 3}
   thisIsPlayer: 0
+  aggro: 0
 --- !u!1 &7909592598854750695
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,12 +13,23 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] npcPrefabs;
 
     // tweak map gen with these
-    public readonly int DIMS = 15;
-    public readonly float FILL_THRESH = 0.7f;
-    public readonly float PERLIN_MULT = 0.2f;
-    public readonly float FALLOFF_FACTOR = 0.3f;
+    public readonly int DIMS = 9;
+    public readonly float FILL_THRESH = 0.5f;
+    public readonly float PERLIN_MULT = 0.25f;
+    public readonly float FALLOFF_FACTOR = 0.1f;
+    public readonly int MIN_VIABLE_TILES = 90;
 
-    public readonly int MIN_VIABLE_TILES = 40;
+    // 100 - 7 * 7 = 50 possible enemy spots
+    // squad count does not exceed fifteen + MAX_
+
+    // tweak NPC gen with this
+    // I'm a little afraid of difficulty spikes - the smallest possible spawn is 12 enemies and the max is 30
+    // We should tighten this and also give more loot if more enemies spawned.
+    public readonly int MAX_SQUAD_SIZE = 3;
+
+    public readonly int ENEMY_QUOTA = 10;
+
+    public readonly int PLAYER_SAFE_ZONE = 7;
 
     // Start is called before the first frame update
     void Awake()
@@ -26,14 +37,16 @@ public class LevelGenerator : MonoBehaviour
         generateMapCandidate();
 
         // always place player at middle... removes all islands.
-        var reachableToPlayer = gu.reachableTilesFrom(Vector3Int.zero, 100, new HashSet<Vector3Int>());
+        var reachableToPlayer = gu.reachableTilesFrom(Vector3Int.zero, 1000, new HashSet<Vector3Int>());
 
         while(gu.levelTileMap.GetTile(Vector3Int.zero) == null || reachableToPlayer.Count < MIN_VIABLE_TILES)
         {
             generateMapCandidate();
-            reachableToPlayer = gu.reachableTilesFrom(Vector3Int.zero, 100, new HashSet<Vector3Int>());
+            reachableToPlayer = gu.reachableTilesFrom(Vector3Int.zero, 1000, new HashSet<Vector3Int>());
         }
-        // this map works
+
+        // this map works.
+        Debug.Log("This map has " + reachableToPlayer.Count + " tiles. ");
 
         // place the ladder - this will be as far from the player as possible every time because of how BFS works
         gs.ladderPosition = reachableToPlayer[reachableToPlayer.Count - 1];
@@ -43,17 +56,61 @@ public class LevelGenerator : MonoBehaviour
         reachableToPlayer.Add(Vector3Int.zero);
         cullNonReachable(reachableToPlayer);
 
-        // drop npcs
+        // make npcs
         gs.NPCPositions = new Dictionary<Vector3Int, Unit>();
-        for (int i = 0; i != 3; ++i)
+
+        // No NPCs on final floor.
+        if (GameState.floorID == 1)
         {
-            GameObject k = Instantiate(npcPrefabs[i]);
-            k.transform.SetParent(this.transform);
-            k.transform.position = gs.globalPositionForTile(new Vector3Int(-i, -1, 0));
-            gs.NPCPositions[new Vector3Int(-i, -1, 0)] = k.GetComponent<Unit>();
+            return;
         }
 
-        // place ladder
+        spawnNPCs();
+
+    }
+
+    public void spawnNPCs()
+    {
+        while(gs.NPCPositions.Count < ENEMY_QUOTA)
+        {
+            var squad_center = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
+            // squads should be far from player
+            if(Mathf.Abs(squad_center.x) < PLAYER_SAFE_ZONE && Mathf.Abs(squad_center.y) < PLAYER_SAFE_ZONE)
+            {
+                continue;
+            }
+            // this is a valid place to put a squad.
+            if (gu.levelTileMap.HasTile(squad_center))
+            {
+                for (int j = 0; j != MAX_SQUAD_SIZE; ++j)
+                {
+                    // valid floor tile!
+                    var targTile = squad_center + new Vector3Int(Random.Range(-1, 2), Random.Range(-1, 2), 0);
+                    Debug.Log(targTile);
+
+                    if (gu.levelTileMap.HasTile(targTile) && !gs.NPCPositions.ContainsKey(targTile))
+                    {
+                        GameObject k = randomNPCForFloor();
+                        k.transform.SetParent(this.transform);
+                        k.transform.position = gs.globalPositionForTile(targTile);
+                        gs.NPCPositions[targTile] = k.GetComponent<Unit>();
+                    }
+                }
+            }
+        }
+    }
+
+    public GameObject randomNPCForFloor()
+    {
+        // half the time just spawn native to that floor
+        if (Random.Range(0f, 1f) > 0.5f)
+        {
+            return Instantiate(npcPrefabs[GameState.floorID-2]);
+        } 
+        else
+        {
+            return Instantiate(npcPrefabs[Random.Range(GameState.floorID - 2,7+1)]);
+        }
     }
 
     void generateMapCandidate()

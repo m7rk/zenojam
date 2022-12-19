@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour
 
     public bool thisIsPlayer;
 
+    public bool aggro;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,7 @@ public class Unit : MonoBehaviour
             // offset above player properly - need a custom field but we do this later.
             v.transform.localPosition = new Vector3((-0.03125f/2f) * health, 0.21f, 0);
         }
+        aggro = false;
     }
 
     // Update is called once per frame
