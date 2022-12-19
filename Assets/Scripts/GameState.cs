@@ -31,7 +31,6 @@ public class GameState : MonoBehaviour
     // NPC Stuff, pop'd by levelgnerator
     public Dictionary<Vector3Int, Unit> NPCPositions;
 
-
     public enum State
     {
         PLAYER_DECIDE_MOVE,
@@ -121,8 +120,16 @@ public class GameState : MonoBehaviour
             var targ = tileAtMousePosition();
             if (actionableTiles().Contains(targ))
             {
-                // trigger the attack animation
+                var attackDmg = Random.Range(playerUnit.item.damageLow, playerUnit.item.damageHi);
 
+                // trigger the attack animation
+                if(NPCPositions[targ].hurt(attackDmg))
+                {
+                    Destroy(NPCPositions[targ].gameObject);
+                    NPCPositions.Remove(targ);
+                }
+
+                gu.clearSelectedTiles();
                 // next state
                 state = State.PLAYER_ACTION;
             }

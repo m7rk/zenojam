@@ -167,3 +167,8 @@ MonoBehaviour:
   b2: {fileID: 1334670778, guid: 6bba88e5ef8cc354ca58f28c6a62e260, type: 3}
   faceFront: 1
   faceRight: 1
+  speed: 3
+  health: 2
+  item: {fileID: 0}
+  healthPrefab: {fileID: 3754268584229062117, guid: 97b458b01a3857a4aba34f171fcb750b, type: 3}
+  thisIsPlayer: 0
