@@ -12,7 +12,7 @@ public class GameState : MonoBehaviour
     // player junk
     public Vector3Int playerPosition;
     public Unit playerUnit;
-    private readonly float MOVE_ANIM_SPEED = 3.5f;
+    private readonly float MOVE_ANIM_SPEED = 4f;
 
     // Grid Stuff
     public GridUtils gu;
@@ -100,6 +100,7 @@ public class GameState : MonoBehaviour
             {
                 // skip move step
                 state = State.PLAYER_DECIDE_ACTION;
+                showActionableTiles();
                 return;
             }
 
