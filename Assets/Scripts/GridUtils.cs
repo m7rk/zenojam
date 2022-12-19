@@ -12,7 +12,7 @@ public class GridUtils : MonoBehaviour
 
     // given a starting tile, return all tiles that can be reached.
     // returns a list which is the path to the tile. The last element in the list is the target tile.
-    public List<List<Vector3Int>> BFS(Vector3Int start, int range)
+    public List<List<Vector3Int>> BFS(Vector3Int start, int range, HashSet<Vector3Int> ignore)
     {
         Vector3Int[] dirs = new Vector3Int[4] { new Vector3Int(-1, 0, 0), new Vector3Int(1, 0, 0), new Vector3Int(0, 1, 0), new Vector3Int(0, -1, 0) };
 
@@ -35,8 +35,8 @@ public class GridUtils : MonoBehaviour
             foreach (var d in dirs)
             {
                 var next = v + d;
-                // explore this if it's unexplored and a floor tile
-                if (!pathTo.ContainsKey(next) && levelTileMap.GetTile(next) != null && levelTileMap.GetTile(next).name.Contains("Floor"))
+                // explore this if it's unexplored and a floor tile and it's not an ignore tile
+                if (!pathTo.ContainsKey(next) && levelTileMap.GetTile(next) != null && levelTileMap.GetTile(next).name.Contains("Floor") && !ignore.Contains(next))
                 {
                     // this tile was unexplored.
                     var pathToThis = new List<Vector3Int>(pathTo[v]);
@@ -55,6 +55,40 @@ public class GridUtils : MonoBehaviour
         }
 
         return results;
+    }
+
+    // convience method, get all reachable tiles from a start + depth.
+    // does not return origin
+    public List<Vector3Int> reachableTilesFrom(Vector3Int start, int depth, HashSet<Vector3Int> ignore)
+    {
+        // returns only lists of moves so we need to trim
+        var reachable = BFS(start, depth, ignore);
+        var destsOnly = new List<Vector3Int>();
+        foreach (var v in reachable)
+        {
+            if (v.Count > 0)
+            {
+                destsOnly.Add(v[v.Count - 1]);
+            }
+        }
+        return destsOnly;
+    }
+
+    public List<Vector3Int> findPathTo(Vector3Int start, int depth, Vector3Int end, HashSet<Vector3Int> ignore)
+    {
+        var reachable = BFS(start, depth, ignore);
+        foreach (var v in reachable)
+        {
+            if (v.Count > 0)
+            {
+                if ((v[v.Count - 1]) == end)
+                {
+                    return v;
+                }
+            }
+        }
+        Debug.Log("path error in findPathTo");
+        return null;
     }
 
     // set the list of tiles as selected.

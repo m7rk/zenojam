@@ -37,5 +37,8 @@ public class Unit : MonoBehaviour
         var halfNote = Time.time % (2 / BPS);
         GetComponentInChildren<SpriteRenderer>().sprite = halfNote > (1f / BPS) ? (faceFront ? f1 : b1) : (faceFront ? f2 : b2);
         this.transform.localScale = !(faceRight ^ faceFront) ? Vector3.one : new Vector3(-1, 1, 1);
+
+        // add a small Y component to Z to force sprite ordering
+        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 1 + (this.transform.position.y * 0.001f));
     }
 }
