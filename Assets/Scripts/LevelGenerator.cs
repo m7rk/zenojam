@@ -39,9 +39,9 @@ public class LevelGenerator : MonoBehaviour
 
         // drop npcs
         gs.NPCPositions = new Dictionary<Vector3Int, GameObject>();
-        for (int i = 0; i != 3; ++i)
+        for (int i = 0; i != 6; ++i)
         {
-            GameObject k = Instantiate(npcPrefabs[0]);
+            GameObject k = Instantiate(npcPrefabs[i]);
             k.transform.SetParent(this.transform);
             k.transform.position = gs.globalPositionForTile(new Vector3Int(-i, -1, 0));
             gs.NPCPositions[new Vector3Int(-i, -1, 0)] = k;
