@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSprite : MonoBehaviour
+public class Unit : MonoBehaviour
 {
     private readonly float JUMP_FACTOR = 0.3f;
 
@@ -32,8 +32,8 @@ public class PlayerSprite : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().transform.localPosition = new Vector3(0, JUMP_FACTOR * (float)jumpPos, 0);
 
 
-        // anim idle
-        var BPS = (80f / 60f);
+        // anim idle (80 if last floor! first floor is 60)
+        var BPS = (60f / 60f);
         var halfNote = Time.time % (2 / BPS);
         GetComponentInChildren<SpriteRenderer>().sprite = halfNote > (1f / BPS) ? (faceFront ? f1 : b1) : (faceFront ? f2 : b2);
         this.transform.localScale = !(faceRight ^ faceFront) ? Vector3.one : new Vector3(-1, 1, 1);

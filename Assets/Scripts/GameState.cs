@@ -89,16 +89,16 @@ public class GameState : MonoBehaviour
                     pendingPlayerPath.RemoveAt(0);
                     if(pendingPlayerPath.Count == 0)
                     {
-                        playerSprite.GetComponent<PlayerSprite>().faceFront = true;
-                        playerSprite.GetComponent<PlayerSprite>().faceRight = true;
+                        playerSprite.GetComponent<Unit>().faceFront = true;
+                        playerSprite.GetComponent<Unit>().faceRight = true;
                         state = State.PLAYER_DECIDE_ACTION;
                     }
                 }
                 else
                 {
                     // set facing
-                    playerSprite.GetComponent<PlayerSprite>().faceFront = globalPositionForTile(pendingPlayerPath[0]).y - playerSprite.transform.position.y < 0;
-                    playerSprite.GetComponent<PlayerSprite>().faceRight = globalPositionForTile(pendingPlayerPath[0]).x - playerSprite.transform.position.x > 0;
+                    playerSprite.GetComponent<Unit>().faceFront = globalPositionForTile(pendingPlayerPath[0]).y - playerSprite.transform.position.y < 0;
+                    playerSprite.GetComponent<Unit>().faceRight = globalPositionForTile(pendingPlayerPath[0]).x - playerSprite.transform.position.x > 0;
                 }
 
                 break;
