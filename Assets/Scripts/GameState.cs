@@ -11,6 +11,8 @@ public class GameState : MonoBehaviour
     public Vector3Int playerPosition;
     public Unit playerUnit;
     private readonly float MOVE_ANIM_SPEED = 4f;
+    private readonly float ACTION_SPEED = 0.4f;
+
 
     // Grid Stuff
     public GridUtils gu;
@@ -22,9 +24,12 @@ public class GameState : MonoBehaviour
     public static int floorID = 9;
 
     // State stuff
-    Unit currentUnitToMove;
-    List<Vector3Int> pendingUnitPath;
-    List<Vector3Int> AITurnOrder;
+    private Unit currentUnitToMoveOrAction;
+    private List<Vector3Int> pendingUnitPath;
+    private List<Vector3Int> AITurnOrder;
+    public float actionTimer;
+
+    private Vector3Int currentUnitTarget;
 
     // NPC Stuff, pop'd by levelgnerator
     public Dictionary<Vector3Int, Unit> NPCPositions;
@@ -84,7 +89,7 @@ public class GameState : MonoBehaviour
             if (gu.reachableTilesFrom(playerPosition, playerUnit.speed, NPCOccupiedTiles()).Contains(targ))
             {
                 // order a move, player to position.
-                currentUnitToMove = playerUnit;
+                currentUnitToMoveOrAction = playerUnit;
                 pendingUnitPath = gu.findPathTo(playerPosition, playerUnit.speed, targ, NPCOccupiedTiles());
 
                 // update player position and clear old tiles
@@ -112,7 +117,8 @@ public class GameState : MonoBehaviour
         if(actionableTiles().Count == 0)
         {
             // no action, end turn
-            state = State.PLAYER_ACTION;
+            state = State.AI_MOVE;
+            generateAITurnOrder();
             return;
         }
 
@@ -121,15 +127,9 @@ public class GameState : MonoBehaviour
             var targ = tileAtMousePosition();
             if (actionableTiles().Contains(targ))
             {
-                var attackDmg = Random.Range(playerUnit.item.damageLow, playerUnit.item.damageHi);
-
-                // trigger the attack animation
-                if(NPCPositions[targ].hurt(attackDmg))
-                {
-                    Destroy(NPCPositions[targ].gameObject);
-                    NPCPositions.Remove(targ);
-                }
-
+                // player to make move.
+                currentUnitToMoveOrAction = playerUnit;
+                currentUnitTarget = targ;
                 gu.clearSelectedTiles();
                 // next state
                 state = State.PLAYER_ACTION;
@@ -142,16 +142,16 @@ public class GameState : MonoBehaviour
     public bool moveUnit()
     {
         // go to square
-        currentUnitToMove.transform.position = Vector3.MoveTowards(currentUnitToMove.transform.position, globalPositionForTile(pendingUnitPath[0]), MOVE_ANIM_SPEED * Time.deltaTime);
+        currentUnitToMoveOrAction.transform.position = Vector3.MoveTowards(currentUnitToMoveOrAction.transform.position, globalPositionForTile(pendingUnitPath[0]), MOVE_ANIM_SPEED * Time.deltaTime);
 
         // if sqaure reached go to next. if no next go to next state.
-        if (Vector3.Distance(currentUnitToMove.transform.position, globalPositionForTile(pendingUnitPath[0])) < 0.01f)
+        if (Vector3.Distance(currentUnitToMoveOrAction.transform.position, globalPositionForTile(pendingUnitPath[0])) < 0.01f)
         {
-            currentUnitToMove.transform.position = globalPositionForTile(pendingUnitPath[0]);
+            currentUnitToMoveOrAction.transform.position = globalPositionForTile(pendingUnitPath[0]);
             pendingUnitPath.RemoveAt(0);
             if (pendingUnitPath.Count == 0)
             {
-                currentUnitToMove = null;
+                currentUnitToMoveOrAction = null;
                 pendingUnitPath = null;
                 return true;
             }
@@ -159,18 +159,63 @@ public class GameState : MonoBehaviour
         else
         {
             // set facing
-            currentUnitToMove.GetComponent<Unit>().faceFront = globalPositionForTile(pendingUnitPath[0]).y - currentUnitToMove.transform.position.y < 0;
-            currentUnitToMove.GetComponent<Unit>().faceRight = globalPositionForTile(pendingUnitPath[0]).x - currentUnitToMove.transform.position.x > 0;
+            currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(pendingUnitPath[0]).y - currentUnitToMoveOrAction.transform.position.y < 0;
+            currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(pendingUnitPath[0]).x - currentUnitToMoveOrAction.transform.position.x > 0;
 
 
             // the AIS are backwards so this is a filthy hack to fix thsat
             if(state == State.AI_MOVE)
             {
-                currentUnitToMove.GetComponent<Unit>().faceRight = !currentUnitToMove.GetComponent<Unit>().faceRight;
+                currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
             }
         }
         return false;
 
+    }
+
+    public bool executeAction()
+    {
+        currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(currentUnitTarget).y - currentUnitToMoveOrAction.transform.position.y < 0;
+        currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(currentUnitTarget).x - currentUnitToMoveOrAction.transform.position.x > 0;
+
+        actionTimer += Time.deltaTime;
+        int frame = (int)(((actionTimer / ACTION_SPEED) * currentUnitToMoveOrAction.attackFront.Length));
+        if (actionTimer >= ACTION_SPEED)
+        {
+            actionTimer = 0;
+            execAttack();
+            currentUnitToMoveOrAction = null;
+            return true;
+        }
+        // run animation
+        currentUnitToMoveOrAction.GetComponentInChildren<SpriteRenderer>().sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
+
+
+        return false;
+
+    }
+
+    void execAttack()
+    {
+        var attackDmg = Random.Range(currentUnitToMoveOrAction.item.damageLow, currentUnitToMoveOrAction.item.damageHi);
+
+        if (currentUnitTarget == playerPosition)
+        {
+            if (playerUnit.hurt(1))
+            {
+                SceneManager.LoadScene("Title");
+            }
+        }
+        else
+        {
+            // trigger the attack animation
+            if (NPCPositions[currentUnitTarget].hurt(attackDmg))
+            {
+                // otherwise carry on
+                Destroy(NPCPositions[currentUnitTarget].gameObject);
+                NPCPositions.Remove(currentUnitTarget);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -198,10 +243,12 @@ public class GameState : MonoBehaviour
 
                 break;
             case State.PLAYER_ACTION:
-                // animation action
-                generateAITurnOrder();
-                // skipped for now.
-                state = State.AI_MOVE;
+                // animation + action
+                if (executeAction())
+                {
+                    generateAITurnOrder();
+                    state = State.AI_MOVE;
+                }
                 break;
             case State.AI_MOVE:
                 // animate all NPCs
@@ -273,7 +320,7 @@ public class GameState : MonoBehaviour
     bool aiMove()
     {
         // check if there is a unit moving
-        if(currentUnitToMove == null)
+        if(currentUnitToMoveOrAction == null)
         {
             // any units left to move?
             if(AITurnOrder.Count == 0)
@@ -285,7 +332,7 @@ public class GameState : MonoBehaviour
             // pull the coordinate of the AI player to move.
             var curTurn = AITurnOrder[0];
             AITurnOrder.RemoveAt(0);
-            currentUnitToMove = NPCPositions[curTurn];
+            currentUnitToMoveOrAction = NPCPositions[curTurn];
 
             // check if there exists a possible path to the player.
             var reachable = gu.reachableTilesFrom(curTurn, 1000, NPCOccupiedTiles());
@@ -300,21 +347,21 @@ public class GameState : MonoBehaviour
                 // aggro check
                 if(pendingUnitPath.Count < AI_AGGRO_RANGE)
                 {
-                    currentUnitToMove.aggro = true;
+                    currentUnitToMoveOrAction.aggro = true;
                 }
 
                 // only go as far as we can if length too big
-                while (pendingUnitPath.Count > currentUnitToMove.speed)
+                while (pendingUnitPath.Count > currentUnitToMoveOrAction.speed)
                 {
                     pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
                 }
 
-                if (currentUnitToMove.aggro)
+                if (currentUnitToMoveOrAction.aggro)
                 {
                     // we were next to the player, so we don't need to update position after all.
                     if (pendingUnitPath.Count == 0)
                     {
-                        currentUnitToMove = null;
+                        currentUnitToMoveOrAction = null;
                         pendingUnitPath = null;
                         return false;
                     }
@@ -322,13 +369,13 @@ public class GameState : MonoBehaviour
                     else
                     {
                         NPCPositions.Remove(curTurn);
-                        NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMove;
+                        NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMoveOrAction;
                     }
                 }
                 else
                 {
                     // player is too far away, do nothing
-                    currentUnitToMove = null;
+                    currentUnitToMoveOrAction = null;
                     pendingUnitPath = null;
                     return false;
                 }
@@ -337,7 +384,7 @@ public class GameState : MonoBehaviour
             {
                 // can't reach player, just do nothing.
                 pendingUnitPath = null;
-                currentUnitToMove = null;
+                currentUnitToMoveOrAction = null;
                 return false;
             }
 

@@ -24,6 +24,10 @@ public class Unit : MonoBehaviour
     public bool thisIsPlayer;
 
     public bool aggro;
+
+    public Sprite[] attackFront;
+    public Sprite[] attackBack;
+
     // Start is called before the first frame update
     void Start()
     {

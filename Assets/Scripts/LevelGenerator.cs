@@ -86,7 +86,6 @@ public class LevelGenerator : MonoBehaviour
                 {
                     // valid floor tile!
                     var targTile = squad_center + new Vector3Int(Random.Range(-1, 2), Random.Range(-1, 2), 0);
-                    Debug.Log(targTile);
 
                     if (gu.levelTileMap.HasTile(targTile) && !gs.NPCPositions.ContainsKey(targTile))
                     {

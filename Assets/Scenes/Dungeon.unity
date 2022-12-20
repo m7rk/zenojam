@@ -927,6 +927,19 @@ MonoBehaviour:
   item: {fileID: 712713876606171034, guid: 39a09f338596be94dab3bef7a9feaa03, type: 3}
   healthPrefab: {fileID: 0}
   thisIsPlayer: 1
+  aggro: 0
+  attackFront:
+  - {fileID: 610975738, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: -470019507, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: -360282560, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: -1384640469, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: 2090904892, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  attackBack:
+  - {fileID: 32842563, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: 58547843, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: -1005349640, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: 2038493109, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  - {fileID: 1341823574, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
 --- !u!1 &995835711
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,6 +3337,7 @@ MonoBehaviour:
   gu: {fileID: 1780189437}
   ladderPosition: {x: 0, y: 0, z: 0}
   floorText: {fileID: 1830652151}
+  actionTimer: 0
 --- !u!4 &1557024817
 Transform:
   m_ObjectHideFlags: 0
