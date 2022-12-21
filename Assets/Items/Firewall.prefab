@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 712713876606171033}
   - component: {fileID: 712713876606171034}
   m_Layer: 0
-  m_Name: Fisticuffs
+  m_Name: Firewall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageLow: 1
   damageHi: 1
-  range: 1
-  description: WHO WANTS A SANDWICH?
-  image: {fileID: -1384640469, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  range: 4
+  description: CREATES A WALL OF FLAME
+  image: {fileID: -712116297, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}

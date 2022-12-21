@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 712713876606171033}
   - component: {fileID: 712713876606171034}
   m_Layer: 0
-  m_Name: Fisticuffs
+  m_Name: Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 1
   range: 1
-  description: WHO WANTS A SANDWICH?
-  image: {fileID: -1384640469, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  description: FOOD FIT FOR A HYENA
+  image: {fileID: 1438436305, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

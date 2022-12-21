@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 712713876606171033}
   - component: {fileID: 712713876606171034}
   m_Layer: 0
-  m_Name: Fisticuffs
+  m_Name: Gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageLow: 1
-  damageHi: 1
-  range: 1
-  description: WHO WANTS A SANDWICH?
-  image: {fileID: -1384640469, guid: 55b9d8ae583b19c4793110fbafc500b5, type: 3}
+  damageHi: 2
+  range: 2
+  description: GREEN, AND POINTY
+  image: {fileID: -989414692, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

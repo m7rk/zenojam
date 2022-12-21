@@ -10,6 +10,10 @@ public class GameState : MonoBehaviour
     // player junk
     public Vector3Int playerPosition;
     public Unit playerUnit;
+    public static List<GameItem> playerItems;
+    public List<GameItem> startingItems;
+    public ItemListManager ilm;
+
     private readonly float MOVE_ANIM_SPEED = 4f;
     private readonly float ACTION_SPEED = 0.4f;
 
@@ -50,6 +54,7 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
+        playerItems = startingItems;
         playerPosition = new Vector3Int(0, 0, 0);
         playerUnit.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
@@ -222,6 +227,7 @@ public class GameState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ilm.generate(playerItems);
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:
