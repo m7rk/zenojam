@@ -106,7 +106,7 @@ public class LevelGenerator : MonoBehaviour
     public void spawnItems()
     {
         gs.groundItems = new Dictionary<Vector3, GroundItem>();
-        for(int i = 0; i != groundItemPrefab.GetComponent<GroundItem>().itemName.Count; ++i)
+        for(int i = 0; i != groundItemPrefab.GetComponent<GroundItem>().allItemName.Count; ++i)
         {
             var testTile = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
             if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile))
@@ -114,7 +114,8 @@ public class LevelGenerator : MonoBehaviour
                 var v = Instantiate(groundItemPrefab);
                 v.transform.SetParent(this.transform);
                 v.transform.position = gs.globalPositionForTile(testTile) + new Vector3(0, -0.22f, 1f);
-                v.GetComponent<GroundItem>().setItemType(groundItemPrefab.GetComponent<GroundItem>().itemName[i]);
+                v.GetComponent<GroundItem>().setItemType(groundItemPrefab.GetComponent<GroundItem>().allItemName[i]);
+                gs.groundItems[testTile] = v.GetComponent<GroundItem>();
             }
         }
     }

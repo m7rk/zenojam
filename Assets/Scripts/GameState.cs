@@ -7,10 +7,14 @@ using UnityEngine.UI;
 
 public class GameState : MonoBehaviour
 {
+
     // player junk
     public Vector3Int playerPosition;
     public Unit playerUnit;
+
+    // preserve between floors
     public static List<GameItem> playerItems;
+    public static int playerItemIndex = 0;
     public List<GameItem> startingItems;
     public ItemListManager ilm;
 
@@ -58,7 +62,8 @@ public class GameState : MonoBehaviour
         playerPosition = new Vector3Int(0, 0, 0);
         playerUnit.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
-        floorText.text = "FLOOR " + numbers[floorID].ToUpper();        
+        floorText.text = "FLOOR " + numbers[floorID].ToUpper();
+        ilm.generate();
     }
 
 
@@ -224,10 +229,25 @@ public class GameState : MonoBehaviour
         }
     }
 
+    public void tryPickUpItem()
+    {
+        if(groundItems.ContainsKey(playerPosition))
+        {
+            // sus
+            var it = Resources.Load<GameObject>("Items/" + groundItems[playerPosition].thisItem);
+            playerItems.Add(it.GetComponent<GameItem>());
+            Destroy(groundItems[playerPosition].gameObject);
+            groundItems.Remove(playerPosition);
+            ilm.generate();
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        ilm.generate(playerItems);
+        // i hate this pattern but its okay
+        playerUnit.item = playerItems[playerItemIndex];
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:
@@ -237,6 +257,7 @@ public class GameState : MonoBehaviour
             case State.PLAYER_MOVE:
                 if(moveUnit())
                 {
+                    tryPickUpItem();
                     checkLeaveFloor();
                     state = State.PLAYER_DECIDE_ACTION;
                     showActionableTiles();
