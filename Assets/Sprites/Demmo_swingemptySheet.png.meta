@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ca1b62651e865e14ebb21bd8c11ebced
+guid: f205c707702d3e14f8b01d2dc3a29857
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,127 +104,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tiles_0_0
+      name: Demmo_swingemptySheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
-        width: 48
-        height: 48
+        y: 40
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c834abd762555564cbcffcf7ef60bbd2
-      internalID: 506531848
+      spriteID: 88158f9efaa2ec442ba4d58cf0022c6e
+      internalID: 2074232602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_1
+      name: Demmo_swingemptySheet_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 48
-        width: 48
-        height: 48
+        x: 40
+        y: 40
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af33a0580480bca45a4a3644d59b6934
-      internalID: -1750217986
+      spriteID: 43988b01f2f5d7e4d8ff89ea987d481c
+      internalID: 1309521555
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_2
+      name: Demmo_swingemptySheet_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 48
-        width: 48
-        height: 48
+        x: 80
+        y: 40
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a089c8695e48514482e9d9d5c115b77
-      internalID: 1074011490
+      spriteID: 2dbe8c230bdfef749957aad802f0a97f
+      internalID: -1457828369
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_3
+      name: Demmo_swingemptySheet_3
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 40
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56c5481e4ff29de4b96bd33940320076
+      internalID: 1549171142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demmo_swingemptySheet_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6dc973c55c4c04c419bb7b8848430a78
-      internalID: -1412807822
+      spriteID: efc5e1705a6cab445b8e4f4afa7e625a
+      internalID: 1069529733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_4
+      name: Demmo_swingemptySheet_5
       rect:
         serializedVersion: 2
-        x: 48
+        x: 40
         y: 0
-        width: 48
-        height: 48
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a5dcb4d8d140f84383f27e773611a67
-      internalID: 863274087
+      spriteID: 2097f6f2ba4f8c24faf05feea80bf169
+      internalID: 1016361504
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_5
+      name: Demmo_swingemptySheet_6
       rect:
         serializedVersion: 2
-        x: 96
+        x: 80
         y: 0
-        width: 48
-        height: 48
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd5933f9c11e7ff40a5a2955d4162a2d
-      internalID: 1967490838
+      spriteID: bc292b51298417f45bab156323571c01
+      internalID: 144892462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Demmo_swingemptySheet_7
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aa3d812c9eb3084e92b97ff332b265a
+      internalID: -1829413336
       vertices: []
       indices: 
       edges: []
@@ -238,16 +280,16 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: b8aac254a16cf084a933916c6c754fb5, type: 3}
-      name: _NormalMap
+    secondaryTextures: []
     nameFileIdTable:
-      Tiles_0_5: 1967490838
-      Tiles_0_2: 1074011490
-      Tiles_0_0: 506531848
-      Tiles_0_3: -1412807822
-      Tiles_0_4: 863274087
-      Tiles_0_1: -1750217986
+      Demmo_swingemptySheet_2: -1457828369
+      Demmo_swingemptySheet_3: 1549171142
+      Demmo_swingemptySheet_0: 2074232602
+      Demmo_swingemptySheet_7: -1829413336
+      Demmo_swingemptySheet_5: 1016361504
+      Demmo_swingemptySheet_6: 144892462
+      Demmo_swingemptySheet_1: 1309521555
+      Demmo_swingemptySheet_4: 1069529733
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

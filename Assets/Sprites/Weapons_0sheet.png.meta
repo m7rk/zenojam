@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ca1b62651e865e14ebb21bd8c11ebced
+guid: 6bf52c8ff44083942a3c4c7fb415c1c6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,127 +104,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tiles_0_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c834abd762555564cbcffcf7ef60bbd2
-      internalID: 506531848
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tiles_0_1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af33a0580480bca45a4a3644d59b6934
-      internalID: -1750217986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tiles_0_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a089c8695e48514482e9d9d5c115b77
-      internalID: 1074011490
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tiles_0_3
+      name: Weapons_0sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6dc973c55c4c04c419bb7b8848430a78
-      internalID: -1412807822
+      spriteID: 0448fafa5126fdf458a456ec2bc1a75c
+      internalID: 431633654
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_4
+      name: Weapons_0sheet_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 905ed10f6bfe38b4e884d343a8c048ed
+      internalID: -597007777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weapons_0sheet_2
       rect:
         serializedVersion: 2
         x: 48
         y: 0
-        width: 48
-        height: 48
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a5dcb4d8d140f84383f27e773611a67
-      internalID: 863274087
+      spriteID: eb3ef8edd912492409e4a4e7e7cb7b49
+      internalID: -293606435
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_0_5
+      name: Weapons_0sheet_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 72
         y: 0
-        width: 48
-        height: 48
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd5933f9c11e7ff40a5a2955d4162a2d
-      internalID: 1967490838
+      spriteID: 142406e3be4526e4194a9f7f068ca946
+      internalID: -1984506733
       vertices: []
       indices: 
       edges: []
@@ -238,16 +196,12 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: b8aac254a16cf084a933916c6c754fb5, type: 3}
-      name: _NormalMap
+    secondaryTextures: []
     nameFileIdTable:
-      Tiles_0_5: 1967490838
-      Tiles_0_2: 1074011490
-      Tiles_0_0: 506531848
-      Tiles_0_3: -1412807822
-      Tiles_0_4: 863274087
-      Tiles_0_1: -1750217986
+      Weapons_0sheet_2: -293606435
+      Weapons_0sheet_0: 431633654
+      Weapons_0sheet_3: -1984506733
+      Weapons_0sheet_1: -597007777
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
