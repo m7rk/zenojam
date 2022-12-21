@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1c8ee6deeb253194c96f04df36c638a1, type: 2}
+  - {fileID: 2100000, guid: a29ab6dd179280a44a1b3dc9db577a7f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -172,3 +172,9 @@ MonoBehaviour:
   item: {fileID: 0}
   healthPrefab: {fileID: 3754268584229062117, guid: 97b458b01a3857a4aba34f171fcb750b, type: 3}
   thisIsPlayer: 0
+  aggro: 0
+  attackFront:
+  - {fileID: 1766364138, guid: 2acc23ef972badb42b428680b126f135, type: 3}
+  attackBack:
+  - {fileID: -924425457, guid: 2acc23ef972badb42b428680b126f135, type: 3}
+  outline: 0

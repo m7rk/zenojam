@@ -31,6 +31,8 @@ public class LevelGenerator : MonoBehaviour
 
     public readonly int PLAYER_SAFE_ZONE = 7;
 
+    public GameObject groundItemPrefab;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -66,6 +68,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         spawnNPCs();
+        spawnItems();
 
     }
 
@@ -95,6 +98,22 @@ public class LevelGenerator : MonoBehaviour
                         gs.NPCPositions[targTile] = k.GetComponent<Unit>();
                     }
                 }
+            }
+        }
+    }
+
+    public void spawnItems()
+    {
+        gs.groundItems = new Dictionary<Vector3, GroundItem>();
+        for(int i = 0; i != groundItemPrefab.GetComponent<GroundItem>().itemName.Count; ++i)
+        {
+            var testTile = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
+            if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile))
+            {
+                var v = Instantiate(groundItemPrefab);
+                v.transform.SetParent(this.transform);
+                v.transform.position = gs.globalPositionForTile(testTile) + new Vector3(0, -0.22f, 1f);
+                v.GetComponent<GroundItem>().setItemType(groundItemPrefab.GetComponent<GroundItem>().itemName[i]);
             }
         }
     }
@@ -130,10 +149,18 @@ public class LevelGenerator : MonoBehaviour
                 if (tVal < FILL_THRESH)
                 {
                     var targTile = (int)((tiles.Length * tVal) / FILL_THRESH);
+
+                    // clamp
                     if (targTile >= tiles.Length)
                     {
                         targTile = tiles.Length - 1;
                     }
+
+                    if(targTile < 0)
+                    {
+                        targTile = 0;
+                    }
+
                     gu.levelTileMap.SetTile(new Vector3Int(x, y, 0), tiles[targTile]); // Or use SetTiles() for multiple tiles.
                 }
             }

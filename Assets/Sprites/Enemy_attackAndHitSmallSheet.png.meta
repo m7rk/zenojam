@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6bba88e5ef8cc354ca58f28c6a62e260
+guid: 2acc23ef972badb42b428680b126f135
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -105,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -116,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_0
+      name: Enemy_attackAndHitSmallSheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -130,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebc2c7b9b0e3f89479991626cd7d3b97
-      internalID: 782979738
+      spriteID: 5840000534f5bfd49adc3f8080bd04e5
+      internalID: 1721305503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_1
+      name: Enemy_attackAndHitSmallSheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -151,14 +151,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 329691feb06bc8d4b8bd8d3f5e264604
-      internalID: -862636786
+      spriteID: 967032d6bb24c064d89d077d53e4c008
+      internalID: 1766364138
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_2
+      name: Enemy_attackAndHitSmallSheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -172,14 +172,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25fec15ac85d9b54da846159b6b1ea0c
-      internalID: 124565772
+      spriteID: 2b53002fa43f89143a0f252913fce3d3
+      internalID: 658715190
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_3
+      name: Enemy_attackAndHitSmallSheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -193,56 +193,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7324e008691109c4e8de3885dfae9262
-      internalID: 1811110070
+      spriteID: c3a67fb7f7e5af44c8f042e87c014488
+      internalID: -47795368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2fa05a850bbf86342a794b2e71e318ea
-      internalID: 1911137479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: afb1850fa00620c4798144e252d2f827
-      internalID: -1582036698
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_6
+      name: Enemy_attackAndHitSmallSheet_4
       rect:
         serializedVersion: 2
         x: 0
@@ -256,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b248321b920ee342bef399088936e9c
-      internalID: -1124394024
+      spriteID: f9e1a35cc7babc44d92951e6d0d79224
+      internalID: 1425186347
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_7
+      name: Enemy_attackAndHitSmallSheet_5
       rect:
         serializedVersion: 2
         x: 32
@@ -277,14 +235,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7d184708e36aa241a5cc5fe5a6a2d14
-      internalID: 811713475
+      spriteID: bc1d53da6ff6cbf4abb3d0bf785e0ceb
+      internalID: -900297388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_8
+      name: Enemy_attackAndHitSmallSheet_6
       rect:
         serializedVersion: 2
         x: 64
@@ -298,14 +256,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 775d29fa70a26ed45a3353e051b41b47
-      internalID: 336387824
+      spriteID: 82e6569c637aa554ea24ace7df0fc08d
+      internalID: 1391538965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_9
+      name: Enemy_attackAndHitSmallSheet_7
       rect:
         serializedVersion: 2
         x: 96
@@ -319,56 +277,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1692690efc6bd64ab230a5d8b7f982b
-      internalID: 1346909314
+      spriteID: 72ad19b5d2462664fa228a69fa02da15
+      internalID: 1715770898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 633af0d89e8944d41987420562f9ec34
-      internalID: 1599449620
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_11
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e9b3b20f5fa3cda44abcad6baaaf343f
-      internalID: 1710254589
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_12
+      name: Enemy_attackAndHitSmallSheet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -382,14 +298,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cea009d0078cfa40b02056f85a1faa6
-      internalID: -734726500
+      spriteID: d59ba2c4d71525a46b03af850eda7399
+      internalID: 1909585978
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_13
+      name: Enemy_attackAndHitSmallSheet_9
       rect:
         serializedVersion: 2
         x: 32
@@ -403,14 +319,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61df2a4984afb874fb0648305ce65688
-      internalID: -2005350360
+      spriteID: 1cac43d66cbde544f86a06dcf04f2bec
+      internalID: -924425457
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_14
+      name: Enemy_attackAndHitSmallSheet_10
       rect:
         serializedVersion: 2
         x: 64
@@ -424,14 +340,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5facdc3346d53ef4582c16172b156262
-      internalID: -376539338
+      spriteID: 1760e23a8e2b0d04eb625aa3a04179da
+      internalID: -1436813911
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_15
+      name: Enemy_attackAndHitSmallSheet_11
       rect:
         serializedVersion: 2
         x: 96
@@ -445,56 +361,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18004ba260536d246bfc673de4230e83
-      internalID: -1414214229
+      spriteID: ecea1b0e05904d34a9d974052d224c33
+      internalID: -634122186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_16
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e74980bfcef314d478835f74bf9d93b5
-      internalID: 1334670778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_17
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6397245bdcc40074f8d46285a5b3a448
-      internalID: -1653762398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_18
+      name: Enemy_attackAndHitSmallSheet_12
       rect:
         serializedVersion: 2
         x: 0
@@ -508,14 +382,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9408e3363c6ff994299ca092b0fcb3bc
-      internalID: -1685289481
+      spriteID: 81e72b267bb6b3f45a67b44e4ca94a3b
+      internalID: -134907926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_19
+      name: Enemy_attackAndHitSmallSheet_13
       rect:
         serializedVersion: 2
         x: 32
@@ -529,14 +403,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 426068395a2225141bc9c10fdb3758d8
-      internalID: 390718625
+      spriteID: 4cbb7b633fd928541bc5486dd8ade5c4
+      internalID: -414767121
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_20
+      name: Enemy_attackAndHitSmallSheet_14
       rect:
         serializedVersion: 2
         x: 64
@@ -550,14 +424,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5adb3ce0656bc0418993f628248e827
-      internalID: -1588941167
+      spriteID: 4f9ae8ff89592fd44a6b1026ce00fa25
+      internalID: -321177692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EnemyIdle_Sheet_21
+      name: Enemy_attackAndHitSmallSheet_15
       rect:
         serializedVersion: 2
         x: 96
@@ -571,50 +445,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ca8d5c75c81bba4d82cfc59f68180fc
-      internalID: -358813234
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_22
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 75e03d0c81f125446b330578f81e9501
-      internalID: 1769100258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: EnemyIdle_Sheet_23
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d2f69a9c21277441b1f71b700f1e3d9
-      internalID: -1171130305
+      spriteID: 994c365f2e4707b47afd398260cb9f36
+      internalID: -1326098774
       vertices: []
       indices: 
       edges: []
@@ -630,30 +462,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EnemyIdle_Sheet_11: 1710254589
-      EnemyIdle_Sheet_20: -1588941167
-      EnemyIdle_Sheet_15: -1414214229
-      EnemyIdle_Sheet_7: 811713475
-      EnemyIdle_Sheet_12: -734726500
-      EnemyIdle_Sheet_13: -2005350360
-      EnemyIdle_Sheet_14: -376539338
-      EnemyIdle_Sheet_4: 1911137479
-      EnemyIdle_Sheet_16: 1334670778
-      EnemyIdle_Sheet_18: -1685289481
-      EnemyIdle_Sheet_0: 782979738
-      EnemyIdle_Sheet_3: 1811110070
-      EnemyIdle_Sheet_5: -1582036698
-      EnemyIdle_Sheet_8: 336387824
-      EnemyIdle_Sheet_22: 1769100258
-      EnemyIdle_Sheet_1: -862636786
-      EnemyIdle_Sheet_19: 390718625
-      EnemyIdle_Sheet_6: -1124394024
-      EnemyIdle_Sheet_9: 1346909314
-      EnemyIdle_Sheet_10: 1599449620
-      EnemyIdle_Sheet_21: -358813234
-      EnemyIdle_Sheet_23: -1171130305
-      EnemyIdle_Sheet_2: 124565772
-      EnemyIdle_Sheet_17: -1653762398
+      Enemy_attackAndHitSmallSheet_9: -924425457
+      Enemy_attackAndHitSmallSheet_14: -321177692
+      Enemy_attackAndHitSmallSheet_8: 1909585978
+      Enemy_attackAndHitSmallSheet_15: -1326098774
+      Enemy_attackAndHitSmallSheet_3: -47795368
+      Enemy_attackAndHitSmallSheet_2: 658715190
+      Enemy_attackAndHitSmallSheet_6: 1391538965
+      Enemy_attackAndHitSmallSheet_7: 1715770898
+      Enemy_attackAndHitSmallSheet_12: -134907926
+      Enemy_attackAndHitSmallSheet_4: 1425186347
+      Enemy_attackAndHitSmallSheet_5: -900297388
+      Enemy_attackAndHitSmallSheet_11: -634122186
+      Enemy_attackAndHitSmallSheet_13: -414767121
+      Enemy_attackAndHitSmallSheet_10: -1436813911
+      Enemy_attackAndHitSmallSheet_1: 1766364138
+      Enemy_attackAndHitSmallSheet_0: 1721305503
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

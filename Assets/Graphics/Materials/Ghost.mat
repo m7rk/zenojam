@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ghosty
+  m_Name: Ghost
   m_Shader: {fileID: -6465566751694194690, guid: b19bb06ae2f9b6e438180590bde896a6, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []

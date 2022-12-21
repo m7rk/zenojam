@@ -28,9 +28,26 @@ public class Unit : MonoBehaviour
     public Sprite[] attackFront;
     public Sprite[] attackBack;
 
+    private static Material hit;
+    private static Material outlineMat;
+    private Material oldMaterial;
+
+    private float MAX_HURT_FLASH_TIME = 0.3f;
+    private float flashTime = 0f;
     // Start is called before the first frame update
+
+    public bool outline = false;
+
     void Start()
     {
+        if (hit == null)
+        {
+            hit = Resources.Load<Material>("Hit");
+            outlineMat = Resources.Load<Material>("Outline");
+
+        }
+
+        oldMaterial = GetComponentInChildren<SpriteRenderer>().material;
         if (!thisIsPlayer)
         {
             var v = Instantiate(healthPrefab);
@@ -41,12 +58,27 @@ public class Unit : MonoBehaviour
             // offset above player properly - need a custom field but we do this later.
             v.transform.localPosition = new Vector3((-0.03125f/2f) * health, 0.21f, 0);
         }
+
         aggro = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (outline)
+        {
+            GetComponentInChildren<SpriteRenderer>().material = outlineMat;
+        }
+        else
+        {
+            if (flashTime > 0f)
+            {
+                GetComponentInChildren<SpriteRenderer>().material = hit;
+                flashTime -= Time.deltaTime;
+            }
+            GetComponentInChildren<SpriteRenderer>().material = oldMaterial;
+        }
+
         // hop
         var xDif = Mathf.Abs(this.transform.position.x) % 0.5;
         // 0 - 0.25 up
@@ -78,5 +110,10 @@ public class Unit : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void triggerFlashTime()
+    {
+        flashTime = MAX_HURT_FLASH_TIME;
     }
 }

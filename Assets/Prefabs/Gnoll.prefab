@@ -57,6 +57,11 @@ MonoBehaviour:
   healthPrefab: {fileID: 3754268584229062117, guid: 97b458b01a3857a4aba34f171fcb750b, type: 3}
   thisIsPlayer: 0
   aggro: 0
+  attackFront:
+  - {fileID: -83625820, guid: 379dc092155502d4d91a8c6a1c851032, type: 3}
+  attackBack:
+  - {fileID: 139277988, guid: 379dc092155502d4d91a8c6a1c851032, type: 3}
+  outline: 0
 --- !u!1 &7909592598854750695
 GameObject:
   m_ObjectHideFlags: 0

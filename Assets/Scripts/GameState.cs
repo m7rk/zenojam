@@ -13,7 +13,6 @@ public class GameState : MonoBehaviour
     private readonly float MOVE_ANIM_SPEED = 4f;
     private readonly float ACTION_SPEED = 0.4f;
 
-
     // Grid Stuff
     public GridUtils gu;
     public Vector3Int ladderPosition;
@@ -34,6 +33,8 @@ public class GameState : MonoBehaviour
     // NPC Stuff, pop'd by levelgnerator
     public Dictionary<Vector3Int, Unit> NPCPositions;
 
+    // Item Stuff, pop'd by level generator
+    public Dictionary<Vector3, GroundItem> groundItems;
     // AI Stuff
     private int AI_AGGRO_RANGE = 7;
 
