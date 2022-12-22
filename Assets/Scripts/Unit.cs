@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour
 
     public bool outline = false;
 
+    public SpriteRenderer spriteRenderer;
+
     void Start()
     {
         if (hit == null)
@@ -47,6 +49,7 @@ public class Unit : MonoBehaviour
 
         }
 
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         oldMaterial = GetComponentInChildren<SpriteRenderer>().material;
         if (!thisIsPlayer)
         {

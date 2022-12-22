@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -188,8 +189,6 @@ public class GameState : MonoBehaviour
 
     public bool executeAction()
     {
-        currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(currentUnitTarget).y - currentUnitToMoveOrAction.transform.position.y < 0;
-        currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(currentUnitTarget).x - currentUnitToMoveOrAction.transform.position.x > 0;
 
         actionTimer += Time.deltaTime;
         int frame = (int)(((actionTimer / ACTION_SPEED) * currentUnitToMoveOrAction.attackFront.Length));
@@ -199,8 +198,19 @@ public class GameState : MonoBehaviour
             execAttack();
             return true;
         }
+
+        Debug.Log(currentUnitToMoveOrAction);
+        currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(currentUnitTarget).y - currentUnitToMoveOrAction.transform.position.y < 0;
+        currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(currentUnitTarget).x - currentUnitToMoveOrAction.transform.position.x > 0;
+
+        // the AIS are backwards so this is a filthy hack to fix thsat
+        if (state == State.AI_MOVE)
+        {
+            currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
+        }
+
         // run animation
-        currentUnitToMoveOrAction.GetComponentInChildren<SpriteRenderer>().sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
+        currentUnitToMoveOrAction.spriteRenderer.sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
 
 
         return false;
@@ -219,7 +229,7 @@ public class GameState : MonoBehaviour
         }
         else
         {
-            var attackDmg = Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
+            var attackDmg = UnityEngine.Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
             {
@@ -245,7 +255,8 @@ public class GameState : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    // use lateupdate because we want sprites to be overriden..
+    void LateUpdate()
     {
         switch(state)
         {
@@ -363,6 +374,7 @@ public class GameState : MonoBehaviour
         var curTurn = AITurnOrder[0];
         AITurnOrder.RemoveAt(0);
         currentUnitToMoveOrAction = NPCPositions[curTurn];
+        AI_MEMO_MOVING = curTurn;
 
         // check if there exists a possible path to the player.
         var reachable = gu.reachableTilesFrom(curTurn, 1000, NPCOccupiedTiles());
@@ -417,15 +429,13 @@ public class GameState : MonoBehaviour
     }
 
 
-    // does two things
-    // set the currentUnitToMove
-    // set the pendingUnitPath (if possiblt)
     public void generateAIAttackPlan()
     {
+        int dist = Math.Abs(AI_MEMO_MOVING.x - playerPosition.x) + Math.Abs(AI_MEMO_MOVING.y - playerPosition.y);
+
         // the unit is in range!
-        if ((AI_MEMO_MOVING - playerPosition).magnitude <= currentUnitToMoveOrAction.AI_range)
+        if (dist <= currentUnitToMoveOrAction.AI_range)
         {
-            Debug.Log("we can attack!");
             currentUnitTarget = playerPosition;
         }
         else
