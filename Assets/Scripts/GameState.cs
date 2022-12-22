@@ -55,6 +55,8 @@ public class GameState : MonoBehaviour
     public static readonly Vector3Int PRACTICE_SEED_POSITION = new Vector3Int(4, 4, 0);
     public static readonly Vector3Int PRACTICE_KENKU_POSITION = new Vector3Int(8, 8, 0);
 
+    public GameObject projectileBase;
+
 
     public enum State
     {
@@ -145,19 +147,19 @@ public class GameState : MonoBehaviour
 
     void playerDecideAction()
     {
-        if(actionableTiles().Count == 0)
-        {
-            // no action, end turn
-            state = State.AI_MOVE;
-            generateAITurnOrder();
-            return;
-        }
 
         if (Input.GetMouseButtonDown(0))
         {
             var targ = tileAtMousePosition();
             if (actionableTiles().Contains(targ))
             {
+                if(targ.Equals(playerPosition))
+                {
+                    state = State.AI_MOVE;
+                    gu.clearSelectedTiles();
+                    generateAITurnOrder();
+                    return;
+                }
                 // player to make move.
                 currentUnitToMoveOrAction = playerUnit;
                 currentUnitTarget = targ;
@@ -203,13 +205,32 @@ public class GameState : MonoBehaviour
 
     }
 
+    public bool attackingPlayerIsUsingRanged()
+    {
+        if (currentUnitToMoveOrAction.GetComponent<Unit>().thisIsPlayer)
+        {
+            return playerItems[playerItemIndex].range > 1;
+        }
+        else
+        {
+            return currentUnitToMoveOrAction.AI_range > 1;
+        }
+    }
+
     public bool executeAction()
     {
-
         actionTimer += Time.deltaTime;
         int frame = (int)(((actionTimer / ACTION_SPEED) * currentUnitToMoveOrAction.attackFront.Length));
         if (actionTimer >= ACTION_SPEED)
         {
+            // check if we need to launch a projectile
+            if(attackingPlayerIsUsingRanged())
+            {
+                var v = Instantiate(projectileBase);
+                v.transform.SetParent(this.transform);
+                v.transform.position = currentUnitToMoveOrAction.transform.position;
+                v.GetComponent<RangedDecal>().setGoal(globalPositionForTile(currentUnitTarget));
+            }
             actionTimer = 0;
             execAttack();
             return true;
@@ -245,7 +266,6 @@ public class GameState : MonoBehaviour
         {
             if (playerUnit.hurt(1))
             {
-                Debug.Log("player was hit!");
                 SceneManager.LoadScene("Title");
             }
         }
@@ -369,6 +389,7 @@ public class GameState : MonoBehaviour
                 hasNPC.Add(v);
             }
         }
+        hasNPC.Add(playerPosition);
         return hasNPC;
     }
     void showActionableTiles()

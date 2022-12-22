@@ -15,19 +15,21 @@ public class HealthBar : MonoBehaviour
 
         var e = Instantiate(end);
         e.transform.SetParent(this.transform);
+        // fuck
         e.transform.localPosition = new Vector3(0f, 0f, 0f);
 
         for(int i = 0; i != count; ++i)
         {
             e = Instantiate(full);
             e.transform.SetParent(this.transform);
-            e.transform.localPosition = new Vector3(0.03125f * (i+1), 0f, 0f);
+            e.transform.localPosition = new Vector3(0.0625f * (i+1), 0f, 0f);
             fullbars.Add(e.GetComponent<SpriteRenderer>());
         }
 
         e = Instantiate(end);
         e.transform.SetParent(this.transform);
-        e.transform.localPosition = new Vector3(0.03125f * (1+count), 0f, 0f);
+        e.transform.localPosition = new Vector3(0.0625f * (1+count), 0f, 0f);
+        e.transform.localScale = new Vector3(-1, 1, 1);
 
         this.gameObject.SetActive(false);
     }

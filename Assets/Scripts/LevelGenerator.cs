@@ -27,7 +27,7 @@ public class LevelGenerator : MonoBehaviour
     // We should tighten this and also give more loot if more enemies spawned.
     public readonly int MAX_SQUAD_SIZE = 3;
 
-    public readonly int ENEMY_QUOTA = 10;
+    public readonly int ENEMY_QUOTA = 7;
 
     public readonly int PLAYER_SAFE_ZONE = 7;
 
@@ -42,7 +42,8 @@ public class LevelGenerator : MonoBehaviour
         {
             // place the ladder - this will be as far from the player as possible every time because of how BFS works
             gs.ladderPosition = new Vector3Int(17, 10, 0);
-            ladder.transform.position = gs.globalPositionForTile(gs.ladderPosition);
+            ladder.transform.position = gs.globalPositionForTile(gs.ladderPosition) + new Vector3(0, 0, (gs.globalPositionForTile(gs.ladderPosition).y * 0.001f));
+
 
             // make npcs
             gs.NPCPositions = new Dictionary<Vector3Int, Unit>();
@@ -83,7 +84,7 @@ public class LevelGenerator : MonoBehaviour
 
         // place the ladder - this will be as far from the player as possible every time because of how BFS works
         gs.ladderPosition = reachableToPlayer[reachableToPlayer.Count - 1];
-        ladder.transform.position = gs.globalPositionForTile(reachableToPlayer[reachableToPlayer.Count - 1]);
+        ladder.transform.position = gs.globalPositionForTile(reachableToPlayer[reachableToPlayer.Count - 1]) + new Vector3(0, 0, (gs.globalPositionForTile(gs.ladderPosition).y * 0.001f)); ;
 
         // remove all the islands the perlin made
         reachableToPlayer.Add(Vector3Int.zero);

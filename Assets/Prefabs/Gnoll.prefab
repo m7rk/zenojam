@@ -61,7 +61,12 @@ MonoBehaviour:
   - {fileID: -83625820, guid: 379dc092155502d4d91a8c6a1c851032, type: 3}
   attackBack:
   - {fileID: 139277988, guid: 379dc092155502d4d91a8c6a1c851032, type: 3}
+  hurtF: {fileID: -83625820, guid: 379dc092155502d4d91a8c6a1c851032, type: 3}
+  hurtB: {fileID: 139277988, guid: 379dc092155502d4d91a8c6a1c851032, type: 3}
   outline: 0
+  mainSpriteRenderer: {fileID: 0}
+  playerBook: {fileID: 0}
+  AIRangedProjectile: {fileID: 0}
 --- !u!1 &7909592598854750695
 GameObject:
   m_ObjectHideFlags: 0
