@@ -28,11 +28,15 @@ public class Unit : MonoBehaviour
     public Sprite[] attackFront;
     public Sprite[] attackBack;
 
+    public Sprite hurtF;
+    public Sprite hurtB;
+
     private static Material hit;
     private static Material outlineMat;
     private Material oldMaterial;
 
-    private float MAX_HURT_FLASH_TIME = 0.3f;
+    private float MAX_HURT_FLASH_TIME = 0.2f;
+    private float HURT_ANIM_TIME = 0.1f;
     private float flashTime = 0f;
     // Start is called before the first frame update
 
@@ -72,18 +76,21 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        flashTime -= Time.deltaTime;
         if (outline)
         {
-            GetComponentInChildren<SpriteRenderer>().material = outlineMat;
+            mainSpriteRenderer.material = outlineMat;
         }
         else
         {
-            if (flashTime > 0f)
+            if (flashTime > HURT_ANIM_TIME)
             {
-                GetComponentInChildren<SpriteRenderer>().material = hit;
-                flashTime -= Time.deltaTime;
+                mainSpriteRenderer.material = hit;
             }
-            GetComponentInChildren<SpriteRenderer>().material = oldMaterial;
+            else
+            {
+                mainSpriteRenderer.material = oldMaterial;
+            }
         }
 
         // hop
@@ -91,23 +98,36 @@ public class Unit : MonoBehaviour
         // 0 - 0.25 up
         // 0.25 - 5 down
         var jumpPos = xDif > 0.25 ? (-xDif + 0.5) : xDif;
-        GetComponentInChildren<SpriteRenderer>().transform.localPosition = new Vector3(0, JUMP_FACTOR * (float)jumpPos, 0);
+        mainSpriteRenderer.transform.localPosition = new Vector3(0, JUMP_FACTOR * (float)jumpPos, 0);
 
 
         // anim idle (80 if last floor! first floor is 60)
         var BPS = (60f / 60f);
         var halfNote = Time.time % (2 / BPS);
-        GetComponentInChildren<SpriteRenderer>().sprite = halfNote > (1f / BPS) ? (faceFront ? f1 : b1) : (faceFront ? f2 : b2);
+        mainSpriteRenderer.sprite = halfNote > (1f / BPS) ? (faceFront ? f1 : b1) : (faceFront ? f2 : b2);
         this.transform.GetChild(0).transform.localScale = !(faceRight ^ faceFront) ? Vector3.one : new Vector3(-1, 1, 1);
 
         // add a small Y component to Z to force sprite ordering
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 1 + (this.transform.position.y * 0.001f));
+
+        if(flashTime > 0)
+        {
+            mainSpriteRenderer.sprite = faceFront ? hurtF : hurtB;
+
+        } else
+        {
+            if (health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     // return true if ded
     public bool hurt(int count)
     {
-        if(thisIsPlayer)
+        flashTime = MAX_HURT_FLASH_TIME;
+        if (thisIsPlayer)
         {
             health -= 1;
             // route elsewhere
@@ -126,10 +146,6 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public void triggerFlashTime()
-    {
-        flashTime = MAX_HURT_FLASH_TIME;
-    }
 
     public void showBook()
     {

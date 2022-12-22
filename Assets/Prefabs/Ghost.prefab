@@ -177,4 +177,9 @@ MonoBehaviour:
   - {fileID: 1766364138, guid: 2acc23ef972badb42b428680b126f135, type: 3}
   attackBack:
   - {fileID: -924425457, guid: 2acc23ef972badb42b428680b126f135, type: 3}
+  hurtF: {fileID: -900297388, guid: 2acc23ef972badb42b428680b126f135, type: 3}
+  hurtB: {fileID: -414767121, guid: 2acc23ef972badb42b428680b126f135, type: 3}
   outline: 0
+  mainSpriteRenderer: {fileID: 0}
+  playerBook: {fileID: 0}
+  AIRangedProjectile: {fileID: 0}

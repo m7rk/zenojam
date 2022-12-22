@@ -243,7 +243,6 @@ public class GameState : MonoBehaviour
 
         if (currentUnitTarget.Equals(playerPosition))
         {
-            playerUnit.triggerFlashTime();
             if (playerUnit.hurt(1))
             {
                 Debug.Log("player was hit!");
@@ -256,9 +255,6 @@ public class GameState : MonoBehaviour
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
             {
-                NPCPositions[currentUnitTarget].triggerFlashTime();
-                // otherwise carry on
-                Destroy(NPCPositions[currentUnitTarget].gameObject);
                 NPCPositions.Remove(currentUnitTarget);
             }
             currentUnitToMoveOrAction.GetComponent<Unit>().hideWeapons();
