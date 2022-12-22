@@ -30,7 +30,7 @@ public class GameState : MonoBehaviour
     // Floor stuff
     public TMPro.TMP_Text floorText;
     static string[] numbers  = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-    public static int floorID = 9;
+    public static int floorID = 10;
 
     // State stuff
     private Unit currentUnitToMoveOrAction;
@@ -67,7 +67,14 @@ public class GameState : MonoBehaviour
         playerPosition = new Vector3Int(0, 0, 0);
         playerUnit.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
-        floorText.text = "FLOOR " + numbers[floorID].ToUpper();
+        if (floorID == 10)
+        {
+            floorText.text = "TUTORIAL";
+        }
+        else
+        {
+            floorText.text = "FLOOR " + numbers[floorID].ToUpper();
+        }
         ilm.generate();
     }
 

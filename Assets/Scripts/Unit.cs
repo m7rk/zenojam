@@ -42,6 +42,8 @@ public class Unit : MonoBehaviour
 
     public SpriteRenderer playerBook;
 
+    public Sprite AIRangedProjectile;
+
     void Start()
     {
         if (hit == null)

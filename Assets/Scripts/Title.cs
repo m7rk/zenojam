@@ -5,19 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
+    public List<GameObject> scenes;
+    int scenePointer = 0;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            GameState.floorID = 9;
-            SceneManager.LoadScene("Dungeon");
+            foreach(var v in scenes)
+            {
+                v.SetActive(false);
+            }    
+            scenePointer++;
+            if (scenePointer == scenes.Count)
+            {
+                GameState.floorID = 10;
+                SceneManager.LoadScene("Dungeon");
+            }
+            else
+            {
+                scenes[scenePointer].SetActive(true);
+            }
         }
     }
 }

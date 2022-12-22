@@ -37,6 +37,22 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        // tutorial level..
+        if (GameState.floorID == 10)
+        {
+            // place the ladder - this will be as far from the player as possible every time because of how BFS works
+            gs.ladderPosition = new Vector3Int(17, 10, 0);
+            ladder.transform.position = gs.globalPositionForTile(gs.ladderPosition);
+
+            // make npcs
+            gs.NPCPositions = new Dictionary<Vector3Int, Unit>();
+
+            // ground items
+            gs.groundItems = new Dictionary<Vector3, GroundItem>();
+
+            return;
+        }
+            
         generateMapCandidate();
 
         // always place player at middle... removes all islands.
