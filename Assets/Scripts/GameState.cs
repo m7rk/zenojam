@@ -200,7 +200,7 @@ public class GameState : MonoBehaviour
             return true;
         }
 
-        Debug.Log(currentUnitToMoveOrAction);
+       
         currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(currentUnitTarget).y - currentUnitToMoveOrAction.transform.position.y < 0;
         currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(currentUnitTarget).x - currentUnitToMoveOrAction.transform.position.x > 0;
 
@@ -208,10 +208,15 @@ public class GameState : MonoBehaviour
         if (state == State.AI_MOVE)
         {
             currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
+        } else
+        {
+            // show player
+            currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
+
         }
 
         // run animation
-        currentUnitToMoveOrAction.spriteRenderer.sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
+        currentUnitToMoveOrAction.mainSpriteRenderer.sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
 
 
         return false;
@@ -220,8 +225,10 @@ public class GameState : MonoBehaviour
 
     void execAttack()
     {
+
         if (currentUnitTarget.Equals(playerPosition))
         {
+            playerUnit.triggerFlashTime();
             if (playerUnit.hurt(1))
             {
                 Debug.Log("player was hit!");
@@ -234,10 +241,12 @@ public class GameState : MonoBehaviour
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
             {
+                NPCPositions[currentUnitTarget].triggerFlashTime();
                 // otherwise carry on
                 Destroy(NPCPositions[currentUnitTarget].gameObject);
                 NPCPositions.Remove(currentUnitTarget);
             }
+            currentUnitToMoveOrAction.GetComponent<Unit>().hideWeapons();
         }
     }
 

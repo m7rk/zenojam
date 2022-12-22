@@ -38,7 +38,9 @@ public class Unit : MonoBehaviour
 
     public bool outline = false;
 
-    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer mainSpriteRenderer;
+
+    public SpriteRenderer playerBook;
 
     void Start()
     {
@@ -49,7 +51,7 @@ public class Unit : MonoBehaviour
 
         }
 
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        mainSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         oldMaterial = GetComponentInChildren<SpriteRenderer>().material;
         if (!thisIsPlayer)
         {
@@ -125,5 +127,17 @@ public class Unit : MonoBehaviour
     public void triggerFlashTime()
     {
         flashTime = MAX_HURT_FLASH_TIME;
+    }
+
+    public void showBook()
+    {
+        playerBook.gameObject.SetActive(true);
+        playerBook.transform.localPosition = new Vector3(playerBook.transform.localPosition.x, playerBook.transform.localPosition.y, faceFront ? -0.01f : 0.01f);
+
+    }
+
+    public void hideWeapons()
+    {
+        playerBook.gameObject.SetActive(false);
     }
 }
