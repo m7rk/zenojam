@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 2
   range: 2
-  description: GREEN, AND POINTY
+  description: Green, shiny, and very pointy.
   image: {fileID: -989414692, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

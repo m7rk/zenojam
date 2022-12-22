@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 2
   range: 1
-  description: A PATHETIC, TINY WEAPON
+  description: A truly pathetic, tiny weapon.
   image: {fileID: -1984506733, guid: 6bf52c8ff44083942a3c4c7fb415c1c6, type: 3}

@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 0
   damageHi: 0
   range: 2
-  description: A PRETTY PETUNIA
+  description: A pretty petunia. How did it get here...
   image: {fileID: 963835434, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

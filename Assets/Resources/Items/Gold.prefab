@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 0
   damageHi: 1
   range: 5
-  description: A BAG OF CASH!
+  description: A big bag of cash.
   image: {fileID: -1184544873, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

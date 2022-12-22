@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 1
   range: 3
-  description: BASIC FIRE ATTACK
+  description: You remember this book from magic 101.
   image: {fileID: 1458854617, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}

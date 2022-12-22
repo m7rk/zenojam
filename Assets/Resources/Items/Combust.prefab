@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 2
   damageHi: 3
   range: 6
-  description: A VERY FAST FIREBALL
+  description: Details on creating a fast fireball.
   image: {fileID: -937835756, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}

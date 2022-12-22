@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 1
   range: 4
-  description: CREATES A WALL OF FLAME
+  description: A wall of flame is on the cover.
   image: {fileID: -712116297, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}

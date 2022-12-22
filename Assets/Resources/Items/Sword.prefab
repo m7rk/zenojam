@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 2
   damageHi: 4
   range: 1
-  description: GENERIC, BORING SWORD
+  description: A generic, ordinary sword.
   image: {fileID: -597007777, guid: 6bf52c8ff44083942a3c4c7fb415c1c6, type: 3}

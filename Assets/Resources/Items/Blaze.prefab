@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 3
   damageHi: 5
   range: 4
-  description: SINGLE USE, DISPOSABLE BOOK
+  description: Single use, disposable pamphlet.
   image: {fileID: -1944893143, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}

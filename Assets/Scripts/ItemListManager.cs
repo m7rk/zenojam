@@ -43,7 +43,7 @@ public class ItemListManager : MonoBehaviour
                 dmg.text = (v.damageLow != v.damageHi) ? v.damageLow + "~" + v.damageHi : "" + v.damageLow;
                 range.text = "" + v.range;
                 descriptor.text = v.description;
-                tname.text = v.name;
+                tname.text = v.name.ToUpper();
             }
             ++x;
         }

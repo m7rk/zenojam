@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 1
   range: 1
-  description: HITS NEARBY BADDIES, TOO
+  description: Creates a 3x3 flame, whatever that means
   image: {fileID: 1389616216, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}

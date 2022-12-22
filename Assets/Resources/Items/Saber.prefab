@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 4
   damageHi: 5
   range: 1
-  description: FINALLY, A DECENT WEAPON
+  description: A really really really heavy sword.
   image: {fileID: 21300000, guid: 0800f0f6f44b167488bbadb696a07e9b, type: 3}

@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 0
   damageHi: 0
   range: 6
-  description: BIRD FOOD
+  description: It's bird food. Smells weird.
   image: {fileID: -1021920203, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

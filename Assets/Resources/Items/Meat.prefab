@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 1
   damageHi: 1
   range: 1
-  description: FOOD FIT FOR A HYENA
+  description: Food, fit for a hyena.
   image: {fileID: 1438436305, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}

@@ -47,5 +47,5 @@ MonoBehaviour:
   damageLow: 2
   damageHi: 3
   range: 1
-  description: MADE IN CLEAVELAND
+  description: 'Engraved: "Made In Cleaveland"'
   image: {fileID: -293606435, guid: 6bf52c8ff44083942a3c4c7fb415c1c6, type: 3}
