@@ -169,7 +169,7 @@ MonoBehaviour:
   faceRight: 1
   speed: 3
   health: 1
-  item: {fileID: 0}
+  AI_range: 1
   healthPrefab: {fileID: 3754268584229062117, guid: 97b458b01a3857a4aba34f171fcb750b, type: 3}
   thisIsPlayer: 0
   aggro: 0

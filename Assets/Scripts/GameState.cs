@@ -46,6 +46,9 @@ public class GameState : MonoBehaviour
     // AI Stuff
     private int AI_AGGRO_RANGE = 7;
 
+    // fuck
+    private readonly Vector3Int VECTOR_NULL = new Vector3Int(1000, 1000, 100);
+
     public enum State
     {
         PLAYER_DECIDE_MOVE,
@@ -162,7 +165,6 @@ public class GameState : MonoBehaviour
             pendingUnitPath.RemoveAt(0);
             if (pendingUnitPath.Count == 0)
             {
-                currentUnitToMoveOrAction = null;
                 pendingUnitPath = null;
                 return true;
             }
@@ -195,7 +197,7 @@ public class GameState : MonoBehaviour
         {
             actionTimer = 0;
             execAttack();
-            currentUnitToMoveOrAction = null;
+            currentUnitTarget = VECTOR_NULL;
             return true;
         }
         // run animation
@@ -208,17 +210,17 @@ public class GameState : MonoBehaviour
 
     void execAttack()
     {
-        var attackDmg = Random.Range(currentUnitToMoveOrAction.item.damageLow, currentUnitToMoveOrAction.item.damageHi);
-
         if (currentUnitTarget == playerPosition)
         {
             if (playerUnit.hurt(1))
             {
+                Debug.Log("player was hit!");
                 SceneManager.LoadScene("Title");
             }
         }
         else
         {
+            var attackDmg = Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
             {
@@ -246,8 +248,6 @@ public class GameState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // i hate this pattern but its okay
-        playerUnit.item = playerItems[playerItemIndex];
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:
@@ -301,7 +301,7 @@ public class GameState : MonoBehaviour
 
     public List<Vector3Int> actionableTiles()
     {
-        var inRange = gu.reachableTilesFrom(playerPosition, playerUnit.item.range, new HashSet<Vector3Int>());
+        var inRange = gu.reachableTilesFrom(playerPosition, playerItems[playerItemIndex].range, new HashSet<Vector3Int>());
         List<Vector3Int> hasNPC = new List<Vector3Int>();
         foreach (var v in inRange)
         {
@@ -336,6 +336,7 @@ public class GameState : MonoBehaviour
 
     void generateAITurnOrder()
     {
+        currentUnitToMoveOrAction = null;
         AITurnOrder = new List<Vector3Int>();
 
         foreach(var v in NPCPositions.Keys)
@@ -345,84 +346,125 @@ public class GameState : MonoBehaviour
         AITurnOrder.Sort((a, b) => (Mathf.Abs(a.x - playerPosition.x) + Mathf.Abs(a.y - playerPosition.y)) - (Mathf.Abs(b.x - playerPosition.x) + Mathf.Abs(b.y - playerPosition.y)));
     }
 
-    bool aiMove()
+    // does two things
+    // set the currentUnitToMove
+    // set the currentUnitTarget (if possible)
+    // returns TRUE if no more players to move
+    // returns FALSE if we need to process move and action.
+    public bool generateAIMovePlan()
     {
-        // check if there is a unit moving
-        if(currentUnitToMoveOrAction == null)
+        // any units left to move?
+        if (AITurnOrder.Count == 0)
         {
-            // any units left to move?
-            if(AITurnOrder.Count == 0)
+            // done!
+            return true;
+        }
+
+        // pull the coordinate of the AI player to move.
+        var curTurn = AITurnOrder[0];
+        AITurnOrder.RemoveAt(0);
+        currentUnitToMoveOrAction = NPCPositions[curTurn];
+
+        // check if there exists a possible path to the player.
+        var reachable = gu.reachableTilesFrom(curTurn, 1000, NPCOccupiedTiles());
+        if (reachable.Contains(playerPosition))
+        {
+            pendingUnitPath = gu.findPathTo(curTurn, 1000, playerPosition, NPCOccupiedTiles());
+            // cut off last move since that would collide with player
+            pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+
+            // aggro check
+            if (pendingUnitPath.Count < AI_AGGRO_RANGE)
             {
-                // done!
-                return true;
+                currentUnitToMoveOrAction.aggro = true;
             }
 
-            // pull the coordinate of the AI player to move.
-            var curTurn = AITurnOrder[0];
-            AITurnOrder.RemoveAt(0);
-            currentUnitToMoveOrAction = NPCPositions[curTurn];
-
-            // check if there exists a possible path to the player.
-            var reachable = gu.reachableTilesFrom(curTurn, 1000, NPCOccupiedTiles());
-
-            if(reachable.Contains(playerPosition))
+            // only go as far as we can if length too big
+            while (pendingUnitPath.Count > currentUnitToMoveOrAction.speed)
             {
-                pendingUnitPath = gu.findPathTo(curTurn, 1000, playerPosition, NPCOccupiedTiles());
-
-                // cut off last move since that would collide with player
                 pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+            }
 
-                // aggro check
-                if(pendingUnitPath.Count < AI_AGGRO_RANGE)
+            if (currentUnitToMoveOrAction.aggro)
+            {
+                // we were next to the player, so we don't need to update position after all.
+                if (pendingUnitPath.Count == 0)
                 {
-                    currentUnitToMoveOrAction.aggro = true;
+                    pendingUnitPath = null;
+                    return false;
                 }
-
-                // only go as far as we can if length too big
-                while (pendingUnitPath.Count > currentUnitToMoveOrAction.speed)
-                {
-                    pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
-                }
-
-                if (currentUnitToMoveOrAction.aggro)
-                {
-                    // we were next to the player, so we don't need to update position after all.
-                    if (pendingUnitPath.Count == 0)
-                    {
-                        currentUnitToMoveOrAction = null;
-                        pendingUnitPath = null;
-                        return false;
-                    }
-                    // update AI positon and go ahead with movement
-                    else
-                    {
-                        NPCPositions.Remove(curTurn);
-                        NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMoveOrAction;
-                    }
-                }
+                // update AI positon and go ahead with movement
                 else
                 {
-                    // player is too far away, do nothing
-                    currentUnitToMoveOrAction = null;
-                    pendingUnitPath = null;
+                    NPCPositions.Remove(curTurn);
+                    NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMoveOrAction;
                     return false;
                 }
             }
             else
             {
-                // can't reach player, just do nothing.
+                // we aren't aggro yet
                 pendingUnitPath = null;
-                currentUnitToMoveOrAction = null;
                 return false;
             }
-
-
         }
-
-        moveUnit();
-        return false;
-
+        else
+        {
+            // can't reach player, just do nothing.
+            pendingUnitPath = null;
+            return false;
+        }
     }
 
 
+    // does two things
+    // set the currentUnitToMove
+    // set the pendingUnitPath (if possiblt)
+    public void generateAIAttackPlan()
+    {
+        // the unit is in range!
+        if ((pendingUnitPath[pendingUnitPath.Count - 1] - playerPosition).magnitude >= currentUnitToMoveOrAction.AI_range)
+        {
+            currentUnitTarget = playerPosition;
+        }
+        else
+        {
+            currentUnitTarget = VECTOR_NULL;
+        }
+    }
+
+    bool aiMove()
+    {
+        // check if there is a unit moving
+        if(currentUnitToMoveOrAction == null)
+        {
+            // if this is true we're done.
+            if (generateAIMovePlan())
+            {
+                return true;
+            }
+        }
+
+        if (pendingUnitPath != null)
+        {
+            // run unit move animation.
+            // when this finishes, check for attack.
+            if(moveUnit())
+            {
+                generateAIAttackPlan();
+            }
+            
+        }
+        else if(currentUnitTarget != VECTOR_NULL)
+        {
+            currentUnitToMoveOrAction = null;
+            /**
+            if(executeAction())
+            {
+                currentUnitToMoveOrAction = null;
+            }
+            */
+        }
+        return false;
+    }
 }

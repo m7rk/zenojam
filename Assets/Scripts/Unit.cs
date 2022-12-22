@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
 
     public int speed;
     public int health;
-    public GameItem item;
+    public int AI_range;
 
     public GameObject healthPrefab;
 
@@ -100,6 +100,12 @@ public class Unit : MonoBehaviour
     // return true if ded
     public bool hurt(int count)
     {
+        if(thisIsPlayer)
+        {
+            // route elsewhere
+            return false;
+        }
+
         for (int i = 0; i != count; ++i)
         {
             GetComponentInChildren<HealthBar>(true).hurt();
