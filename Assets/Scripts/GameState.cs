@@ -36,6 +36,8 @@ public class GameState : MonoBehaviour
     private List<Vector3Int> AITurnOrder;
     public float actionTimer;
 
+    private Vector3Int AI_MEMO_MOVING; 
+
     private Vector3Int currentUnitTarget;
 
     // NPC Stuff, pop'd by levelgnerator
@@ -46,8 +48,6 @@ public class GameState : MonoBehaviour
     // AI Stuff
     private int AI_AGGRO_RANGE = 7;
 
-    // fuck
-    private readonly Vector3Int VECTOR_NULL = new Vector3Int(1000, 1000, 100);
 
     public enum State
     {
@@ -197,7 +197,6 @@ public class GameState : MonoBehaviour
         {
             actionTimer = 0;
             execAttack();
-            currentUnitTarget = VECTOR_NULL;
             return true;
         }
         // run animation
@@ -398,6 +397,7 @@ public class GameState : MonoBehaviour
                 {
                     NPCPositions.Remove(curTurn);
                     NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMoveOrAction;
+                    AI_MEMO_MOVING = pendingUnitPath[pendingUnitPath.Count - 1];
                     return false;
                 }
             }
@@ -423,14 +423,16 @@ public class GameState : MonoBehaviour
     public void generateAIAttackPlan()
     {
         // the unit is in range!
-        if ((pendingUnitPath[pendingUnitPath.Count - 1] - playerPosition).magnitude >= currentUnitToMoveOrAction.AI_range)
+        if ((AI_MEMO_MOVING - playerPosition).magnitude <= currentUnitToMoveOrAction.AI_range)
         {
+            Debug.Log("we can attack!");
             currentUnitTarget = playerPosition;
         }
         else
         {
-            currentUnitTarget = VECTOR_NULL;
+            currentUnitToMoveOrAction = null;
         }
+
     }
 
     bool aiMove()
@@ -443,8 +445,15 @@ public class GameState : MonoBehaviour
             {
                 return true;
             }
+            // jump to attack logic if move was null
+            if(pendingUnitPath == null)
+            {
+                generateAIAttackPlan();
+                return false;
+            }
         }
 
+        // always do move first if we have to.
         if (pendingUnitPath != null)
         {
             // run unit move animation.
@@ -452,19 +461,18 @@ public class GameState : MonoBehaviour
             if(moveUnit())
             {
                 generateAIAttackPlan();
+                return false;
             }
             
         }
-        else if(currentUnitTarget != VECTOR_NULL)
+        else
         {
-            currentUnitToMoveOrAction = null;
-            /**
             if(executeAction())
             {
                 currentUnitToMoveOrAction = null;
             }
-            */
         }
+
         return false;
     }
 }
