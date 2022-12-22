@@ -50,6 +50,20 @@ public class LevelGenerator : MonoBehaviour
             // ground items
             gs.groundItems = new Dictionary<Vector3, GroundItem>();
 
+
+            // practice seed (functionize!!!)
+            var v = Instantiate(groundItemPrefab);
+            v.transform.SetParent(this.transform);
+            v.transform.position = gs.globalPositionForTile(GameState.PRACTICE_SEED_POSITION) + new Vector3(0, -0.22f, 1f);
+            v.GetComponent<GroundItem>().setItemType("Seed");
+            gs.groundItems[GameState.PRACTICE_SEED_POSITION] = v.GetComponent<GroundItem>();
+
+            // practice kenku
+            GameObject k = Instantiate(npcPrefabs[4]);
+            k.transform.SetParent(this.transform);
+            k.transform.position = gs.globalPositionForTile(GameState.PRACTICE_KENKU_POSITION);
+            gs.NPCPositions[GameState.PRACTICE_KENKU_POSITION] = k.GetComponent<Unit>();
+
             return;
         }
             

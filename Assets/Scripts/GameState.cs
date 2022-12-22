@@ -12,6 +12,7 @@ public class GameState : MonoBehaviour
     // player junk
     public Vector3Int playerPosition;
     public Unit playerUnit;
+    public DungeonUI dungeonUI;
 
     // preserve between floors
     public static List<GameItem> playerItems;
@@ -37,6 +38,7 @@ public class GameState : MonoBehaviour
     private List<Vector3Int> pendingUnitPath;
     private List<Vector3Int> AITurnOrder;
     public float actionTimer;
+    private bool levelEndFlag = false;
 
     private Vector3Int AI_MEMO_MOVING; 
 
@@ -49,6 +51,9 @@ public class GameState : MonoBehaviour
     public Dictionary<Vector3, GroundItem> groundItems;
     // AI Stuff
     private int AI_AGGRO_RANGE = 7;
+
+    public static readonly Vector3Int PRACTICE_SEED_POSITION = new Vector3Int(4, 4, 0);
+    public static readonly Vector3Int PRACTICE_KENKU_POSITION = new Vector3Int(8, 8, 0);
 
 
     public enum State
@@ -63,7 +68,10 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
-        playerItems = startingItems;
+        if (playerItems == null)
+        {
+            playerItems = startingItems;
+        }
         playerPosition = new Vector3Int(0, 0, 0);
         playerUnit.transform.position = globalPositionForTile(playerPosition);
         showReachableTilesForPlayer();
@@ -275,7 +283,26 @@ public class GameState : MonoBehaviour
     // use lateupdate because we want sprites to be overriden..
     void LateUpdate()
     {
-        hpBarT.setHP(playerUnit.health);
+        if(levelEndFlag)
+        {
+            return;
+        }
+
+        // tutorial stuff
+        if (GameState.floorID == 10)
+        {
+            if(playerItemIndex == 1)
+            {
+                dungeonUI.progressEquip();
+            }
+
+            if(playerPosition.x > PRACTICE_KENKU_POSITION.x && playerPosition.y > PRACTICE_KENKU_POSITION.y)
+            {
+                dungeonUI.progressUse();
+            }
+        }
+
+            hpBarT.setHP(playerUnit.health);
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:
@@ -293,6 +320,14 @@ public class GameState : MonoBehaviour
                 break;
 
             case State.PLAYER_DECIDE_ACTION:
+                if(GameState.floorID == 10)
+                {
+                    dungeonUI.progressMove();
+                    if(playerPosition.Equals(GameState.PRACTICE_SEED_POSITION))
+                    {
+                        dungeonUI.progressPickup();
+                    }
+                }
                 // wait for a valid action
                 // break early if they should escape
                 playerDecideAction();
@@ -349,16 +384,21 @@ public class GameState : MonoBehaviour
     {
         if (playerPosition == ladderPosition)
         {
-            floorID -= 1;
-            if (floorID == 0)
-            {
-                SceneManager.LoadScene("Title");
+            FindObjectOfType<Transitioner>().endScene(toNextLevel);
+            levelEndFlag = true;
+        }
+    }
+    void toNextLevel()
+    {
+        floorID -= 1;
+        if (floorID == 0)
+        {
+            SceneManager.LoadScene("Title");
 
-            }
-            else
-            {
-                SceneManager.LoadScene("Dungeon");
-            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Dungeon");
         }
     }
 
@@ -402,8 +442,8 @@ public class GameState : MonoBehaviour
             // cut off last move since that would collide with player
             pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
 
-            // aggro check
-            if (pendingUnitPath.Count < AI_AGGRO_RANGE)
+            // aggro check - disable on tutorial floor.
+            if (pendingUnitPath.Count < AI_AGGRO_RANGE && GameState.floorID != 10)
             {
                 currentUnitToMoveOrAction.aggro = true;
             }
@@ -452,7 +492,7 @@ public class GameState : MonoBehaviour
         int dist = Math.Abs(AI_MEMO_MOVING.x - playerPosition.x) + Math.Abs(AI_MEMO_MOVING.y - playerPosition.y);
 
         // the unit is in range!
-        if (dist <= currentUnitToMoveOrAction.AI_range)
+        if (dist <= currentUnitToMoveOrAction.AI_range && GameState.floorID != 10)
         {
             currentUnitTarget = playerPosition;
         }
