@@ -18,6 +18,7 @@ public class GameState : MonoBehaviour
     public static int playerItemIndex = 0;
     public List<GameItem> startingItems;
     public ItemListManager ilm;
+    public HPBar hpBarT;
 
     private readonly float MOVE_ANIM_SPEED = 4f;
     private readonly float ACTION_SPEED = 0.4f;
@@ -219,7 +220,7 @@ public class GameState : MonoBehaviour
 
     void execAttack()
     {
-        if (currentUnitTarget == playerPosition)
+        if (currentUnitTarget.Equals(playerPosition))
         {
             if (playerUnit.hurt(1))
             {
@@ -258,6 +259,7 @@ public class GameState : MonoBehaviour
     // use lateupdate because we want sprites to be overriden..
     void LateUpdate()
     {
+        hpBarT.setHP(playerUnit.health);
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:

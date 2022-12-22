@@ -105,6 +105,7 @@ public class Unit : MonoBehaviour
     {
         if(thisIsPlayer)
         {
+            health -= 1;
             // route elsewhere
             return false;
         }
