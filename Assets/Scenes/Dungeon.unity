@@ -3094,6 +3094,7 @@ MonoBehaviour:
   ladderPosition: {x: 0, y: 0, z: 0}
   floorText: {fileID: 1830652151}
   actionTimer: 0
+  projectileBase: {fileID: 2522329389266222564, guid: 6ba14812678158b4f95365e5c69dc528, type: 3}
 --- !u!4 &1557024817
 Transform:
   m_ObjectHideFlags: 0
