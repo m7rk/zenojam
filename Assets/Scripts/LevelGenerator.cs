@@ -12,6 +12,8 @@ public class LevelGenerator : MonoBehaviour
     public Tile[] tiles;
     public GameObject[] npcPrefabs;
 
+    public GameObject boss;
+
     // tweak map gen with these
     public readonly int DIMS = 9;
     public readonly float FILL_THRESH = 0.5f;
@@ -94,6 +96,8 @@ public class LevelGenerator : MonoBehaviour
         // No NPCs on final floor.
         if (GameState.floorID == 1)
         {
+            spawnNPC(boss, gs.ladderPosition);
+            gs.ladderPosition = new Vector3Int(1000, 1000, 0);
             return;
         }
 

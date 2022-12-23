@@ -1860,7 +1860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 757760916}
   m_Layer: 0
-  m_Name: Melee2
+  m_Name: Melee2F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757760915}
   m_LocalRotation: {x: -0, y: -0, z: 0.09390871, w: 0.99558085}
-  m_LocalPosition: {x: 0.623, y: 0.272, z: 0}
+  m_LocalPosition: {x: 0.20799994, y: 0.19300002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1883,8 +1883,8 @@ Transform:
   - {fileID: 1400668432}
   - {fileID: 671006570}
   - {fileID: 2075643105}
-  m_Father: {fileID: 804372415}
-  m_RootOrder: 3
+  m_Father: {fileID: 1751383003}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.777}
 --- !u!1 &789021294
 GameObject:
@@ -2052,10 +2052,6 @@ Transform:
   m_Children:
   - {fileID: 1751383003}
   - {fileID: 933385083}
-  - {fileID: 851460729}
-  - {fileID: 757760916}
-  - {fileID: 2111996913}
-  - {fileID: 1313941681}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2112,7 +2108,12 @@ MonoBehaviour:
   mainSpriteRenderer: {fileID: 1751383004}
   playerBook: {fileID: 933385084}
   AIRangedProjectile: {fileID: 0}
-  playerMelees: {fileID: 0}
+  playerMeleesF:
+  - {fileID: 851460728}
+  - {fileID: 757760915}
+  - {fileID: 2111996912}
+  - {fileID: 1313941680}
+  playerMeleesB: []
 --- !u!1 &851460728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,7 +2124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 851460729}
   m_Layer: 0
-  m_Name: Melee1
+  m_Name: Melee1F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2136,8 +2137,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851460728}
-  m_LocalRotation: {x: -0, y: -0, z: 0.25621733, w: 0.9666192}
-  m_LocalPosition: {x: 0.467, y: 0.369, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.25621736, w: 0.96661925}
+  m_LocalPosition: {x: 0.051999927, y: 0.29000002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2146,8 +2147,8 @@ Transform:
   - {fileID: 1835112775}
   - {fileID: 1671881842}
   - {fileID: 470328578}
-  m_Father: {fileID: 804372415}
-  m_RootOrder: 2
+  m_Father: {fileID: 1751383003}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 29.691}
 --- !u!1 &853395718
 GameObject:
@@ -3535,7 +3536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1313941681}
   m_Layer: 0
-  m_Name: Melee4
+  m_Name: Melee4F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3549,7 +3550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313941680}
   m_LocalRotation: {x: -0, y: -0, z: -0.3898524, w: 0.9208774}
-  m_LocalPosition: {x: 0.64, y: 0.066, z: 0}
+  m_LocalPosition: {x: 0.2249999, y: -0.013000011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3558,8 +3559,8 @@ Transform:
   - {fileID: 1728744431}
   - {fileID: 1864148634}
   - {fileID: 1860325911}
-  m_Father: {fileID: 804372415}
-  m_RootOrder: 5
+  m_Father: {fileID: 1751383003}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45.891}
 --- !u!1 &1400668431
 GameObject:
@@ -4617,10 +4618,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751383002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.19999999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 851460729}
+  - {fileID: 757760916}
+  - {fileID: 2111996913}
+  - {fileID: 1313941681}
   m_Father: {fileID: 804372415}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4665,7 +4670,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 2074232602, guid: f205c707702d3e14f8b01d2dc3a29857, type: 3}
+  m_Sprite: {fileID: 1134193096, guid: 078a91af8045a3942973f40a59dec9e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6295,7 +6300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2111996913}
   m_Layer: 0
-  m_Name: Melee3
+  m_Name: Melee3F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6309,7 +6314,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111996912}
   m_LocalRotation: {x: -0, y: -0, z: -0.15676036, w: 0.9876367}
-  m_LocalPosition: {x: 0.681, y: 0.205, z: 0}
+  m_LocalPosition: {x: 0.2659999, y: 0.12599999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6318,8 +6323,8 @@ Transform:
   - {fileID: 1972272048}
   - {fileID: 705987867}
   - {fileID: 2100797296}
-  m_Father: {fileID: 804372415}
-  m_RootOrder: 4
+  m_Father: {fileID: 1751383003}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -18.038}
 --- !u!1 &2147319538
 GameObject:

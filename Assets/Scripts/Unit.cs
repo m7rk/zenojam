@@ -156,9 +156,10 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void showBook()
+    public void showBook(Sprite book)
     {
         playerBook.gameObject.SetActive(true);
+        playerBook.GetComponent<SpriteRenderer>().sprite = book;
         playerBook.transform.localPosition = new Vector3(playerBook.transform.localPosition.x, playerBook.transform.localPosition.y, faceFront ? -0.01f : 0.01f);
     }
 
@@ -175,6 +176,7 @@ public class Unit : MonoBehaviour
 
     public void hideWeapons()
     {
+        playerBook.gameObject.SetActive(false);
         foreach (var v in playerMeleesF)
         {
             for (int i = 0; i != v.transform.childCount; ++i)

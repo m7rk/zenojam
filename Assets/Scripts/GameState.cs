@@ -293,7 +293,7 @@ public class GameState : MonoBehaviour
             {
                 if (playerItems[playerItemIndex].range > 1)
                 {
-                    currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
+                    currentUnitToMoveOrAction.GetComponent<Unit>().showBook(playerItems[playerItemIndex].image);
                 } 
                 else
                 {
@@ -371,8 +371,9 @@ public class GameState : MonoBehaviour
     void LateUpdate()
     {
         getCursorContext();
+        hpBarT.setHP(playerUnit.health, PLAYER_MAXHEALTH);
 
-        if(playerUnit.health == 0)
+        if (playerUnit.health == 0)
         {
             return;
         }
@@ -395,8 +396,6 @@ public class GameState : MonoBehaviour
                 dungeonUI.progressUse();
             }
         }
-
-            hpBarT.setHP(playerUnit.health, PLAYER_MAXHEALTH);
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:

@@ -15,18 +15,19 @@ public class Title : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            foreach(var v in scenes)
-            {
-                v.SetActive(false);
-            }    
             scenePointer++;
-            if (scenePointer == scenes.Count)
+            if (scenePointer >= scenes.Count)
             {
                 GameState.floorID = 10;
                 SceneManager.LoadScene("Dungeon");
+                return;
             }
             else
             {
+                foreach (var v in scenes)
+                {
+                    v.SetActive(false);
+                }
                 scenes[scenePointer].SetActive(true);
             }
         }
