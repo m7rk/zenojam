@@ -36,6 +36,9 @@ public class HPBar : MonoBehaviour
         var rt = ((RectTransform)hpBarStretch.transform);
         rt.sizeDelta = new Vector2(4, barLenDest);
         rt.anchoredPosition = new Vector2(0, barHDest);
+
+        rt = ((RectTransform)hpTop.transform);
+        rt.anchoredPosition = new Vector2(0, -28 + (barLenDest));
     }
 
     public void setHP(int hp, int maxHP)

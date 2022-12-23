@@ -21,7 +21,7 @@ public class GameState : MonoBehaviour
     public static int PLAYER_MAXHEALTH = 5;
     public static int PLAYER_MAXSPEED = 3;
     public static bool pacifist = true;
-    public static int floorID = 10;
+    public static int floorID = 9;
 
     public List<GameItem> startingItems;
     public ItemListManager ilm;
@@ -266,7 +266,7 @@ public class GameState : MonoBehaviour
 
         var attackAnimAry = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront : currentUnitToMoveOrAction.attackBack;
 
-        if(state == State.PLAYER_ACTION && playerItems[playerItemIndex].range == 1)
+        if(state == State.PLAYER_ACTION && playerItems[playerItemIndex].range == 1 && playerItems[playerItemIndex].name != "Fisticuffs")
         {
             attackAnimAry = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.altAttackFront : currentUnitToMoveOrAction.altAttackBack;
         }
@@ -326,7 +326,7 @@ public class GameState : MonoBehaviour
         {
             if (playerUnit.hurt(1))
             {
-                SceneManager.LoadScene("Title");
+
             }
         }
         else
@@ -375,6 +375,11 @@ public class GameState : MonoBehaviour
         }
     }
 
+    void playerDied()
+    {
+        FindObjectOfType<Transitioner>().endScene(toNextLevel);
+    }
+
     // Update is called once per frame
     // use lateupdate because we want sprites to be overriden..
     void LateUpdate()
@@ -390,7 +395,7 @@ public class GameState : MonoBehaviour
         // end game no hp
         if (playerUnit.health == 0)
         {
-            FindObjectOfType<Transitioner>().endScene(toNextLevel);
+            Invoke("playerDied", 1f);
             levelEndFlag = true;
             return;
         }
@@ -532,20 +537,22 @@ public class GameState : MonoBehaviour
         GameState.floorID = 9;
     }
 
-
     void toNextLevel()
     {
         floorID -= 1;
 
+        //ded
         if(playerUnit.health == 0)
         {
             PARAMS_RESET();
             SceneManager.LoadScene("Dungeon");
         }
-        if (floorID == 0)
+        // bad end
+        else if (floorID == 0)
         {
             SceneManager.LoadScene("BadEnd");
         }
+        // good end
         else if (floorID == 1 && GameState.pacifist)
         {
             SceneManager.LoadScene("GoodEnd");

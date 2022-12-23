@@ -129,6 +129,11 @@ public class Unit : MonoBehaviour
             {
                 Destroy(this.gameObject);
             }
+            // keep flashed until transitioner kicks in
+            if(health <= 0 && thisIsPlayer)
+            {
+                flashTime = 0.1f;
+            }
         }
     }
 
@@ -169,7 +174,14 @@ public class Unit : MonoBehaviour
         {
             v.SetActive(false);
         }
+
         var pm = playerMeleesF[frame];
+
+        if (!faceFront)
+        {
+            pm = playerMeleesB[frame];
+        }
+
         pm.SetActive(true);
         pm.transform.Find(name).gameObject.SetActive(true);
     }
@@ -184,5 +196,13 @@ public class Unit : MonoBehaviour
                 v.transform.GetChild(i).gameObject.SetActive(false);
             }
         }
+        foreach (var v in playerMeleesB)
+        {
+            for (int i = 0; i != v.transform.childCount; ++i)
+            {
+                v.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
     }
 }

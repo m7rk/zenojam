@@ -185,7 +185,7 @@ MonoBehaviour:
     FATHERS WERE ABLE TO PUT A STOP\nTO THE SENSELESS FIGHTING, AND YOU\nSTAND GUARD
     AT THE GATES TO KEEP THE PEACE.\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
   m_sharedMaterial: {fileID: -7721940899237406625, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &257568738
@@ -324,7 +324,7 @@ MonoBehaviour:
 
     CHALLENBGE"'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
   m_sharedMaterial: {fileID: -7721940899237406625, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &309867453
@@ -463,7 +463,7 @@ MonoBehaviour:
 
     THE SITUATION SEEMS HOPELESS.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
   m_sharedMaterial: {fileID: -7721940899237406625, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &492667614
@@ -1504,7 +1504,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: LIFE IS GOOD.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
   m_sharedMaterial: {fileID: -7721940899237406625, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1764158751
@@ -1639,8 +1639,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: TO HECK AND BACK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
-  m_sharedMaterial: {fileID: -7721940899237406625, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
+  m_sharedMaterial: {fileID: -7721940899237406625, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1776,7 +1776,7 @@ MonoBehaviour:
 
     AND LET YOUR GUARD DOWN.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f8884ea395d6b459b2b85859c839f3, type: 2}
   m_sharedMaterial: {fileID: -7721940899237406625, guid: c57d7a3dedbf83b43b4f244ef7da1dee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1877026336
