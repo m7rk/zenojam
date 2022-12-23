@@ -516,7 +516,7 @@ public class GameState : MonoBehaviour
 
     public static void PARAMS_RESET()
     {
-        GameState.playerItems = new List<GameItem>();
+        GameState.playerItems = null;
         GameState.playerItemIndex = 0;
         GameState.PLAYER_MAXHEALTH = 5;
         GameState.PLAYER_MAXSPEED = 3;

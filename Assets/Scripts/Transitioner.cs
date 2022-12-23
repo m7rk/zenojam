@@ -18,27 +18,29 @@ public class Transitioner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RectTransform rt = ((RectTransform)this.transform);
 
-        if(endSceneFlag)
+        if (endSceneFlag)
         {
-            this.transform.position += new Vector3(0, 0 - (Time.deltaTime * 700f), 0f);
-            if(this.transform.position.y < 360)
+            rt.anchoredPosition += new Vector2(0, 0 - (Time.deltaTime * 700f));
+            if(rt.anchoredPosition.y < 0)
             {
 
-                this.transform.position = new Vector3(480, 360, 0f);
+                rt.anchoredPosition = new Vector3(0, 0, 0f);
                 transitionDone.Invoke();
             }
         } 
         else
         {
-            this.transform.position += new Vector3(0, 0 - (Time.deltaTime * 700f), 0f);
+            rt.anchoredPosition += new Vector2(0, 0 - (Time.deltaTime * 700f));
         }
     }
 
     public void endScene(Action onEnd)
     {
+        RectTransform rt = ((RectTransform)this.transform);
         transitionDone = onEnd;
         endSceneFlag = true;
-        this.transform.position = new Vector3(480, 360*3, 0f);
+        rt.anchoredPosition = new Vector3(0, 360, 0f);
     }
 }
