@@ -21,7 +21,7 @@ public class GameState : MonoBehaviour
     public static int PLAYER_MAXHEALTH = 5;
     public static int PLAYER_MAXSPEED = 3;
     public static bool pacifist = true;
-    public static int floorID = 9;
+    public static int floorID = 10;
 
     public List<GameItem> startingItems;
     public ItemListManager ilm;
@@ -254,7 +254,9 @@ public class GameState : MonoBehaviour
             {
                 var v = Instantiate(projectileBase);
                 // if we're the player load the sprite, otherwise, we're an AI.
-                v.GetComponent<SpriteRenderer>().sprite = (state == State.PLAYER_ACTION) ? playerItems[playerItemIndex].image : currentUnitToMoveOrAction.AIRangedProjectile;
+                v.GetComponent<RangedDecal>().anims = new Sprite[] { (state == State.PLAYER_ACTION) ? playerItems[playerItemIndex].image : currentUnitToMoveOrAction.AIRangedProjectile };
+                // fireballs get special animation.
+
                 v.transform.SetParent(this.transform);
                 v.transform.position = currentUnitToMoveOrAction.transform.position;
                 // offset for items
@@ -451,8 +453,13 @@ public class GameState : MonoBehaviour
                 }
                 break;
             case State.AI_MOVE:
+                if (GameState.floorID == 10)
+                {
+                    dungeonUI.progressAction();
+                }
+                    
                 // animate all NPCs
-                if(aiMove())
+                if (aiMove())
                 {
                     state = State.PLAYER_DECIDE_MOVE;
                     showReachableTilesForPlayer();
@@ -593,8 +600,23 @@ public class GameState : MonoBehaviour
             if(groundItems.ContainsKey(v) && groundItems[v].GetComponent<GroundItem>().canDistract(currentUnitToMoveOrAction.name))
             {
                 pendingUnitPath = gu.findPathTo(curTurn, 1000, v, NPCOccupiedTiles());
+
+                // make seeds always work in tutorial level
+                if (GameState.floorID == 10)
+                {
+                    var weakSeedToss = ((v == (new Vector3Int(1, 0, 0) + GameState.PRACTICE_KENKU_POSITION)) || (v == (new Vector3Int(0, 1, 0) + GameState.PRACTICE_KENKU_POSITION)));
+                    // if, the seed was not thrown far enough, move somewhere safe
+                    if (weakSeedToss && (v + new Vector3Int(1, 2, 0)) != playerPosition)
+                    {
+                        // forced move
+                        pendingUnitPath = gu.findPathTo(curTurn, 1000, GameState.PRACTICE_KENKU_POSITION + new Vector3Int(1, 2, 0), NPCOccupiedTiles());
+                    }
+                }
+
                 // last move cutoff
                 pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+
+
                 // we know we're in range so just do it and return
 
                 // we were next to the item so we don't need to update position after all.
@@ -675,6 +697,25 @@ public class GameState : MonoBehaviour
     {
         int dist = Math.Abs(AI_MEMO_MOVING.x - playerPosition.x) + Math.Abs(AI_MEMO_MOVING.y - playerPosition.y);
 
+        if (currentUnitToMoveOrAction.pacified)
+        {
+            // look at item
+            var ireachable = gu.reachableTilesFrom(AI_MEMO_MOVING, currentUnitToMoveOrAction.speed, NPCOccupiedTiles());
+            foreach (var v in ireachable)
+            {
+                if (groundItems.ContainsKey(v) && groundItems[v].GetComponent<GroundItem>().canDistract(currentUnitToMoveOrAction.name))
+                {
+                    currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(v).y - currentUnitToMoveOrAction.transform.position.y < 0;
+                    currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(v).x - currentUnitToMoveOrAction.transform.position.x > 0;
+
+                    // the AIS are backwards so this is, again,  a filthy hack to fix thsat
+                    if (state == State.AI_MOVE)
+                    {
+                        currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
+                    }
+                }
+            }
+        }
         // the unit is in range!
         if (dist <= currentUnitToMoveOrAction.AI_range && GameState.floorID != 10 && !currentUnitToMoveOrAction.pacified)
         {

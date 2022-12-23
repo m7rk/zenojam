@@ -173,13 +173,18 @@ MonoBehaviour:
   healthPrefab: {fileID: 3754268584229062117, guid: 97b458b01a3857a4aba34f171fcb750b, type: 3}
   thisIsPlayer: 0
   aggro: 0
+  pacified: 0
   attackFront:
   - {fileID: 1721305503, guid: 2acc23ef972badb42b428680b126f135, type: 3}
   attackBack:
   - {fileID: 1909585978, guid: 2acc23ef972badb42b428680b126f135, type: 3}
+  altAttackFront: []
+  altAttackBack: []
   hurtF: {fileID: -134907926, guid: 2acc23ef972badb42b428680b126f135, type: 3}
   hurtB: {fileID: 1425186347, guid: 2acc23ef972badb42b428680b126f135, type: 3}
   outline: 0
   mainSpriteRenderer: {fileID: 0}
   playerBook: {fileID: 0}
-  AIRangedProjectile: {fileID: 0}
+  AIRangedProjectile: {fileID: 562444110, guid: e90d71d549ce3d543b6984c0f015a9dd, type: 3}
+  playerMeleesF: []
+  playerMeleesB: []

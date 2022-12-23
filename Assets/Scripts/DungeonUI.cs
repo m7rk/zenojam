@@ -18,6 +18,7 @@ public class DungeonUI : MonoBehaviour
 
     private int prog = 0;
     public string moveText;
+    public string actionText;
     public string pickupText;
     public string equipText;
     public string useText;
@@ -55,36 +56,46 @@ public class DungeonUI : MonoBehaviour
             return;
         }
         prog = 1;
-        tutorialText.text = pickupText;
+        tutorialText.text = actionText;
     }
 
-    public void progressPickup()
+    public void progressAction()
     {
         if (prog != 1)
         {
             return;
         }
         prog = 2;
-        tutorialText.text = equipText;
+        tutorialText.text = pickupText;
     }
 
-    public void progressEquip()
+    public void progressPickup()
     {
         if (prog != 2)
         {
             return;
         }
         prog = 3;
-        tutorialText.text = useText;
+        tutorialText.text = equipText;
     }
 
-    public void progressUse()
+    public void progressEquip()
     {
         if (prog != 3)
         {
             return;
         }
         prog = 4;
+        tutorialText.text = useText;
+    }
+
+    public void progressUse()
+    {
+        if (prog != 4)
+        {
+            return;
+        }
+        prog = 5;
         tutorialText.text = ladderText;
     }
 
