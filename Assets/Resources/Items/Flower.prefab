@@ -47,7 +47,7 @@ MonoBehaviour:
   damageLow: 0
   damageHi: 0
   range: 2
-  description: A pretty petunia. How did it get here...
+  description: A pretty petunia. Ghosts find them comforting.
   image: {fileID: 963835434, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}
   distractable: 1
   edible: 0

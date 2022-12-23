@@ -354,6 +354,7 @@ public class GameState : MonoBehaviour
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
             {
+                GameState.pacifist = false;
                 NPCPositions.Remove(currentUnitTarget);
             }
             currentUnitToMoveOrAction.GetComponent<Unit>().hideWeapons();
