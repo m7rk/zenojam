@@ -49,3 +49,4 @@ MonoBehaviour:
   range: 2
   description: A pretty petunia. How did it get here...
   image: {fileID: 963835434, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}
+  distractionFor: Ghost

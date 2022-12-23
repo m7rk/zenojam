@@ -105,4 +105,20 @@ public class GridUtils : MonoBehaviour
     {
         overlayTileMap.ClearAllTiles();
     }
+
+    public List<Vector3Int> manhattan(Vector3Int start, int dist)
+    {
+        List<Vector3Int> b = new List<Vector3Int>();
+        for (int x = -dist; x != dist + 1; ++x)
+        {
+            for (int y = -dist; y != dist + 1; ++y)
+            {
+                if (Mathf.Abs(x) + Mathf.Abs(y) <= dist)
+                {
+                    b.Add(start + new Vector3Int(x, y, 0));
+                }
+            }
+        }
+        return b;
+    }
 }

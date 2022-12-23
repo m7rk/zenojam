@@ -34,6 +34,15 @@ public class LevelGenerator : MonoBehaviour
     public GameObject groundItemPrefab;
 
 
+    public void spawnNPC(GameObject prefab, Vector3Int pos)
+    {
+        GameObject k = Instantiate(prefab);
+        k.name = prefab.name;
+        k.transform.SetParent(this.transform);
+        k.transform.position = gs.globalPositionForTile(pos);
+        gs.NPCPositions[pos] = k.GetComponent<Unit>();
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,20 +59,10 @@ public class LevelGenerator : MonoBehaviour
 
             // ground items
             gs.groundItems = new Dictionary<Vector3, GroundItem>();
-
-
-            // practice seed (functionize!!!)
-            var v = Instantiate(groundItemPrefab);
-            v.transform.SetParent(this.transform);
-            v.transform.position = gs.globalPositionForTile(GameState.PRACTICE_SEED_POSITION) + new Vector3(0, -0.22f, 1f);
-            v.GetComponent<GroundItem>().setItemType("Seed");
-            gs.groundItems[GameState.PRACTICE_SEED_POSITION] = v.GetComponent<GroundItem>();
+            gs.putItem("Seed", GameState.PRACTICE_SEED_POSITION);
 
             // practice kenku
-            GameObject k = Instantiate(npcPrefabs[4]);
-            k.transform.SetParent(this.transform);
-            k.transform.position = gs.globalPositionForTile(GameState.PRACTICE_KENKU_POSITION);
-            gs.NPCPositions[GameState.PRACTICE_KENKU_POSITION] = k.GetComponent<Unit>();
+            spawnNPC(npcPrefabs[4], GameState.PRACTICE_KENKU_POSITION);
 
             return;
         }
@@ -124,10 +123,7 @@ public class LevelGenerator : MonoBehaviour
 
                     if (gu.levelTileMap.HasTile(targTile) && !gs.NPCPositions.ContainsKey(targTile))
                     {
-                        GameObject k = randomNPCForFloor();
-                        k.transform.SetParent(this.transform);
-                        k.transform.position = gs.globalPositionForTile(targTile);
-                        gs.NPCPositions[targTile] = k.GetComponent<Unit>();
+                        spawnNPC(randomNPCForFloor(), targTile);
                     }
                 }
             }
@@ -142,11 +138,7 @@ public class LevelGenerator : MonoBehaviour
             var testTile = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
             if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile))
             {
-                var v = Instantiate(groundItemPrefab);
-                v.transform.SetParent(this.transform);
-                v.transform.position = gs.globalPositionForTile(testTile) + new Vector3(0, -0.22f, 1f);
-                v.GetComponent<GroundItem>().setItemType(groundItemPrefab.GetComponent<GroundItem>().allItemName[i]);
-                gs.groundItems[testTile] = v.GetComponent<GroundItem>();
+                gs.putItem(groundItemPrefab.GetComponent<GroundItem>().allItemName[i], testTile);
             }
         }
     }

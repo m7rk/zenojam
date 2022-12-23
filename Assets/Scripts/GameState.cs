@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -17,12 +18,16 @@ public class GameState : MonoBehaviour
     // preserve between floors
     public static List<GameItem> playerItems;
     public static int playerItemIndex = 0;
+
+    public static int PLAYER_MAXHEALTH = 5;
+    public static int PLAYER_MAXSPEED = 3;
+
     public List<GameItem> startingItems;
     public ItemListManager ilm;
     public HPBar hpBarT;
 
     private readonly float MOVE_ANIM_SPEED = 4f;
-    private readonly float ACTION_SPEED = 0.4f;
+    public static readonly float ACTION_SPEED = 0.4f;
 
     // Grid Stuff
     public GridUtils gu;
@@ -57,6 +62,10 @@ public class GameState : MonoBehaviour
 
     public GameObject projectileBase;
 
+    public GameObject contextCursor;
+    public Canvas canvas;
+
+    public GameObject groundItemPrefab;
 
     public enum State
     {
@@ -138,16 +147,24 @@ public class GameState : MonoBehaviour
             {
                 // skip move step
                 state = State.PLAYER_DECIDE_ACTION;
-                showActionableTiles();
                 return;
             }
 
         }
     }
 
+    public void putItem(string name, Vector3Int tposition)
+    {
+        var v = Instantiate(groundItemPrefab);
+        v.transform.SetParent(this.transform);
+        v.transform.position = globalPositionForTile(tposition) + new Vector3(0, -0.22f, 1f);
+        v.GetComponent<GroundItem>().setItemType(name);
+        groundItems[tposition] = v.GetComponent<GroundItem>();
+    }
+
     void playerDecideAction()
     {
-
+        showActionableTiles();
         if (Input.GetMouseButtonDown(0))
         {
             var targ = tileAtMousePosition();
@@ -219,20 +236,27 @@ public class GameState : MonoBehaviour
 
     public bool executeAction()
     {
+        if(actionTimer == 0)
+        {
+            // check if we need to launch a projectile
+            if (attackingPlayerIsUsingRanged())
+            {
+                var v = Instantiate(projectileBase);
+                // if we're the player load the sprite, otherwise, we're an AI.
+                v.GetComponent<SpriteRenderer>().sprite = (state == State.PLAYER_ACTION) ? playerItems[playerItemIndex].image : currentUnitToMoveOrAction.AIRangedProjectile;
+                v.transform.SetParent(this.transform);
+                v.transform.position = currentUnitToMoveOrAction.transform.position;
+                // offset for items
+                v.GetComponent<RangedDecal>().setGoal(globalPositionForTile(currentUnitTarget) + new Vector3(0, -0.22f, 1f));
+            }
+        }
+
         actionTimer += Time.deltaTime;
         int frame = (int)(((actionTimer / ACTION_SPEED) * currentUnitToMoveOrAction.attackFront.Length));
         if (actionTimer >= ACTION_SPEED)
         {
-            // check if we need to launch a projectile
-            if(attackingPlayerIsUsingRanged())
-            {
-                var v = Instantiate(projectileBase);
-                v.transform.SetParent(this.transform);
-                v.transform.position = currentUnitToMoveOrAction.transform.position;
-                v.GetComponent<RangedDecal>().setGoal(globalPositionForTile(currentUnitTarget));
-            }
             actionTimer = 0;
-            execAttack();
+            finishAction();
             return true;
         }
 
@@ -246,9 +270,11 @@ public class GameState : MonoBehaviour
             currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
         } else
         {
-            // show player
-            currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
-
+            // this is a weapon
+            if (playerItems[playerItemIndex].distractionFor == "")
+            {
+                currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
+            }
         }
 
         // run animation
@@ -259,11 +285,11 @@ public class GameState : MonoBehaviour
 
     }
 
-    void execAttack()
+    void finishAction()
     {
-
         if (currentUnitTarget.Equals(playerPosition))
         {
+            // eat?
             if (playerUnit.hurt(1))
             {
                 SceneManager.LoadScene("Title");
@@ -271,6 +297,16 @@ public class GameState : MonoBehaviour
         }
         else
         {
+            if(!NPCPositions.ContainsKey(currentUnitTarget))
+            {
+                // item was tossed, just place it!
+                putItem(playerItems[playerItemIndex].name,currentUnitTarget);
+                playerItems.RemoveAt(playerItemIndex);
+                playerItemIndex--;
+                ilm.generate();
+                return;
+               
+            }
             var attackDmg = UnityEngine.Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
@@ -299,7 +335,8 @@ public class GameState : MonoBehaviour
     // use lateupdate because we want sprites to be overriden..
     void LateUpdate()
     {
-        if(levelEndFlag)
+        getCursorContext();
+        if (levelEndFlag)
         {
             return;
         }
@@ -318,7 +355,7 @@ public class GameState : MonoBehaviour
             }
         }
 
-            hpBarT.setHP(playerUnit.health);
+            hpBarT.setHP(playerUnit.health, PLAYER_MAXHEALTH);
         switch(state)
         {
             case State.PLAYER_DECIDE_MOVE:
@@ -331,7 +368,6 @@ public class GameState : MonoBehaviour
                     tryPickUpItem();
                     checkLeaveFloor();
                     state = State.PLAYER_DECIDE_ACTION;
-                    showActionableTiles();
                 }
                 break;
 
@@ -378,19 +414,33 @@ public class GameState : MonoBehaviour
         gu.showTilesAsSelected(reachable);
     }
 
+    
+
     public List<Vector3Int> actionableTiles()
     {
-        var inRange = gu.reachableTilesFrom(playerPosition, playerItems[playerItemIndex].range, new HashSet<Vector3Int>());
-        List<Vector3Int> hasNPC = new List<Vector3Int>();
-        foreach (var v in inRange)
+        var tiles = gu.manhattan(playerPosition, playerItems[playerItemIndex].range);
+
+        var actionables = new List<Vector3Int>();
+        foreach (var v in tiles)
         {
-            if (NPCPositions.ContainsKey(v))
+            // this NPC attackable.
+            if (playerItems[playerItemIndex].damageHi > 0)
             {
-                hasNPC.Add(v);
+                if (NPCPositions.ContainsKey(v))
+                {
+                    actionables.Add(v);
+                }
+            }
+
+            // this item can be thrown as a distraction
+            if(playerItems[playerItemIndex].distractionFor != "" && gu.levelTileMap.HasTile(v) && !NPCPositions.ContainsKey(v))
+            {
+                actionables.Add(v);
             }
         }
-        hasNPC.Add(playerPosition);
-        return hasNPC;
+        // always add eat or pass
+        actionables.Add(playerPosition);
+        return actionables;
     }
     void showActionableTiles()
     {
@@ -559,5 +609,66 @@ public class GameState : MonoBehaviour
         }
 
         return false;
+    }
+
+    // later, show enemy name and stat
+    public void getCursorContext()
+    {
+        Vector2 movePos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.transform as RectTransform,
+            Input.mousePosition, canvas.worldCamera,
+            out movePos);
+
+        contextCursor.transform.position = canvas.transform.TransformPoint(movePos);
+
+        contextCursor.GetComponentInChildren<TMP_Text>().text = "";
+
+        var targ = tileAtMousePosition();
+
+        if(state == State.PLAYER_DECIDE_MOVE)
+        {
+            if (targ == playerPosition)
+            {
+                contextCursor.GetComponentInChildren<TMP_Text>().text = "Stay Put";
+            } 
+            else if(gu.reachableTilesFrom(playerPosition, playerUnit.speed, NPCOccupiedTiles()).Contains(targ))
+            {
+                if (groundItems.ContainsKey(targ))
+                {
+                    contextCursor.GetComponentInChildren<TMP_Text>().text = "Pick Up " + groundItems[targ].thisItem;
+                }
+                else
+                {
+                    contextCursor.GetComponentInChildren<TMP_Text>().text = "Move Here";
+                }
+            }
+        }
+
+        if (state == State.PLAYER_DECIDE_ACTION)
+        {
+            if (targ == playerPosition)
+            {
+                if(playerItems[playerItemIndex].edible)
+                {
+                    contextCursor.GetComponentInChildren<TMP_Text>().text = "Eat " + playerItems[playerItemIndex].name;
+                } 
+                else
+                {
+                    contextCursor.GetComponentInChildren<TMP_Text>().text = "Skip Action";
+                }
+            }
+            else if (actionableTiles().Contains(targ))
+            {
+                if (NPCPositions.ContainsKey(targ))
+                {
+                    contextCursor.GetComponentInChildren<TMP_Text>().text = "Attack " + NPCPositions[targ].name + " with " + playerItems[playerItemIndex].name;
+                } 
+                else
+                {
+                    contextCursor.GetComponentInChildren<TMP_Text>().text = "Toss " + playerItems[playerItemIndex].name + " here";
+                }
+            }
+        }
     }
 }
