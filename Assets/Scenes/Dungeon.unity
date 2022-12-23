@@ -3264,6 +3264,7 @@ MonoBehaviour:
   projectileBase: {fileID: 2522329389266222564, guid: 6ba14812678158b4f95365e5c69dc528, type: 3}
   contextCursor: {fileID: 1839906227}
   canvas: {fileID: 1449936329}
+  groundItemPrefab: {fileID: 7435218913623088415, guid: fd77413d918157e4381ffdb903faea40, type: 3}
 --- !u!4 &1557024817
 Transform:
   m_ObjectHideFlags: 0

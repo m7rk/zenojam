@@ -49,4 +49,5 @@ MonoBehaviour:
   range: 5
   description: A big bag of cash.
   image: {fileID: -1184544873, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}
-  distractionFor: Knight
+  distractable: 1
+  edible: 0

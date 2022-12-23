@@ -271,7 +271,7 @@ public class GameState : MonoBehaviour
         } else
         {
             // this is a weapon
-            if (playerItems[playerItemIndex].distractionFor == "")
+            if (!playerItems[playerItemIndex].distractable)
             {
                 currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
             }
@@ -279,7 +279,6 @@ public class GameState : MonoBehaviour
 
         // run animation
         currentUnitToMoveOrAction.mainSpriteRenderer.sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
-
 
         return false;
 
@@ -433,7 +432,7 @@ public class GameState : MonoBehaviour
             }
 
             // this item can be thrown as a distraction
-            if(playerItems[playerItemIndex].distractionFor != "" && gu.levelTileMap.HasTile(v) && !NPCPositions.ContainsKey(v))
+            if(playerItems[playerItemIndex].distractable && gu.levelTileMap.HasTile(v) && !NPCPositions.ContainsKey(v))
             {
                 actionables.Add(v);
             }
@@ -481,6 +480,7 @@ public class GameState : MonoBehaviour
         AITurnOrder.Sort((a, b) => (Mathf.Abs(a.x - playerPosition.x) + Mathf.Abs(a.y - playerPosition.y)) - (Mathf.Abs(b.x - playerPosition.x) + Mathf.Abs(b.y - playerPosition.y)));
     }
 
+
     // does two things
     // set the currentUnitToMove
     // set the currentUnitTarget (if possible)
@@ -500,6 +500,40 @@ public class GameState : MonoBehaviour
         AITurnOrder.RemoveAt(0);
         currentUnitToMoveOrAction = NPCPositions[curTurn];
         AI_MEMO_MOVING = curTurn;
+
+
+        // ====================================
+
+        // check if there exists a possible path to a distraction.
+        var ireachable = gu.reachableTilesFrom(curTurn, currentUnitToMoveOrAction.speed, NPCOccupiedTiles());
+        foreach(var v in ireachable)
+        {
+            if(groundItems.ContainsKey(v) && groundItems[v].GetComponent<GroundItem>().canDistract(currentUnitToMoveOrAction.name))
+            {
+                pendingUnitPath = gu.findPathTo(curTurn, 1000, v, NPCOccupiedTiles());
+                // last move cutoff
+                pendingUnitPath.RemoveAt(pendingUnitPath.Count - 1);
+                // we know we're in range so just do it and return
+
+                // we were next to the item so we don't need to update position after all.
+                if (pendingUnitPath.Count == 0)
+                {
+                    pendingUnitPath = null;
+                    return false;
+                }
+                // update AI positon and go ahead with movement
+                else
+                {
+                    NPCPositions.Remove(curTurn);
+                    NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMoveOrAction;
+                    AI_MEMO_MOVING = pendingUnitPath[pendingUnitPath.Count - 1];
+                    return false;
+                }
+            }
+        }
+
+
+        // ====================================
 
         // check if there exists a possible path to the player.
         var reachable = gu.reachableTilesFrom(curTurn, 1000, NPCOccupiedTiles());

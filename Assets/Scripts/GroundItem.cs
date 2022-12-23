@@ -15,4 +15,18 @@ public class GroundItem : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = allItemSprite[allItemName.FindIndex(a => a == item)];
         thisItem = item;
     }
+
+    public bool canDistract(string NPCName)
+    {
+        switch(thisItem)
+        {
+            case "Bone": return NPCName == "Ghost";
+            case "Seed": return NPCName == "Kenku";
+            case "Gem": return NPCName == "Kobold";
+            case "Gold": return NPCName == "Knight";
+            case "Meat": return NPCName == "Gnoll";
+            case "Flower": return NPCName == "Ghost";
+        }
+        return false;
+    }
 }

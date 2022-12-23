@@ -49,5 +49,5 @@ MonoBehaviour:
   range: 1
   description: Food, fit for a hyena. Or you, I guess.
   image: {fileID: 1438436305, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}
-  distractionFor: Gnoll
+  distractable: 1
   edible: 1

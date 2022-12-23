@@ -49,4 +49,5 @@ MonoBehaviour:
   range: 2
   description: Green, shiny, and very pointy.
   image: {fileID: -989414692, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}
-  distractionFor: Gem
+  distractable: 1
+  edible: 0
