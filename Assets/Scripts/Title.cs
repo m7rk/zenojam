@@ -7,7 +7,7 @@ public class Title : MonoBehaviour
 {
     public List<GameObject> scenes;
     int scenePointer = 0;
-
+    public string whereToGo;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class Title : MonoBehaviour
             if (scenePointer >= scenes.Count)
             {
                 GameState.floorID = 10;
-                SceneManager.LoadScene("Dungeon");
+                SceneManager.LoadScene(whereToGo);
                 return;
             }
             else

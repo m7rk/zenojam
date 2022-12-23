@@ -76,7 +76,7 @@ public class Unit : MonoBehaviour
             v.GetComponent<HealthBar>().setMax(health);
 
             // offset above player properly - need a custom field but we do this later.
-            v.transform.localPosition = new Vector3((-0.03125f/2f) * health, 0.21f, 0);
+            v.transform.localPosition = new Vector3((-0.0625f / 2f) * health, 0.21f, 0);
         }
 
         aggro = false;

@@ -18,9 +18,10 @@ public class GameState : MonoBehaviour
     // preserve between floors
     public static List<GameItem> playerItems;
     public static int playerItemIndex = 0;
-
     public static int PLAYER_MAXHEALTH = 5;
     public static int PLAYER_MAXSPEED = 3;
+    public static bool pacifist = true;
+    public static int floorID = 9;
 
     public List<GameItem> startingItems;
     public ItemListManager ilm;
@@ -36,7 +37,7 @@ public class GameState : MonoBehaviour
     // Floor stuff
     public TMPro.TMP_Text floorText;
     static string[] numbers  = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-    public static int floorID = 9;
+
 
     // State stuff
     private Unit currentUnitToMoveOrAction;
@@ -286,6 +287,11 @@ public class GameState : MonoBehaviour
         if (state == State.AI_MOVE)
         {
             currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
+            // the boss is forward rekt
+            if(currentUnitToMoveOrAction.name == "Adventurer" && currentUnitToMoveOrAction.GetComponent<Unit>().faceFront)
+            {
+                currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
+            }
         } else
         {
             // this is a weapon
@@ -373,15 +379,26 @@ public class GameState : MonoBehaviour
         getCursorContext();
         hpBarT.setHP(playerUnit.health, PLAYER_MAXHEALTH);
 
-        if (playerUnit.health == 0)
-        {
-            return;
-        }
-
         if (levelEndFlag)
         {
             return;
         }
+
+        // end game no hp
+        if (playerUnit.health == 0)
+        {
+            FindObjectOfType<Transitioner>().endScene(toNextLevel);
+            levelEndFlag = true;
+            return;
+        }
+
+        // end game killed boss
+        if (GameState.floorID == 1 && NPCOccupiedTiles().Count == 0)
+        {
+            FindObjectOfType<Transitioner>().endScene(toNextLevel);
+            levelEndFlag = true;
+        }
+
 
         // tutorial stuff
         if (GameState.floorID == 10)
@@ -495,13 +512,35 @@ public class GameState : MonoBehaviour
             levelEndFlag = true;
         }
     }
+
+
+    public static void PARAMS_RESET()
+    {
+        GameState.playerItems = new List<GameItem>();
+        GameState.playerItemIndex = 0;
+        GameState.PLAYER_MAXHEALTH = 5;
+        GameState.PLAYER_MAXSPEED = 3;
+        GameState.pacifist = true;
+        GameState.floorID = 9;
+    }
+
+
     void toNextLevel()
     {
         floorID -= 1;
+
+        if(playerUnit.health == 0)
+        {
+            PARAMS_RESET();
+            SceneManager.LoadScene("Dungeon");
+        }
         if (floorID == 0)
         {
-            SceneManager.LoadScene("Title");
-
+            SceneManager.LoadScene("BadEnd");
+        }
+        else if (floorID == 1 && GameState.pacifist)
+        {
+            SceneManager.LoadScene("GoodEnd");
         }
         else
         {

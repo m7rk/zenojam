@@ -97,7 +97,9 @@ public class LevelGenerator : MonoBehaviour
         if (GameState.floorID == 1)
         {
             spawnNPC(boss, gs.ladderPosition);
+            gs.groundItems = new Dictionary<Vector3, GroundItem>();
             gs.ladderPosition = new Vector3Int(1000, 1000, 0);
+            ladder.transform.position = gs.globalPositionForTile(gs.ladderPosition);
             return;
         }
 

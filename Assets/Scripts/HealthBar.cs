@@ -39,5 +39,9 @@ public class HealthBar : MonoBehaviour
         fullbars[fullbars.Count - 1].sprite = empty;
         fullbars.RemoveAt(fullbars.Count - 1);
         this.gameObject.SetActive(true);
+        if(fullbars.Count == 0)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 }
