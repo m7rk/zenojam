@@ -36,7 +36,7 @@ public class GameState : MonoBehaviour
     // Floor stuff
     public TMPro.TMP_Text floorText;
     static string[] numbers  = new string[] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-    public static int floorID = 10;
+    public static int floorID = 9;
 
     // State stuff
     private Unit currentUnitToMoveOrAction;
@@ -172,6 +172,16 @@ public class GameState : MonoBehaviour
             {
                 if(targ.Equals(playerPosition))
                 {
+                    // eat?
+                    if(playerItems[playerItemIndex].edible)
+                    {
+                        playerUnit.health += 1;
+                        playerUnit.health = Mathf.Min(playerUnit.health, PLAYER_MAXHEALTH);
+                        playerItems.RemoveAt(playerItemIndex);
+                        playerItemIndex--;
+                        ilm.generate();
+                    }    
+
                     state = State.AI_MOVE;
                     gu.clearSelectedTiles();
                     generateAITurnOrder();
@@ -251,8 +261,16 @@ public class GameState : MonoBehaviour
             }
         }
 
+        var attackAnimAry = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront : currentUnitToMoveOrAction.attackBack;
+
+        if(state == State.PLAYER_ACTION && playerItems[playerItemIndex].range == 1)
+        {
+            attackAnimAry = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.altAttackFront : currentUnitToMoveOrAction.altAttackBack;
+        }
+
         actionTimer += Time.deltaTime;
-        int frame = (int)(((actionTimer / ACTION_SPEED) * currentUnitToMoveOrAction.attackFront.Length));
+        int frame = (int)(((actionTimer / ACTION_SPEED) * attackAnimAry.Length));
+
         if (actionTimer >= ACTION_SPEED)
         {
             actionTimer = 0;
@@ -273,12 +291,22 @@ public class GameState : MonoBehaviour
             // this is a weapon
             if (!playerItems[playerItemIndex].distractable)
             {
-                currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
+                if (playerItems[playerItemIndex].range > 1)
+                {
+                    currentUnitToMoveOrAction.GetComponent<Unit>().showBook();
+                } 
+                else
+                {
+                    if (playerItems[playerItemIndex].name != "Fisticuffs")
+                    {
+                        currentUnitToMoveOrAction.GetComponent<Unit>().showWeapon(playerItems[playerItemIndex].name, frame);
+                    }
+                }
             }
         }
 
         // run animation
-        currentUnitToMoveOrAction.mainSpriteRenderer.sprite = (currentUnitToMoveOrAction.GetComponent<Unit>().faceFront) ? currentUnitToMoveOrAction.attackFront[frame] : currentUnitToMoveOrAction.attackBack[frame];
+        currentUnitToMoveOrAction.mainSpriteRenderer.sprite = attackAnimAry[frame];
 
         return false;
 
@@ -288,7 +316,6 @@ public class GameState : MonoBehaviour
     {
         if (currentUnitTarget.Equals(playerPosition))
         {
-            // eat?
             if (playerUnit.hurt(1))
             {
                 SceneManager.LoadScene("Title");
@@ -306,6 +333,15 @@ public class GameState : MonoBehaviour
                 return;
                
             }
+
+            if(playerItems[playerItemIndex].distractable)
+            {
+                // threw away a distractable, destroy...
+                playerItems.RemoveAt(playerItemIndex);
+                playerItemIndex--;
+                ilm.generate();
+            }
+
             var attackDmg = UnityEngine.Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
             // trigger the attack animation
             if (NPCPositions[currentUnitTarget].hurt(attackDmg))
@@ -335,6 +371,12 @@ public class GameState : MonoBehaviour
     void LateUpdate()
     {
         getCursorContext();
+
+        if(playerUnit.health == 0)
+        {
+            return;
+        }
+
         if (levelEndFlag)
         {
             return;
@@ -432,7 +474,7 @@ public class GameState : MonoBehaviour
             }
 
             // this item can be thrown as a distraction
-            if(playerItems[playerItemIndex].distractable && gu.levelTileMap.HasTile(v) && !NPCPositions.ContainsKey(v))
+            if(playerItems[playerItemIndex].distractable && gu.levelTileMap.HasTile(v) && !NPCPositions.ContainsKey(v) && !groundItems.ContainsKey(v))
             {
                 actionables.Add(v);
             }
@@ -506,7 +548,9 @@ public class GameState : MonoBehaviour
 
         // check if there exists a possible path to a distraction.
         var ireachable = gu.reachableTilesFrom(curTurn, currentUnitToMoveOrAction.speed, NPCOccupiedTiles());
-        foreach(var v in ireachable)
+
+        currentUnitToMoveOrAction.pacified = false;
+        foreach (var v in ireachable)
         {
             if(groundItems.ContainsKey(v) && groundItems[v].GetComponent<GroundItem>().canDistract(currentUnitToMoveOrAction.name))
             {
@@ -524,6 +568,7 @@ public class GameState : MonoBehaviour
                 // update AI positon and go ahead with movement
                 else
                 {
+                    currentUnitToMoveOrAction.pacified = true;
                     NPCPositions.Remove(curTurn);
                     NPCPositions[pendingUnitPath[pendingUnitPath.Count - 1]] = currentUnitToMoveOrAction;
                     AI_MEMO_MOVING = pendingUnitPath[pendingUnitPath.Count - 1];
@@ -593,7 +638,7 @@ public class GameState : MonoBehaviour
         int dist = Math.Abs(AI_MEMO_MOVING.x - playerPosition.x) + Math.Abs(AI_MEMO_MOVING.y - playerPosition.y);
 
         // the unit is in range!
-        if (dist <= currentUnitToMoveOrAction.AI_range && GameState.floorID != 10)
+        if (dist <= currentUnitToMoveOrAction.AI_range && GameState.floorID != 10 && !currentUnitToMoveOrAction.pacified)
         {
             currentUnitTarget = playerPosition;
         }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// this class doesn't really work for ai and player :(((((((((((((((((((
 public class Unit : MonoBehaviour
 {
     private readonly float JUMP_FACTOR = 0.3f;
@@ -24,9 +26,13 @@ public class Unit : MonoBehaviour
     public bool thisIsPlayer;
 
     public bool aggro;
+    public bool pacified;
 
     public Sprite[] attackFront;
     public Sprite[] attackBack;
+
+    public Sprite[] altAttackFront;
+    public Sprite[] altAttackBack;
 
     public Sprite hurtF;
     public Sprite hurtB;
@@ -47,6 +53,9 @@ public class Unit : MonoBehaviour
     public SpriteRenderer playerBook;
 
     public Sprite AIRangedProjectile;
+
+    public GameObject[] playerMeleesF;
+    public GameObject[] playerMeleesB;
 
     void Start()
     {
@@ -116,7 +125,7 @@ public class Unit : MonoBehaviour
 
         } else
         {
-            if (health <= 0)
+            if (health <= 0 && !thisIsPlayer)
             {
                 Destroy(this.gameObject);
             }
@@ -151,11 +160,27 @@ public class Unit : MonoBehaviour
     {
         playerBook.gameObject.SetActive(true);
         playerBook.transform.localPosition = new Vector3(playerBook.transform.localPosition.x, playerBook.transform.localPosition.y, faceFront ? -0.01f : 0.01f);
+    }
 
+    public void showWeapon(string name, int frame)
+    {
+        foreach(var v in playerMeleesF)
+        {
+            v.SetActive(false);
+        }
+        var pm = playerMeleesF[frame];
+        pm.SetActive(true);
+        pm.transform.Find(name).gameObject.SetActive(true);
     }
 
     public void hideWeapons()
     {
-        playerBook.gameObject.SetActive(false);
+        foreach (var v in playerMeleesF)
+        {
+            for (int i = 0; i != v.transform.childCount; ++i)
+            {
+                v.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
     }
 }

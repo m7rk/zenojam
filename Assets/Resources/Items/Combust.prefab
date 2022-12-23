@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42907d12dc5fe4989bc290e7fd0b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageLow: 2
-  damageHi: 3
-  range: 6
+  damageLow: 1
+  damageHi: 1
+  range: 5
   description: Details on creating a fast fireball.
   image: {fileID: -937835756, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}
+  distractable: 0
+  edible: 0

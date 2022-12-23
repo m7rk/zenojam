@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42907d12dc5fe4989bc290e7fd0b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageLow: 0
-  damageHi: 1
-  range: 5
+  damageLow: 1
+  damageHi: 3
+  range: 4
   description: A big bag of cash.
   image: {fileID: -1184544873, guid: 52b90f5904fc8a54c9a5d00573a251d0, type: 3}
   distractable: 1

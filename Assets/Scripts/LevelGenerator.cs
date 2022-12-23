@@ -53,7 +53,6 @@ public class LevelGenerator : MonoBehaviour
             gs.ladderPosition = new Vector3Int(17, 10, 0);
             ladder.transform.position = gs.globalPositionForTile(gs.ladderPosition) + new Vector3(0, 0, (gs.globalPositionForTile(gs.ladderPosition).y * 0.001f));
 
-
             // make npcs
             gs.NPCPositions = new Dictionary<Vector3Int, Unit>();
 
@@ -148,11 +147,11 @@ public class LevelGenerator : MonoBehaviour
         // half the time just spawn native to that floor
         if (Random.Range(0f, 1f) > 0.5f)
         {
-            return Instantiate(npcPrefabs[GameState.floorID-2]);
+            return npcPrefabs[GameState.floorID-2];
         } 
         else
         {
-            return Instantiate(npcPrefabs[Random.Range(GameState.floorID - 2,7+1)]);
+            return npcPrefabs[Random.Range(GameState.floorID - 2,7+1)];
         }
     }
 
