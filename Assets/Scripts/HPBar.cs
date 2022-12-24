@@ -27,6 +27,7 @@ public class HPBar : MonoBehaviour
     private float barLenDest = 25;
 
     private float BAR_ANIM_TIME = 12;
+    private bool danger = false;
 
     // Update is called once per frame
     void Update()
@@ -39,10 +40,27 @@ public class HPBar : MonoBehaviour
 
         rt = ((RectTransform)hpTop.transform);
         rt.anchoredPosition = new Vector2(0, -28 + (barLenDest));
+
+        if(danger)
+        {
+            hpTop.GetComponent<Image>().color = Time.time % 2 > 1 ? Color.red : Color.white;
+            outerRend.GetComponent<Image>().color = Time.time % 2 > 1 ? Color.red : Color.white;
+        } else
+        {
+            hpTop.GetComponent<Image>().color = Color.white;
+            outerRend.GetComponent<Image>().color = Color.white;
+        }
     }
 
     public void setHP(int hp, int maxHP)
     {
+        if(hp == 1)
+        {
+            danger = true;
+        } else
+        {
+            danger = false;
+        }
         htp.text = "" + hp;
         // tween later
         barLenDest = BAR_HEIGHT_MAX * (hp/(float)maxHP);

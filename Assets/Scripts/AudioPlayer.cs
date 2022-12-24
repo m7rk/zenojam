@@ -12,7 +12,6 @@ public class AudioPlayer : MonoBehaviour
         {
             if(v.name == n)
             {
-                Debug.Log("play " + n);
                 FindObjectOfType<AudioSource>().PlayOneShot(v,0.5f);
                 return;
             }

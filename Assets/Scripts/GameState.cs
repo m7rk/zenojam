@@ -22,6 +22,7 @@ public class GameState : MonoBehaviour
     public static int PLAYER_MAXSPEED = 3;
     public static int healthLastFloor = PLAYER_MAXHEALTH;
     public static bool pacifist = true;
+    public static bool knowsAboutAutoSkip = false;
     public static int floorID = 9;
 
     public List<GameItem> startingItems;
@@ -84,6 +85,8 @@ public class GameState : MonoBehaviour
 
     public AudioSource gameMus;
     public AudioSource bossMus;
+
+    public GameObject autoSkipHint;
 
     void Start()
     {
@@ -183,6 +186,16 @@ public class GameState : MonoBehaviour
     void playerDecideAction()
     {
         showActionableTiles();
+
+        if(Input.GetKey(KeyCode.Space))
+        {
+            knowsAboutAutoSkip = true;
+            state = State.AI_MOVE;
+            gu.clearSelectedTiles();
+            generateAITurnOrder();
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             var targ = tileAtMousePosition();
@@ -272,6 +285,11 @@ public class GameState : MonoBehaviour
                 var v = Instantiate(projectileBase);
                 // if we're the player load the sprite, otherwise, we're an AI.
                 v.GetComponent<RangedDecal>().anims = new Sprite[] { (state == State.PLAYER_ACTION) ? playerItems[playerItemIndex].image : currentUnitToMoveOrAction.AIRangedProjectile };
+
+                if(state != State.PLAYER_ACTION)
+                {
+                    currentUnitToMoveOrAction.GetComponent<Unit>().playAIAttackSound();
+                }
 
                 // fireballs get special animation.
                 if ((state == State.PLAYER_ACTION) && !playerItems[playerItemIndex].distractable)
@@ -452,6 +470,10 @@ public class GameState : MonoBehaviour
     // use lateupdate because we want sprites to be overriden..
     void LateUpdate()
     {
+        if(knowsAboutAutoSkip)
+        {
+            autoSkipHint.SetActive(false);
+        }
         getCursorContext();
         hpBarT.setHP(playerUnit.health, PLAYER_MAXHEALTH);
 

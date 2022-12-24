@@ -36,7 +36,7 @@ public class LevelGenerator : MonoBehaviour
 
 
     // firewall is never spawned
-    public string[] itemSpawnList;
+    public List<string> itemSpawnList;
 
 
     public void spawnNPC(GameObject prefab, Vector3Int pos)
@@ -146,7 +146,19 @@ public class LevelGenerator : MonoBehaviour
             var testTile = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
             if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile))
             {
-                gs.putItem(randomItemForFloor(), testTile);
+                var spawnCand = randomItemForFloor();
+                if (GameState.playerItems != null)
+                {
+                    foreach (var v in GameState.playerItems)
+                    {
+                        if (v.name == spawnCand && !v.distractable)
+                        {
+                            // we already have this item, reroll
+                            spawnCand = randomItemForFloor();
+                        }
+                    }
+                }
+                gs.putItem(spawnCand, testTile);
             }
         }
     }
@@ -164,7 +176,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    // later, reroll if player has item or it was spawned.
+    // later, reroll if player has item already
     public string randomItemForFloor()
     {
         // if 9 : 2/9 of list spawnable.
@@ -172,8 +184,10 @@ public class LevelGenerator : MonoBehaviour
         float bestPossble = Random.Range(0f, (11f - GameState.floorID) / 9f);
         float targ = 1f - bestPossble;
         Debug.Log(bestPossble);
-
-        return itemSpawnList[(int)(targ * itemSpawnList.Length)];
+        int toSpawn = (int)(targ * itemSpawnList.Count);
+        string ret = itemSpawnList[toSpawn];
+        itemSpawnList.RemoveAt(toSpawn);
+        return itemSpawnList[toSpawn];
     }
 
     void generateMapCandidate()
