@@ -87,6 +87,10 @@ public class GameState : MonoBehaviour
     public AudioSource gameMus;
     public AudioSource bossMus;
 
+
+    public AudioSource pickUpSound;
+    public AudioSource eatSound;
+
     public GameObject autoSkipHint;
 
     void Start()
@@ -211,7 +215,7 @@ public class GameState : MonoBehaviour
                     // eat?
                     if(playerItems[playerItemIndex].edible)
                     {
-                        ap.playByName("EAT");
+                        eatSound.Play();
                         playerUnit.health += 1;
                         playerUnit.health = Mathf.Min(playerUnit.health, PLAYER_MAXHEALTH);
                         playerItems.RemoveAt(playerItemIndex);
@@ -424,7 +428,7 @@ public class GameState : MonoBehaviour
                             if (NPCPositions[currentUnitTarget + new Vector3Int(x, y, 0)].hurt(attackDmg))
                             {
                                 GameState.pacifist = false;
-                                NPCPositions.Remove(currentUnitTarget);
+                                NPCPositions.Remove(currentUnitTarget + new Vector3Int(x, y, 0));
                             }
                         }
                     }
@@ -464,7 +468,7 @@ public class GameState : MonoBehaviour
     {
         if(groundItems.ContainsKey(playerPosition))
         {
-            ap.playByName("ITEM_PICKUP");
+            pickUpSound.Play();
             // sus
             var it = Resources.Load<GameObject>("Items/" + groundItems[playerPosition].thisItem);
             playerItems.Add(it.GetComponent<GameItem>());

@@ -168,7 +168,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject randomNPCForFloor()
     {
         // half the time just spawn native to that floor
-        if (Random.Range(0f, 1f) > 0.5f)
+        if (Random.Range(0f, 1f) > 0.7f)
         {
             return npcPrefabs[GameState.floorID-2];
         } 
