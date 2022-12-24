@@ -37,7 +37,7 @@ public class ItemListManager : MonoBehaviour
             it.transform.SetParent(this.transform);
             it.GetComponent<Image>().sprite = v.image;
             it.transform.localScale = Vector3.one;
-            it.transform.localPosition = new Vector3(48*(x - GameState.playerItemIndex), 0, 0);
+            it.transform.localPosition = new Vector3(32*(x - GameState.playerItemIndex), 0, 0);
             it.GetComponent<Button>().onClick.AddListener(() => onClick(x2));
             buttons.Add(it);
             if(x == GameState.playerItemIndex)

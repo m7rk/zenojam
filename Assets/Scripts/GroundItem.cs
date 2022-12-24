@@ -20,7 +20,7 @@ public class GroundItem : MonoBehaviour
     {
         switch(thisItem)
         {
-            case "Bone": return NPCName == "Ghost";
+            case "Bone": return NPCName == "Skeleton";
             case "Seed": return NPCName == "Kenku";
             case "Gem": return NPCName == "Kobold";
             case "Gold": return NPCName == "Knight";

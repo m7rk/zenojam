@@ -15,7 +15,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject boss;
 
     // tweak map gen with these
-    public readonly int DIMS = 9;
+    public readonly int DIMS = 7;
     public readonly float FILL_THRESH = 0.5f;
     public readonly float PERLIN_MULT = 0.25f;
     public readonly float FALLOFF_FACTOR = 0.1f;
@@ -24,9 +24,9 @@ public class LevelGenerator : MonoBehaviour
     // 100 - 7 * 7 = 50 possible enemy spots
     // squad count does not exceed fifteen + MAX_
 
-    public readonly int MAX_SQUAD_SIZE = 3;
+    public readonly int MAX_SQUAD_SIZE = 2;
 
-    public readonly int ENEMY_QUOTA = 7;
+    public readonly int ENEMY_QUOTA = 6;
 
     public readonly int PLAYER_SAFE_ZONE = 7;
 
@@ -183,11 +183,10 @@ public class LevelGenerator : MonoBehaviour
         // if 2 : 9/9 of list spawnable.
         float bestPossble = Random.Range(0f, (11f - GameState.floorID) / 9f);
         float targ = 1f - bestPossble;
-        Debug.Log(bestPossble);
         int toSpawn = (int)(targ * itemSpawnList.Count);
         string ret = itemSpawnList[toSpawn];
         itemSpawnList.RemoveAt(toSpawn);
-        return itemSpawnList[toSpawn];
+        return ret;
     }
 
     void generateMapCandidate()

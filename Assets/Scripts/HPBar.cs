@@ -29,6 +29,11 @@ public class HPBar : MonoBehaviour
     private float BAR_ANIM_TIME = 12;
     private bool danger = false;
 
+    public Sprite dying;
+    public Sprite fine;
+
+    public Image portrait;
+
     // Update is called once per frame
     void Update()
     {
@@ -45,10 +50,12 @@ public class HPBar : MonoBehaviour
         {
             hpTop.GetComponent<Image>().color = Time.time % 2 > 1 ? Color.red : Color.white;
             outerRend.GetComponent<Image>().color = Time.time % 2 > 1 ? Color.red : Color.white;
+            portrait.GetComponent<Image>().sprite = dying;
         } else
         {
             hpTop.GetComponent<Image>().color = Color.white;
             outerRend.GetComponent<Image>().color = Color.white;
+            portrait.GetComponent<Image>().sprite = fine;
         }
     }
 

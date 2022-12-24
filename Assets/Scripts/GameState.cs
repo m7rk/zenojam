@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     // preserve between floors
     public static List<GameItem> playerItems;
     public static int playerItemIndex = 0;
-    public static int PLAYER_MAXHEALTH = 5;
+    public static int PLAYER_MAXHEALTH = 6;
     public static int PLAYER_MAXSPEED = 3;
     public static int healthLastFloor = PLAYER_MAXHEALTH;
     public static bool pacifist = true;
