@@ -91,6 +91,7 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(GameState.pacifist + " pacifist? ");
         gameMus.time = GameState.timeJump;
         playerUnit.health = GameState.healthLastFloor;
         if (playerItems == null)

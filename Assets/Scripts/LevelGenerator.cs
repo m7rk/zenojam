@@ -21,14 +21,11 @@ public class LevelGenerator : MonoBehaviour
     public readonly float FALLOFF_FACTOR = 0.1f;
     public readonly int MIN_VIABLE_TILES = 80;
 
-
-    public readonly int MAX_SQUAD_SIZE = 2;
-
-    public readonly int ENEMY_QUOTA = 6;
+    public readonly int ENEMY_QUOTA = 5;
 
     public readonly int PLAYER_SAFE_ZONE = 6;
 
-    public readonly int ITEMS_TO_SPAWN = 8;
+    public readonly int ITEMS_TO_SPAWN = 5;
 
     public GameObject groundItemPrefab;
 
@@ -122,15 +119,12 @@ public class LevelGenerator : MonoBehaviour
             // this is a valid place to put a squad.
             if (gu.levelTileMap.HasTile(squad_center))
             {
-                for (int j = 0; j != MAX_SQUAD_SIZE; ++j)
-                {
-                    // valid floor tile!
-                    var targTile = squad_center + new Vector3Int(Random.Range(-1, 2), Random.Range(-1, 2), 0);
+                // valid floor tile!
+                var targTile = squad_center + new Vector3Int(Random.Range(-1, 2), Random.Range(-1, 2), 0);
 
-                    if (gu.levelTileMap.HasTile(targTile) && !gs.NPCPositions.ContainsKey(targTile))
-                    {
-                        spawnNPC(randomNPCForFloor(), targTile);
-                    }
+                if (gu.levelTileMap.HasTile(targTile) && !gs.NPCPositions.ContainsKey(targTile))
+                {
+                    spawnNPC(randomNPCForFloor(), targTile);
                 }
             }
         }
