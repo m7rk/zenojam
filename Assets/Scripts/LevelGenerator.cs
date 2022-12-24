@@ -15,22 +15,20 @@ public class LevelGenerator : MonoBehaviour
     public GameObject boss;
 
     // tweak map gen with these
-    public readonly int DIMS = 7;
+    public readonly int DIMS = 6;
     public readonly float FILL_THRESH = 0.5f;
     public readonly float PERLIN_MULT = 0.25f;
     public readonly float FALLOFF_FACTOR = 0.1f;
-    public readonly int MIN_VIABLE_TILES = 90;
+    public readonly int MIN_VIABLE_TILES = 80;
 
-    // 100 - 7 * 7 = 50 possible enemy spots
-    // squad count does not exceed fifteen + MAX_
 
     public readonly int MAX_SQUAD_SIZE = 2;
 
     public readonly int ENEMY_QUOTA = 6;
 
-    public readonly int PLAYER_SAFE_ZONE = 7;
+    public readonly int PLAYER_SAFE_ZONE = 6;
 
-    public readonly int ITEMS_TO_SPAWN = 10;
+    public readonly int ITEMS_TO_SPAWN = 8;
 
     public GameObject groundItemPrefab;
 

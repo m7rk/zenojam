@@ -109,11 +109,11 @@ public class GameState : MonoBehaviour
 
         if (floorID == 0)
         {
-            Destroy(gameMus);
+            Destroy(gameMus.gameObject);
         }
         else
         {
-            Destroy(bossMus);
+            Destroy(bossMus.gameObject);
         }
         ilm.generate();
     }
@@ -621,8 +621,6 @@ public class GameState : MonoBehaviour
     {
         GameState.playerItems = null;
         GameState.playerItemIndex = 0;
-        GameState.PLAYER_MAXHEALTH = 5;
-        GameState.PLAYER_MAXSPEED = 3;
         GameState.pacifist = true;
         GameState.floorID = 9;
         GameState.healthLastFloor = PLAYER_MAXHEALTH;
@@ -692,7 +690,9 @@ public class GameState : MonoBehaviour
         // ====================================
 
         // check if there exists a possible path to a distraction.
-        var ireachable = gu.reachableTilesFrom(curTurn, currentUnitToMoveOrAction.speed, NPCOccupiedTiles());
+        var occd = NPCOccupiedTiles();
+        occd.Add(playerPosition);
+        var ireachable = gu.reachableTilesFrom(curTurn, currentUnitToMoveOrAction.speed, occd);
 
         currentUnitToMoveOrAction.pacified = false;
         foreach (var v in ireachable)
@@ -722,6 +722,7 @@ public class GameState : MonoBehaviour
                 // we were next to the item so we don't need to update position after all.
                 if (pendingUnitPath.Count == 0)
                 {
+                    currentUnitToMoveOrAction.pacified = true;
                     pendingUnitPath = null;
                     return false;
                 }
@@ -807,15 +808,14 @@ public class GameState : MonoBehaviour
                 {
                     currentUnitToMoveOrAction.GetComponent<Unit>().faceFront = globalPositionForTile(v).y - currentUnitToMoveOrAction.transform.position.y < 0;
                     currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = globalPositionForTile(v).x - currentUnitToMoveOrAction.transform.position.x > 0;
-
-                    // the AIS are backwards so this is, again,  a filthy hack to fix thsat
-                    if (state == State.AI_MOVE)
-                    {
-                        currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
-                    }
+                    currentUnitToMoveOrAction.GetComponent<Unit>().faceRight = !currentUnitToMoveOrAction.GetComponent<Unit>().faceRight;
                 }
             }
+            // don't attack
+            currentUnitToMoveOrAction = null;
+            return;
         }
+
         // the unit is in range!
         if (dist <= currentUnitToMoveOrAction.AI_range && GameState.floorID != 10 && !currentUnitToMoveOrAction.pacified)
         {
