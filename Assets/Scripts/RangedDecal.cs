@@ -27,6 +27,8 @@ public class RangedDecal : MonoBehaviour
 
     public void setGoal(Vector3 target)
     {
+        // make sure anim is preset.
+        GetComponent<SpriteRenderer>().sprite = anims[0];
         timestampStart = Time.time;
         targetDest = target;
         targetDest = new Vector3(targetDest.x, targetDest.y, 2);

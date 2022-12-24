@@ -20,6 +20,7 @@ public class GameState : MonoBehaviour
     public static int playerItemIndex = 0;
     public static int PLAYER_MAXHEALTH = 5;
     public static int PLAYER_MAXSPEED = 3;
+    public static int healthLastFloor = PLAYER_MAXHEALTH;
     public static bool pacifist = true;
     public static int floorID = 9;
 
@@ -68,6 +69,7 @@ public class GameState : MonoBehaviour
 
     public GameObject groundItemPrefab;
 
+    public MagicAnimsets ma;
     public enum State
     {
         PLAYER_DECIDE_MOVE,
@@ -80,6 +82,7 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
+        playerUnit.health = GameState.healthLastFloor;
         if (playerItems == null)
         {
             playerItems = startingItems;
@@ -255,7 +258,13 @@ public class GameState : MonoBehaviour
                 var v = Instantiate(projectileBase);
                 // if we're the player load the sprite, otherwise, we're an AI.
                 v.GetComponent<RangedDecal>().anims = new Sprite[] { (state == State.PLAYER_ACTION) ? playerItems[playerItemIndex].image : currentUnitToMoveOrAction.AIRangedProjectile };
+
                 // fireballs get special animation.
+                if ((state == State.PLAYER_ACTION) && !playerItems[playerItemIndex].distractable)
+                {
+                    // it's a fireball
+                    v.GetComponent<RangedDecal>().anims = ma.animsetForSpell(playerItems[playerItemIndex].name);
+                }
 
                 v.transform.SetParent(this.transform);
                 v.transform.position = currentUnitToMoveOrAction.transform.position;
@@ -535,6 +544,7 @@ public class GameState : MonoBehaviour
         GameState.PLAYER_MAXSPEED = 3;
         GameState.pacifist = true;
         GameState.floorID = 9;
+        GameState.healthLastFloor = PLAYER_MAXHEALTH;
     }
 
     void toNextLevel()
@@ -559,6 +569,7 @@ public class GameState : MonoBehaviour
         }
         else
         {
+            GameState.healthLastFloor = Mathf.Min(PLAYER_MAXHEALTH, playerUnit.health + 1);
             SceneManager.LoadScene("Dungeon");
         }
     }
