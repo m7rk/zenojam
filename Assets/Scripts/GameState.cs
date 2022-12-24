@@ -571,7 +571,7 @@ public class GameState : MonoBehaviour
     {
         var reachable = gu.reachableTilesFrom(playerPosition, playerUnit.speed, NPCOccupiedTiles());
         reachable.Add(playerPosition);
-        gu.showTilesAsSelected(reachable);
+        gu.showTilesAsSelected(reachable, false);
     }
 
     
@@ -604,7 +604,7 @@ public class GameState : MonoBehaviour
     }
     void showActionableTiles()
     {
-        gu.showTilesAsSelected(actionableTiles());
+        gu.showTilesAsSelected(actionableTiles(), true);
     }
 
     void checkLeaveFloor()

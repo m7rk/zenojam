@@ -9,6 +9,7 @@ public class GridUtils : MonoBehaviour
     public Tilemap levelTileMap;
     public Tilemap overlayTileMap;
     public Tile overlayTile;
+    public Tile selectorTile;
 
     // given a starting tile, return all tiles that can be reached.
     // returns a list which is the path to the tile. The last element in the list is the target tile.
@@ -92,12 +93,12 @@ public class GridUtils : MonoBehaviour
     }
 
     // set the list of tiles as selected.
-    public void showTilesAsSelected(List<Vector3Int> selected)
+    public void showTilesAsSelected(List<Vector3Int> selected, bool selector)
     {
         clearSelectedTiles();
         foreach (var n in selected)
         {
-            overlayTileMap.SetTile(n, overlayTile);
+            overlayTileMap.SetTile(n, selector ? selectorTile : overlayTile);
         }
     }
 
