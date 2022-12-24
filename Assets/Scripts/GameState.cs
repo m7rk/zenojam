@@ -18,13 +18,16 @@ public class GameState : MonoBehaviour
     // preserve between floors
     public static List<GameItem> playerItems;
     public static int playerItemIndex = 0;
-    public static int PLAYER_MAXHEALTH = 6;
     public static int PLAYER_MAXSPEED = 3;
-    public static int healthLastFloor = PLAYER_MAXHEALTH;
     public static bool pacifist = true;
     public static bool knowsAboutAutoSkip = false;
+
+    public static float timeJumpGame;
+    public static float timeJumpBoss;
+
     public static int floorID = 9;
-    public static float timeJump;
+    public static int PLAYER_MAXHEALTH = 6;
+    public static int healthLastFloor = PLAYER_MAXHEALTH;
 
     public List<GameItem> startingItems;
     public ItemListManager ilm;
@@ -95,8 +98,13 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
+        if(GameState.floorID == 10)
+        {
+            PARAMS_RESET();
+        }
         Debug.Log(GameState.pacifist + " pacifist? ");
-        gameMus.time = GameState.timeJump;
+        gameMus.time = GameState.timeJumpGame;
+        bossMus.time = GameState.timeJumpBoss;
         playerUnit.health = GameState.healthLastFloor;
         if (playerItems == null)
         {
@@ -117,11 +125,13 @@ public class GameState : MonoBehaviour
         if (floorID <= 3)
         {
             Destroy(gameMus.gameObject);
+            gameMus = null;
             floorText.color = Color.red;
         }
         else
         {
             Destroy(bossMus.gameObject);
+            bossMus = null;
             floorText.color = Color.white;
         }
         ilm.generate();
@@ -642,7 +652,8 @@ public class GameState : MonoBehaviour
         GameState.pacifist = true;
         GameState.floorID = 9;
         GameState.healthLastFloor = PLAYER_MAXHEALTH;
-        GameState.timeJump = 0;
+        GameState.timeJumpGame = 0;
+        GameState.timeJumpBoss = 0;
     }
 
     void toNextLevel()
@@ -668,7 +679,14 @@ public class GameState : MonoBehaviour
         else
         {
             GameState.healthLastFloor = Mathf.Min(PLAYER_MAXHEALTH, playerUnit.health + 2);
-            GameState.timeJump = gameMus.time;
+            if (gameMus != null)
+            {
+                GameState.timeJumpGame = gameMus.time;
+            }
+            if (bossMus != null)
+            {
+                GameState.timeJumpBoss = bossMus.time;
+            }
             SceneManager.LoadScene("Dungeon");
         }
     }
