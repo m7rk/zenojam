@@ -189,6 +189,8 @@ MonoBehaviour:
   AIRangedProjectile: {fileID: 1115468110, guid: e90d71d549ce3d543b6984c0f015a9dd, type: 3}
   playerMeleesF: []
   playerMeleesB: []
+  hurtSound: {fileID: 8300000, guid: 987cf868eaaedbf4a8a02fd4fa15f422, type: 3}
+  AI_attackSound: {fileID: 8300000, guid: 3fa938d4a58158f409a80b2a547b34cf, type: 3}
 --- !u!82 &-412391145441596517
 AudioSource:
   m_ObjectHideFlags: 0
@@ -201,7 +203,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

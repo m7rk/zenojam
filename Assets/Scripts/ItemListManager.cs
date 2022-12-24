@@ -13,6 +13,8 @@ public class ItemListManager : MonoBehaviour
     public TMPro.TMP_Text descriptor;
     public TMPro.TMP_Text tname;
 
+    public GameState gs;
+
     // Start is called before the first frame update
     public void generate()
     {
@@ -51,7 +53,13 @@ public class ItemListManager : MonoBehaviour
 
     public void onClick(int idx)
     {
+        // no messing with weapons during action phase.
+        if(gs.state == GameState.State.PLAYER_ACTION)
+        {
+            return;
+        }
         GameState.playerItemIndex = idx;
+        GetComponent<AudioSource>().Play();
         generate();
     }
 

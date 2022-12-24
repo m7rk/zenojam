@@ -78,7 +78,12 @@ public class GameState : MonoBehaviour
         PLAYER_ACTION,
         AI_MOVE
     }
-    State state;
+    public State state;
+
+    public AudioPlayer ap;
+
+    public AudioSource gameMus;
+    public AudioSource bossMus;
 
     void Start()
     {
@@ -97,6 +102,15 @@ public class GameState : MonoBehaviour
         else
         {
             floorText.text = "FLOOR " + numbers[floorID].ToUpper();
+        }
+
+        if (floorID == 0)
+        {
+            Destroy(gameMus);
+        }
+        else
+        {
+            Destroy(bossMus);
         }
         ilm.generate();
     }
@@ -264,12 +278,23 @@ public class GameState : MonoBehaviour
                 {
                     // it's a fireball
                     v.GetComponent<RangedDecal>().anims = ma.animsetForSpell(playerItems[playerItemIndex].name);
+                    ap.playByName("PLAYER_RANGED");
                 }
 
                 v.transform.SetParent(this.transform);
                 v.transform.position = currentUnitToMoveOrAction.transform.position;
                 // offset for items
                 v.GetComponent<RangedDecal>().setGoal(globalPositionForTile(currentUnitTarget) + new Vector3(0, -0.22f, 1f));
+            } else
+            {
+                if ((state == State.PLAYER_ACTION))
+                {
+                    ap.playByName("PLAYER_MELEE");
+                }
+                else
+                {
+                    currentUnitToMoveOrAction.GetComponent<Unit>().playAIAttackSound();
+                }
             }
         }
 
@@ -360,12 +385,38 @@ public class GameState : MonoBehaviour
             }
 
             var attackDmg = UnityEngine.Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
-            // trigger the attack animation
-            if (NPCPositions[currentUnitTarget].hurt(attackDmg))
+
+            // special AOE for that one spell
+            if (playerItems[playerItemIndex].name == "Inferno")
             {
-                GameState.pacifist = false;
-                NPCPositions.Remove(currentUnitTarget);
+                for (int x = -1; x != 2; ++x)
+                {
+                    for (int y = -1; y != 2; ++y)
+                    {
+                        if(NPCPositions.ContainsKey(currentUnitTarget + new Vector3Int(x,y,0)))
+                        {
+                            // trigger the attack animation
+                            if (NPCPositions[currentUnitTarget].hurt(attackDmg))
+                            {
+                                GameState.pacifist = false;
+                                NPCPositions.Remove(currentUnitTarget);
+                            }
+                        }
+                    }
+                }
             }
+            else
+            {
+                // trigger the attack animation
+                if (NPCPositions[currentUnitTarget].hurt(attackDmg))
+                {
+                    GameState.pacifist = false;
+                    NPCPositions.Remove(currentUnitTarget);
+                }
+            }
+
+
+
             currentUnitToMoveOrAction.GetComponent<Unit>().hideWeapons();
         }
     }

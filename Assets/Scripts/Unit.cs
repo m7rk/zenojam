@@ -57,6 +57,9 @@ public class Unit : MonoBehaviour
     public GameObject[] playerMeleesF;
     public GameObject[] playerMeleesB;
 
+    public AudioClip hurtSound;
+    public AudioClip AI_attackSound;
+
     void Start()
     {
         if (hit == null)
@@ -137,9 +140,15 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void playAIAttackSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(AI_attackSound);
+    }
     // return true if ded
     public bool hurt(int count)
     {
+
+        GetComponent<AudioSource>().PlayOneShot(hurtSound);
         flashTime = MAX_HURT_FLASH_TIME;
         if (thisIsPlayer)
         {
@@ -171,6 +180,10 @@ public class Unit : MonoBehaviour
     public void showWeapon(string name, int frame)
     {
         foreach(var v in playerMeleesF)
+        {
+            v.SetActive(false);
+        }
+        foreach (var v in playerMeleesB)
         {
             v.SetActive(false);
         }
