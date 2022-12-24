@@ -43,4 +43,9 @@ public class Transitioner : MonoBehaviour
         endSceneFlag = true;
         rt.anchoredPosition = new Vector3(0, 360, 0f);
     }
+
+    public void unSet()
+    {
+        endSceneFlag = false;
+    }
 }

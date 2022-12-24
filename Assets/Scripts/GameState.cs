@@ -24,6 +24,7 @@ public class GameState : MonoBehaviour
     public static bool pacifist = true;
     public static bool knowsAboutAutoSkip = false;
     public static int floorID = 9;
+    public static float timeJump;
 
     public List<GameItem> startingItems;
     public ItemListManager ilm;
@@ -90,6 +91,7 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
+        gameMus.time = GameState.timeJump;
         playerUnit.health = GameState.healthLastFloor;
         if (playerItems == null)
         {
@@ -624,6 +626,7 @@ public class GameState : MonoBehaviour
         GameState.pacifist = true;
         GameState.floorID = 9;
         GameState.healthLastFloor = PLAYER_MAXHEALTH;
+        GameState.timeJump = 0;
     }
 
     void toNextLevel()
@@ -649,6 +652,7 @@ public class GameState : MonoBehaviour
         else
         {
             GameState.healthLastFloor = Mathf.Min(PLAYER_MAXHEALTH, playerUnit.health + 1);
+            GameState.timeJump = gameMus.time;
             SceneManager.LoadScene("Dungeon");
         }
     }

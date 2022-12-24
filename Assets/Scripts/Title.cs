@@ -15,21 +15,27 @@ public class Title : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            scenePointer++;
-            if (scenePointer >= scenes.Count)
+            FindObjectOfType<Transitioner>().endScene(callBack);
+        }
+    }
+
+    void callBack()
+    {
+        scenePointer++;
+        if (scenePointer >= scenes.Count)
+        {
+            GameState.floorID = 10;
+            SceneManager.LoadScene(whereToGo);
+            return;
+        }
+        else
+        {
+            FindObjectOfType<Transitioner>().unSet();
+            foreach (var v in scenes)
             {
-                GameState.floorID = 10;
-                SceneManager.LoadScene(whereToGo);
-                return;
+                v.SetActive(false);
             }
-            else
-            {
-                foreach (var v in scenes)
-                {
-                    v.SetActive(false);
-                }
-                scenes[scenePointer].SetActive(true);
-            }
+            scenes[scenePointer].SetActive(true);
         }
     }
 }
