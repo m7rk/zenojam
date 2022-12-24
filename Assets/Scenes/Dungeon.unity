@@ -5702,6 +5702,27 @@ MonoBehaviour:
   - {fileID: 4187880743076409109, guid: a9bd05b1bd29bb946bd6571db4dd93fe, type: 3}
   boss: {fileID: 7181679792846755148, guid: ecc51c12018901f459b6a919255b8c14, type: 3}
   groundItemPrefab: {fileID: 7435218913623088415, guid: fd77413d918157e4381ffdb903faea40, type: 3}
+  itemSpawnList:
+  - Gold
+  - Meat
+  - Saber
+  - Hammer
+  - Sword
+  - Meat
+  - Inferno
+  - Firewall
+  - Combust
+  - Meat
+  - Gold
+  - Blaze
+  - Cleaver
+  - Meat
+  - Gem
+  - Bone
+  - Singe
+  - Dagger
+  - Flower
+  - Meat
 --- !u!114 &1557024819
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,16 +24,19 @@ public class LevelGenerator : MonoBehaviour
     // 100 - 7 * 7 = 50 possible enemy spots
     // squad count does not exceed fifteen + MAX_
 
-    // tweak NPC gen with this
-    // I'm a little afraid of difficulty spikes - the smallest possible spawn is 12 enemies and the max is 30
-    // We should tighten this and also give more loot if more enemies spawned.
     public readonly int MAX_SQUAD_SIZE = 3;
 
     public readonly int ENEMY_QUOTA = 7;
 
     public readonly int PLAYER_SAFE_ZONE = 7;
 
+    public readonly int ITEMS_TO_SPAWN = 10;
+
     public GameObject groundItemPrefab;
+
+
+    // firewall is never spawned
+    public string[] itemSpawnList;
 
 
     public void spawnNPC(GameObject prefab, Vector3Int pos)
@@ -138,12 +141,12 @@ public class LevelGenerator : MonoBehaviour
     public void spawnItems()
     {
         gs.groundItems = new Dictionary<Vector3, GroundItem>();
-        for(int i = 0; i != groundItemPrefab.GetComponent<GroundItem>().allItemName.Count; ++i)
+        for(int i = 0; i != ITEMS_TO_SPAWN; ++i)
         {
             var testTile = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
             if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile))
             {
-                gs.putItem(groundItemPrefab.GetComponent<GroundItem>().allItemName[i], testTile);
+                gs.putItem(randomItemForFloor(), testTile);
             }
         }
     }
@@ -159,6 +162,18 @@ public class LevelGenerator : MonoBehaviour
         {
             return npcPrefabs[Random.Range(GameState.floorID - 2,7+1)];
         }
+    }
+
+    // later, reroll if player has item or it was spawned.
+    public string randomItemForFloor()
+    {
+        // if 9 : 2/9 of list spawnable.
+        // if 2 : 9/9 of list spawnable.
+        float bestPossble = Random.Range(0f, (11f - GameState.floorID) / 9f);
+        float targ = 1f - bestPossble;
+        Debug.Log(bestPossble);
+
+        return itemSpawnList[(int)(targ * itemSpawnList.Length)];
     }
 
     void generateMapCandidate()

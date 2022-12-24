@@ -386,6 +386,7 @@ public class GameState : MonoBehaviour
 
             var attackDmg = UnityEngine.Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
 
+
             // special AOE for that one spell
             if (playerItems[playerItemIndex].name == "Inferno")
             {
@@ -413,6 +414,13 @@ public class GameState : MonoBehaviour
                     GameState.pacifist = false;
                     NPCPositions.Remove(currentUnitTarget);
                 }
+            }
+            // blaze gets consumed.
+            if(playerItems[playerItemIndex].name == "Blaze")
+            {
+                playerItems.RemoveAt(playerItemIndex);
+                playerItemIndex--;
+                ilm.generate();
             }
 
 

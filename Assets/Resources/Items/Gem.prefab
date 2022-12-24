@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b42907d12dc5fe4989bc290e7fd0b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageLow: 2
+  damageLow: 1
   damageHi: 3
   range: 3
   description: Green, shiny, and very pointy.

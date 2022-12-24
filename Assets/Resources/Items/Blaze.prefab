@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageLow: 3
   damageHi: 5
-  range: 4
+  range: 3
   description: Single use, disposable pamphlet.
   image: {fileID: -1944893143, guid: d9b50b4bc35cd11489d303c1d955af37, type: 3}
+  distractable: 0
+  edible: 0
