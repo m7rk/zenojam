@@ -15,15 +15,15 @@ public class LevelGenerator : MonoBehaviour
     public GameObject boss;
 
     // tweak map gen with these
-    public readonly int DIMS = 6;
+    public readonly int DIMS = 7;
     public readonly float FILL_THRESH = 0.5f;
     public readonly float PERLIN_MULT = 0.25f;
     public readonly float FALLOFF_FACTOR = 0.1f;
     public readonly int MIN_VIABLE_TILES = 80;
 
-    public readonly int ENEMY_QUOTA = 6;
+    public readonly int ENEMY_QUOTA = 5;
 
-    public readonly int PLAYER_SAFE_ZONE = 6;
+    private int PLAYER_SAFE_ZONE = 6;
 
     public readonly int ITEMS_TO_SPAWN = 7;
 
@@ -108,8 +108,17 @@ public class LevelGenerator : MonoBehaviour
 
     public void spawnNPCs()
     {
-        while(gs.NPCPositions.Count < ENEMY_QUOTA)
+        int softLockCounter = 1000;
+        while (gs.NPCPositions.Count < ENEMY_QUOTA)
         {
+            softLockCounter--;
+            if(softLockCounter < 0)
+            {
+                PLAYER_SAFE_ZONE--;
+                softLockCounter = 1000;
+                Debug.Log("protected against NPC softlock.");
+            }
+
             var squad_center = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
             // squads should be far from player
             if(Mathf.Abs(squad_center.x) < PLAYER_SAFE_ZONE && Mathf.Abs(squad_center.y) < PLAYER_SAFE_ZONE)
@@ -128,6 +137,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
+        Debug.Log("softlock " + softLockCounter);
     }
 
     public void spawnItems()
@@ -136,7 +146,7 @@ public class LevelGenerator : MonoBehaviour
         for(int i = 0; i != ITEMS_TO_SPAWN; ++i)
         {
             var testTile = new Vector3Int(Random.Range(-DIMS, DIMS), Random.Range(-DIMS, DIMS), 0);
-            if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile))
+            if (gu.levelTileMap.HasTile(testTile) && !gs.groundItems.ContainsKey(testTile) && testTile != gs.ladderPosition)
             {
                 var spawnCand = randomItemForFloor();
                 if (GameState.playerItems != null)

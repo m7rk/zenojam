@@ -110,13 +110,15 @@ public class GameState : MonoBehaviour
             floorText.text = "FLOOR " + numbers[floorID].ToUpper();
         }
 
-        if (floorID == 0)
+        if (floorID <= 3)
         {
             Destroy(gameMus.gameObject);
+            floorText.color = Color.red;
         }
         else
         {
             Destroy(bossMus.gameObject);
+            floorText.color = Color.white;
         }
         ilm.generate();
     }
