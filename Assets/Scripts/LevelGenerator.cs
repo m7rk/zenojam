@@ -21,11 +21,11 @@ public class LevelGenerator : MonoBehaviour
     public readonly float FALLOFF_FACTOR = 0.1f;
     public readonly int MIN_VIABLE_TILES = 80;
 
-    public readonly int ENEMY_QUOTA = 5;
+    public readonly int ENEMY_QUOTA = 6;
 
     public readonly int PLAYER_SAFE_ZONE = 6;
 
-    public readonly int ITEMS_TO_SPAWN = 5;
+    public readonly int ITEMS_TO_SPAWN = 7;
 
     public GameObject groundItemPrefab;
 

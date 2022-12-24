@@ -95,7 +95,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            if (flashTime > HURT_ANIM_TIME)
+            if (flashTime > HURT_ANIM_TIME && (!thisIsPlayer || health > 0))
             {
                 mainSpriteRenderer.material = hit;
             }
@@ -135,7 +135,7 @@ public class Unit : MonoBehaviour
             // keep flashed until transitioner kicks in
             if(health <= 0 && thisIsPlayer)
             {
-                flashTime = 0.1f;
+                flashTime = 5f;
             }
         }
     }

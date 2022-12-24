@@ -209,6 +209,7 @@ public class GameState : MonoBehaviour
                     // eat?
                     if(playerItems[playerItemIndex].edible)
                     {
+                        ap.playByName("EAT");
                         playerUnit.health += 1;
                         playerUnit.health = Mathf.Min(playerUnit.health, PLAYER_MAXHEALTH);
                         playerItems.RemoveAt(playerItemIndex);
@@ -241,6 +242,10 @@ public class GameState : MonoBehaviour
         // if sqaure reached go to next. if no next go to next state.
         if (Vector3.Distance(currentUnitToMoveOrAction.transform.position, globalPositionForTile(pendingUnitPath[0])) < 0.01f)
         {
+            if (state == State.PLAYER_MOVE)
+            {
+                ap.playByName("STEP");
+            }
             currentUnitToMoveOrAction.transform.position = globalPositionForTile(pendingUnitPath[0]);
             pendingUnitPath.RemoveAt(0);
             if (pendingUnitPath.Count == 0)
@@ -292,6 +297,10 @@ public class GameState : MonoBehaviour
                 if(state != State.PLAYER_ACTION)
                 {
                     currentUnitToMoveOrAction.GetComponent<Unit>().playAIAttackSound();
+                    if(GameState.floorID == 1)
+                    {
+                        v.GetComponent<RangedDecal>().anims = ma.animsetForSpell("Combust");
+                    }
                 }
 
                 // fireballs get special animation.
@@ -397,14 +406,6 @@ public class GameState : MonoBehaviour
                
             }
 
-            if(playerItems[playerItemIndex].distractable)
-            {
-                // threw away a distractable, destroy...
-                playerItems.RemoveAt(playerItemIndex);
-                playerItemIndex--;
-                ilm.generate();
-            }
-
             var attackDmg = UnityEngine.Random.Range(playerItems[playerItemIndex].damageLow, 1 + playerItems[playerItemIndex].damageHi);
 
 
@@ -418,7 +419,7 @@ public class GameState : MonoBehaviour
                         if(NPCPositions.ContainsKey(currentUnitTarget + new Vector3Int(x,y,0)))
                         {
                             // trigger the attack animation
-                            if (NPCPositions[currentUnitTarget].hurt(attackDmg))
+                            if (NPCPositions[currentUnitTarget + new Vector3Int(x, y, 0)].hurt(attackDmg))
                             {
                                 GameState.pacifist = false;
                                 NPCPositions.Remove(currentUnitTarget);
@@ -444,6 +445,13 @@ public class GameState : MonoBehaviour
                 ilm.generate();
             }
 
+            if (playerItems[playerItemIndex].distractable)
+            {
+                // threw away a distractable, destroy...
+                playerItems.RemoveAt(playerItemIndex);
+                playerItemIndex--;
+                ilm.generate();
+            }
 
 
             currentUnitToMoveOrAction.GetComponent<Unit>().hideWeapons();
@@ -454,6 +462,7 @@ public class GameState : MonoBehaviour
     {
         if(groundItems.ContainsKey(playerPosition))
         {
+            ap.playByName("ITEM_PICKUP");
             // sus
             var it = Resources.Load<GameObject>("Items/" + groundItems[playerPosition].thisItem);
             playerItems.Add(it.GetComponent<GameItem>());
@@ -652,7 +661,7 @@ public class GameState : MonoBehaviour
         }
         else
         {
-            GameState.healthLastFloor = Mathf.Min(PLAYER_MAXHEALTH, playerUnit.health + 1);
+            GameState.healthLastFloor = Mathf.Min(PLAYER_MAXHEALTH, playerUnit.health + 2);
             GameState.timeJump = gameMus.time;
             SceneManager.LoadScene("Dungeon");
         }
